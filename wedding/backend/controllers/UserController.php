@@ -158,6 +158,8 @@ class UserController extends Controller
                 echo '<pre>';
                 print_r($taskofuser);
                 echo '</pre>';
+                $test['taskofuser'] = $taskofuser;
+                return $this->render('taskuser',$test);
             }
         }
     }

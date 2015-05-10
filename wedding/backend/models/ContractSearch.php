@@ -45,9 +45,10 @@ class ContractSearch extends Contract
      */
     public function search($params)
     {
-        $query = Contract::find();
+        //$query = Contract::find();
         
-        $test = new Query();
+        $query =Contract::find()->joinWith('idUser');
+        //var_dump($query);exit;
         $test = Yii::$app->db->createCommand('select * from contract INNER JOIN user ON contract.id_user = user.id')->execute();
         
          

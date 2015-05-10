@@ -195,7 +195,7 @@ class ContractController extends Controller
                 'makeupcontract'=>$makeupcontract,
                 'album'=>$album,
                 'bigimg'=>$bigimg,
-                'modelsBigImg' => (empty($modelsBigImg)) ? [new Address] : $modelsBigImg
+                
             ]);
         }
     }
