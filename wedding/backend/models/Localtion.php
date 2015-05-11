@@ -86,4 +86,13 @@ class Localtion extends ActiveRecord implements CartPositionInterface
     {
         return $this->hasMany(Imglocal::className(), ['id_local' => 'id_local']);
     }
+    
+    public function getName($id_local){
+        $result = Yii::$app->db->createCommand("SELECT name_local from localtion where id_local = '" .$id_local . "'")->queryOne();
+//        echo '<pre>';
+//        print_r($result);
+//        echo '</pre>';
+        //echo $result['name_local'];
+        return $result['name_local'];
+    }
 }

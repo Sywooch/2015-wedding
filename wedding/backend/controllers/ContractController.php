@@ -20,6 +20,7 @@ use backend\models\Album;
 use backend\models\Ratealbum;
 use backend\models\Bigimg;
 use app\base\Model;
+use backend\models\Localtion;
 //use backend\controllers\UserController;
 //use backend\controllers\DressController;
 //use backend\controllers\RatealbumController;
@@ -265,9 +266,8 @@ class ContractController extends Controller
     public function actionTest(){
         //echo time();
        // var_dump(User::find());
-        echo '<pre>';
-        print_r(User::find()->joinWith('contract')->all());
-        echo '</pre>';
+       $test = new Localtion();
+       $test->getName('L1429634734');
     }
     
     /**
