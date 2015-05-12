@@ -26,21 +26,31 @@ $this->params['breadcrumbs'][] = $this->title;
                     ArrayHelper::map(TypeUser::find()->all(), 'id_type', 'name_type'),
                         ['prompt'=>'Select Type User',]
                         ) ?>
-            <div class = "foo" id="foo" style="display: none;">
-                   
-
+            
+                <?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
                     
+                    <div class = "email-customer" style="display: none;">
+                   
+                        <?= $form->field($model, 'email2')->textInput(['maxlength' => 255]) ?>
+                    </div>
 
                    
                     <?= $form->field($model, 'fullname')->textInput(['maxlength' => 250]) ?>
-
-                    <?= $form->field($model, 'fullname2')->textInput(['maxlength' => 250]) ?>
+                    <div class = "fullname-customer" style="display: none;">
+                   
+                         <?= $form->field($model, 'fullname2')->textInput(['maxlength' => 250]) ?>
+                    </div>
+                   
 
                     <?= $form->field($model, 'tell')->textInput(['maxlength' => 12]) ?>
+                    
+                    <div class = "tell-customer" style="display: none;">
+                   
+                         <?= $form->field($model, 'tell2')->textInput(['maxlength' => 12]) ?>
+                    </div>
+                   
 
-                    <?= $form->field($model, 'tell2')->textInput(['maxlength' => 12]) ?>
-
-                    <?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
+                    
 
                     
 
@@ -51,9 +61,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model, 'avatar')->textInput(['maxlength' => 255]) ?>
 
                    
-            </div>
             
-            <div id ="staff" style="display: none;">
+            
+            <div id ="staff" class="staff" style="display: none;">
                 <?= $form->field($model, 'range_user')->dropDownList([
                         '1'=>'A',
                         '2'=>'B',
@@ -61,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],['prompt'=>'Select Range User']) ?>
                 
                  <?= $form->field($model, 'rate_user')->textInput() ?>
-                <?= $form->field($model, 'email2')->textInput(['maxlength' => 255]) ?>
+                
                 
             </div>
                 <div class="form-group">
