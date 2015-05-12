@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\Contract;
 use DateTime;
+use backend\models\Localtion;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -155,11 +156,16 @@ class UserController extends Controller
                 foreach ($result as $val) {
                     $taskofuser[] = Yii::$app->db->createCommand("SELECT id_user,id_local,start_time,end_time,status FROM contract where id_contract = '".$val."'")->queryOne();
                 }
-                echo '<pre>';
-                print_r($taskofuser);
-                echo '</pre>';
-                $test['taskofuser'] = $taskofuser;
-                return $this->render('taskuser',$test);
+               
+                $modellocal = new Localtion();
+                foreach ($taskofuser as $key => $value) {
+                    $taskofuser[$key]['name_local'] = $modellocal->getName($value['id_local']);
+                }
+//                 echo '<pre>';
+//                print_r($taskofuser);
+//                echo '</pre>';
+                $array['taskofuser'] = $taskofuser;
+                return $this->render('taskuser',$array);
             }
         }
     }

@@ -242,5 +242,10 @@ class User extends \yii\db\ActiveRecord
         return $arr_userphoto;
     }
     
-   
+    public function getName($id_user) {
+        $result = Yii::$app->db->createCommand("SELECT fullname,fullname2 from user where id = '".$id_user."'")->queryOne();
+        
+        var_dump($result);
+        
+    }
 }

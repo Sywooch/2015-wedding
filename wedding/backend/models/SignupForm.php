@@ -55,25 +55,7 @@ class SignupForm extends Model
         ];
         
         
-//        return [
-//            [['username', 'auth_key', 'password_hash', 'type_user', 'fullname', 'tell', 'email', 'info_user', 'address', 'avatar', 'created_at', 'updated_at'], 'required'],
-//            [['type_user', 'range_user', 'rate_user', 'status', 'created_at', 'updated_at'], 'integer'],
-//            [['info_user'], 'string'],
-//            [['username', 'password_hash', 'password_reset_token', 'email', 'email2', 'avatar'], 'string', 'max' => 255],
-//            [['auth_key'], 'string', 'max' => 32],
-//            [['fullname', 'fullname2', 'address'], 'string', 'max' => 250],
-//            [['tell', 'tell2'], 'string', 'max' => 12],
-//            ['username', 'filter', 'filter' => 'trim'],
-//            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
-//            ['username', 'string', 'min' => 2, 'max' => 255],
-////
-//            ['email', 'filter', 'filter' => 'trim'],
-//            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
-//            ['email', 'email'],
-//            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
-//
-//            ['password', 'string', 'min' => 6],
-//        ];
+
     }
 
     /**
@@ -92,6 +74,12 @@ class SignupForm extends Model
             $user->tell = $this->tell;
             $user->address = $this->address;
             $user->info_user = $this->info_user;
+            if(isset($this->range_user)){
+                $user->range_user = $this->range_user;
+            }
+            if(isset($this->rate_user)){
+                $user->rate_user = $this->rate_user;
+            }
             $user->setPassword($this->password);
             $user->generateAuthKey();
             if ($user->save()) {

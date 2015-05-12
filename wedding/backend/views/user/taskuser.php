@@ -14,16 +14,35 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     
-    <?= DetailView::widget([
-        'model' => $taskofuser,
-        'attributes' => [
-            'id_user',
-            'id_local',
-            'start_time',
-            'end_time',
-            'status',
+    
+    <?php if (isset($taskofuser)&& $taskofuser !=NULL){ 
+    ?>
+    
+    
+    
+    <table class ="table table-striped table-bordered table-hover table-condensed">
+        <tr>
+            <td></td>
+            <td>Tên địa điểm</td>
+            <td>Thời Gian Bắt Đầu</td>
+            <td>Thời Gian Kết Thúc</td>
+            <td>Trạng Thái</td>
+            <td>Action</td>
+        </tr>
+        <?php foreach ($taskofuser as $task) { ?>
+        <tr>
+            <td><?=$task['id_user']?></td>
+            <td><?=$task['name_local']?></td>
+            <td><?=$task['start_time']?></td>
+            <td><?=$task['end_time']?></td>
+            <td><?=$task['status']?></td>
+            <td></td>
             
-        ],
-    ]) ?>
+        </tr>
+                
+    
+        <?php      }?>
+    </table>
+    <?php } ?>
 
 </div>

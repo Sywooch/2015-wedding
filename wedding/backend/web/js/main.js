@@ -24,3 +24,24 @@ $(function(){
     })
 });
 
+$(document).ready(function (){
+            $("#signupform-type_user").change(function() {
+                // foo is the id of the other select box 
+                if ($(this).val() == "1") {
+                    $(".email-customer").show();
+                    $(".fullname-customer").show();
+                    $(".tell-customer").show();
+                    $(".staff").hide();
+                }else if($(this).val() != "1" &&$(this).val() != "0"){
+                    $(".email-customer").hide();
+                    $(".fullname-customer").hide();
+                    $(".tell-customer").hide();
+                    $(".staff").show();
+                }else{
+                    $(".email-customer").hide();
+                    $(".fullname-customer").hide();
+                    $(".tell-customer").hide();
+                    $(".staff").hide();
+                } 
+            });
+});
