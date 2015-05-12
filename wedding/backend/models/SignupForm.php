@@ -92,6 +92,12 @@ class SignupForm extends Model
             $user->tell = $this->tell;
             $user->address = $this->address;
             $user->info_user = $this->info_user;
+            if(isset($this->range_user)){
+                $user->range_user = $this->range_user;
+            }
+            if(isset($this->rate_user)){
+                $user->rate_user = $this->rate_user;
+            }
             $user->setPassword($this->password);
             $user->generateAuthKey();
             if ($user->save()) {
