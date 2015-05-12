@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <td>Thời Gian Bắt Đầu</td>
             <td>Thời Gian Kết Thúc</td>
             <td>Trạng Thái</td>
+            <td>Action</td>
         </tr>
         <?php foreach ($taskofuser as $task) { ?>
         <tr>
@@ -35,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <td><?=$task['start_time']?></td>
             <td><?=$task['end_time']?></td>
             <td><?=$task['status']?></td>
+            <td></td>
             
         </tr>
                 
