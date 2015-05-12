@@ -60,13 +60,16 @@ class UserController extends Controller
     }
     
     // get timework user
-    public function  actionTimework($id_user){
-        
+    public function  actionTimework(){
+        $model = new Contract();
+        //$test = $model->getContractInMonth(1);
+        echo Yii::$app->request->baseUrl;
+        //var_dump($test);
     }
     // view task yourself
     // 
     
-    public function actionTask($id_user){
+    public function actionTask($id_user,$month){
         
         // find user 
         $model = UserController::findModel($id_user);
@@ -95,7 +98,7 @@ class UserController extends Controller
             $modelcontract = new Contract();
             //$gettime = new DateTime($time);
             // get all contract in month
-            $allcontractinmonth = $modelcontract->getContractInMonth(date('m'));
+            $allcontractinmonth = $modelcontract->getContractInMonth($month);
             
             
             // get overall 2 arr
@@ -104,12 +107,13 @@ class UserController extends Controller
             $result = $modelcontract->getJoinArr($allcontractinmonth,$allcontractofuser);
             
             $arr_time;
-
-            foreach ($result as $key=>$value) {
-                // get start time and end time of all contract
-                 $result_start_end[] = Yii::$app->db->createCommand("select start_time,end_time from CONTRACT WHERE id_contract = '".$value."'" )->queryOne();   
-            }
+            if($result!=NULL){
             
+                foreach ($result as $key=>$value) {
+                    // get start time and end time of all contract
+                     $result_start_end[] = Yii::$app->db->createCommand("select start_time,end_time from CONTRACT WHERE id_contract = '".$value."'" )->queryOne();   
+                }
+            }
             
             // check isset 
             if(isset($result_start_end)){
@@ -139,17 +143,17 @@ class UserController extends Controller
                 
                 //get contract prev month
                 
-                $allcontractinprevmonth = $modelcontract->getContractInMonth(date('m')-1);
+               // $allcontractinprevmonth = $modelcontract->getContractInMonth(date('m')-1);
                 
                 //get contract of user prev month
                 
                 
-                $result_contract_prevmonth = $modelcontract->getJoinArr($allcontractinprevmonth,$allcontractofuser);
+               // $result_contract_prevmonth = $modelcontract->getJoinArr($allcontractinprevmonth,$allcontractofuser);
                 
                 //get contract next month 
-                $allcontractinnextmonth = $modelcontract->getContractInMonth(date('m')+1);
+              //  $allcontractinnextmonth = $modelcontract->getContractInMonth(date('m')+1);
                 // get contract of user next month
-                 $result_contract_nextmonth = $modelcontract->getJoinArr($allcontractinnextmonth,$allcontractofuser);
+               //  $result_contract_nextmonth = $modelcontract->getJoinArr($allcontractinnextmonth,$allcontractofuser);
                 
                 // set task of user
                 $taskofuser;
@@ -161,9 +165,7 @@ class UserController extends Controller
                 foreach ($taskofuser as $key => $value) {
                     $taskofuser[$key]['name_local'] = $modellocal->getName($value['id_local']);
                 }
-//                 echo '<pre>';
-//                print_r($taskofuser);
-//                echo '</pre>';
+
                 $array['taskofuser'] = $taskofuser;
                 return $this->render('taskuser',$array);
             }

@@ -143,6 +143,7 @@ class Contract extends \yii\db\ActiveRecord
         $date;
         $year = intval(date('Y'));
         $monthyear = intval($monthyear);
+        if($monthyear<=0 || $monthyear >12)return NULL;
         switch ($monthyear){
             case 1:
             case 3:
@@ -162,10 +163,12 @@ class Contract extends \yii\db\ActiveRecord
                 break;
         }
         
-        $endmonth = $date.'-'.$monthyear.'-'.$year;
-        $startmonth = '01-'.$monthyear.'-'.$year;
+        $endmonth = $year.'-'.$monthyear.'-'.$date;
+        $startmonth = $year.'-'.$monthyear.'-'.'01';
         
         $contract = Yii::$app->db->createCommand("SELECT id_contract FROM contract WHERE start_time >='".$startmonth."' AND start_time<='".$endmonth."' ORDER BY start_time")->queryAll();
+        
+        //var_dump($contract);
         
         $allcontract ;
         
@@ -174,7 +177,7 @@ class Contract extends \yii\db\ActiveRecord
         }
         
         if(isset($allcontract))
-        return $allcontract;
+        return $allcontract;else
         return NULL;
     }
    

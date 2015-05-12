@@ -45,3 +45,20 @@ $(document).ready(function (){
                 } 
             });
 });
+
+
+$(document).ready(function(){
+    $("#contract-start_time").change(function(){
+
+    	$("#contract-timeadd").change(function(){
+    		var x = document.getElementById("contract-start_time").value;
+    		var y = document.getElementById("contract-timeadd").value;
+                //var baseurl='<?php echo Yii::$app->request->baseUrl();?>';
+    		window.location.href ='index.php?r=contract%2Fcreate'+ '&&start='+x+'&&end='+x;
+                exit;
+                $(".info_contract").show();
+                $(".timestart").hide();
+                
+    	});
+    });
+});
