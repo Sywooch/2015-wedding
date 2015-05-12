@@ -26,12 +26,44 @@ $this->params['breadcrumbs'][] = $this->title;
                     ArrayHelper::map(TypeUser::find()->all(), 'id_type', 'name_type'),
                         ['prompt'=>'Select Type User',]
                         ) ?>
-                <?= $form->field($model, 'email') ?>
-                <?= $form->field($model, 'fullname') ?>
-                <?= $form->field($model, 'tell') ?>
-                <?= $form->field($model, 'info_user')->textarea()?>
-                <?= $form->field($model, 'address') ?>
+            <div class = "foo" id="foo" style="display: none;">
+                   
+
+                    
+
+                   
+                    <?= $form->field($model, 'fullname')->textInput(['maxlength' => 250]) ?>
+
+                    <?= $form->field($model, 'fullname2')->textInput(['maxlength' => 250]) ?>
+
+                    <?= $form->field($model, 'tell')->textInput(['maxlength' => 12]) ?>
+
+                    <?= $form->field($model, 'tell2')->textInput(['maxlength' => 12]) ?>
+
+                    <?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
+
+                    
+
+                    <?= $form->field($model, 'info_user')->textarea(['rows' => 6]) ?>
+
+                    <?= $form->field($model, 'address')->textInput(['maxlength' => 250]) ?>
+
+                    <?= $form->field($model, 'avatar')->textInput(['maxlength' => 255]) ?>
+
+                   
+            </div>
+            
+            <div id ="staff" style="display: none;">
+                <?= $form->field($model, 'range_user')->dropDownList([
+                        '1'=>'A',
+                        '2'=>'B',
+                        '3'=>'C'
+                    ],['prompt'=>'Select Range User']) ?>
                 
+                 <?= $form->field($model, 'rate_user')->textInput() ?>
+                <?= $form->field($model, 'email2')->textInput(['maxlength' => 255]) ?>
+                
+            </div>
                 <div class="form-group">
                     <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
                 </div>
@@ -39,3 +71,5 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+
+

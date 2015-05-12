@@ -24,3 +24,13 @@ $(function(){
     })
 });
 
+$(document).ready(function (){
+            $("#signupform-type_user").change(function() {
+                // foo is the id of the other select box 
+                if ($(this).val() == "1") {
+                    $("#foo").show();
+                }else{
+                    $("#foo").hide();
+                } 
+            });
+});
