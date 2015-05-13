@@ -27,6 +27,8 @@ $opt = [15,20,25,30,35,40,45,50];
 <div class="contract-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    
+    <?php if(!isset($_GET['start'])) {?>
     <div class = "timestart">
     <?= $form->field($model, 'id_local')->dropDownList(
                     ArrayHelper::map(Localtion::find()->all(), 'id_local', 'name_local'),
@@ -42,8 +44,10 @@ $opt = [15,20,25,30,35,40,45,50];
               ]
         ]);?>
         <?= $form->field($model, 'timeadd')->textInput() ?>
+                
     </div>
-    <div class ="info_contract" style="display: none">
+    <?php }?>
+    <div class ="info_contract">
     
     
     <?php if($model->isNewRecord) {?>

@@ -134,7 +134,8 @@ class Contract extends \yii\db\ActiveRecord
                         $result[] = $value2;
                 }
             }
-            return $result;
+            if(isset($result)){
+            return $result;}else return NULL;
         }
         return NULL;
     }
