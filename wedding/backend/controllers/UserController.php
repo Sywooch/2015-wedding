@@ -141,19 +141,7 @@ class UserController extends Controller
                 }
                 
                 
-                //get contract prev month
-                
-               // $allcontractinprevmonth = $modelcontract->getContractInMonth(date('m')-1);
-                
-                //get contract of user prev month
-                
-                
-               // $result_contract_prevmonth = $modelcontract->getJoinArr($allcontractinprevmonth,$allcontractofuser);
-                
-                //get contract next month 
-              //  $allcontractinnextmonth = $modelcontract->getContractInMonth(date('m')+1);
-                // get contract of user next month
-               //  $result_contract_nextmonth = $modelcontract->getJoinArr($allcontractinnextmonth,$allcontractofuser);
+              
                 
                 // set task of user
                 $taskofuser;
@@ -165,7 +153,7 @@ class UserController extends Controller
                 foreach ($taskofuser as $key => $value) {
                     $taskofuser[$key]['name_local'] = $modellocal->getName($value['id_local']);
                 }
-
+                
                 $array['taskofuser'] = $taskofuser;
                 return $this->render('taskuser',$array);
             }
