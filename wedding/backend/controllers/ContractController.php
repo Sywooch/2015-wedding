@@ -21,6 +21,7 @@ use backend\models\Ratealbum;
 use backend\models\Bigimg;
 use app\base\Model;
 use backend\models\Localtion;
+use yii\web\Session;
 //use backend\controllers\UserController;
 //use backend\controllers\DressController;
 //use backend\controllers\RatealbumController;
@@ -49,16 +50,21 @@ class ContractController extends Controller
      * Lists all Contract models.
      * @return mixed
      */
-    private $data;
+    //private $data;
     public function actionIndex()
     {
-        $searchModel = new ContractSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $session = Yii::$app->session;
+        if(isset($session)&&$session['type_user']==0){
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            $searchModel = new ContractSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+        else return $this->goHome ();
     }
 
     /**
@@ -80,125 +86,132 @@ class ContractController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Contract();
-        $dress = new Dress();
-        $dresscontract = new Dresscontract();
-        $photocontract = new Photocontract();
-        $makeupcontract = new Makeupcontract();
-        $bigimg = new Bigimg();
-        $album = new Album();
+        
         $modelsBigImg = [new Bigimg];
         
+       $session = Yii::$app->session;
        
+       if(isset($session)&&$session['type_user']==0){
+        
+           $model = new Contract();
+            $dress = new Dress();
+            $dresscontract = new Dresscontract();
+            $photocontract = new Photocontract();
+            $makeupcontract = new Makeupcontract();
+            $bigimg = new Bigimg();
+            $album = new Album();
+            if ($model->load(Yii::$app->request->post())) {
 
-        if ($model->load(Yii::$app->request->post())) {
-            
-            // get all multi img
-           
-            
-            // get data form create contract
-            //get info dress contract
-            $dresscontract->load(Yii::$app->request->post());
-            // get id user photogaraper
-            $photocontract->load(Yii::$app->request->post());
-            // get id user makeup
-            $makeupcontract->load(Yii::$app->request->post());
-            //create album 
-            $album->load(Yii::$app->request->post());
-            
-            // load info imgbig
-            $bigimg->load(Yii::$app->request->post());
-            
-            // create end time photo
-            $query = new Query();
-            $tb = $query->select(['timework'])->from('localtion')->where(['id_local'=>$model->id_local])->one();
-            
-            $time_add = $tb['timework'] + $model->timeadd;
-            
-            
-            $date1 = str_replace('-', '/', $model->start_time);
-            $model->end_time = date('Y-m-d',strtotime($date1 ."+".$time_add. " days"));
-            //end create phôt
-//            echo '<pre>';
-//            print_r($photocontract->id_user);
-//            echo '</pre>';
-            
-            //time work of contract
-            $model->total_time = $time_add;
-            // save contract
-            if($model->save()){ 
-                //$db = new Connection();
-                //update customer have contract
-                Yii::$app->db->createCommand('UPDATE user SET have_contract=1 WHERE id ='.$model->id_user)->execute();
-                 //money rent dress
-            //
-                $rent_dress = 0;
-                // add dress contract
-                foreach ($dresscontract->id_dress as $dress) {
+                // get all multi img
 
-                    Yii::$app->db->createCommand("INSERT INTO dresscontract (id_dress,id_contract) VALUES ('".$dress."','".$model->id_contract."')")->execute();
 
-                    $infodress = Dress::findOne($dress);
-                    $rent_dress += intval($infodress->rate_hire)*intval($time_add);
+                // get data form create contract
+                //get info dress contract
+                $dresscontract->load(Yii::$app->request->post());
+                // get id user photogaraper
+                $photocontract->load(Yii::$app->request->post());
+                // get id user makeup
+                $makeupcontract->load(Yii::$app->request->post());
+                //create album 
+                $album->load(Yii::$app->request->post());
+
+                // load info imgbig
+                $bigimg->load(Yii::$app->request->post());
+
+                // create end time photo
+                $query = new Query();
+                $tb = $query->select(['timework'])->from('localtion')->where(['id_local'=>$model->id_local])->one();
+
+                $time_add = $tb['timework'] + $model->timeadd;
+
+
+                $date1 = str_replace('-', '/', $model->start_time);
+                $model->end_time = date('Y-m-d',strtotime($date1 ."+".$time_add. " days"));
+                //end create phôt
+    //            echo '<pre>';
+    //            print_r($photocontract->id_user);
+    //            echo '</pre>';
+
+                //time work of contract
+                $model->total_time = $time_add;
+                // save contract
+                if($model->save()){ 
+                    //$db = new Connection();
+                    //update customer have contract
+                    Yii::$app->db->createCommand('UPDATE user SET have_contract=1 WHERE id ='.$model->id_user)->execute();
+                     //money rent dress
+                //
+                    $rent_dress = 0;
+                    // add dress contract
+                    foreach ($dresscontract->id_dress as $dress) {
+
+                        Yii::$app->db->createCommand("INSERT INTO dresscontract (id_dress,id_contract) VALUES ('".$dress."','".$model->id_contract."')")->execute();
+
+                        $infodress = Dress::findOne($dress);
+                        $rent_dress += intval($infodress->rate_hire)*intval($time_add);
+
+                    }
+                    //add photo to contract
+                    Yii::$app->db->createCommand("INSERT INTO photocontract (id_user,id_contract) VALUES ('".$photocontract->id_user."','".$model->id_contract."')")->execute();
+                    // add makeup to contract
+                    Yii::$app->db->createCommand("INSERT INTO makeupcontract (id_user,id_contract) VALUES ('".$makeupcontract->id_user."','".$model->id_contract."')")->execute();        
+
+
+                    // wage of photo
+                    $infophoto = User::findOne($photocontract->id_user);
+                    $wagephoto = intval($infophoto->rate_user)*intval($time_add);
+
+                    // wage of makeup
+                    $infomakeup = User::findOne($makeupcontract->id_user);
+                    $wagemakeup = intval($infomakeup->rate_user)*intval($time_add);
+
+
+
+                    // create and save album db
+                    $album->id_contract =  $model->id_contract;
+
+                    if($album->save()){
+                             $rate_album = Ratealbum::findOne($album->numpage)->rate;
+
+
+
+                            $bigimg->id_contract = $model->id_contract;
+
+                            $rate_bigimg = \backend\models\Sizebigimg::findOne($bigimg->size)->rate;
+
+
+
+                            $bigimg->save();
+
+                            $model->total = intval($rate_album)+$wagemakeup+$wagephoto+$rent_dress + $rate_bigimg;
+                            $model->save();
+                    }
+
+
 
                 }
-                //add photo to contract
-                Yii::$app->db->createCommand("INSERT INTO photocontract (id_user,id_contract) VALUES ('".$photocontract->id_user."','".$model->id_contract."')")->execute();
-                // add makeup to contract
-                Yii::$app->db->createCommand("INSERT INTO makeupcontract (id_user,id_contract) VALUES ('".$makeupcontract->id_user."','".$model->id_contract."')")->execute();        
-
-
-                // wage of photo
-                $infophoto = User::findOne($photocontract->id_user);
-                $wagephoto = intval($infophoto->rate_user)*intval($time_add);
-
-                // wage of makeup
-                $infomakeup = User::findOne($makeupcontract->id_user);
-                $wagemakeup = intval($infomakeup->rate_user)*intval($time_add);
 
 
 
-                // create and save album db
-                $album->id_contract =  $model->id_contract;
 
-                if($album->save()){
-                         $rate_album = Ratealbum::findOne($album->numpage)->rate;
+                return $this->redirect(['view', 'id' => $model->id_contract]);
+            } 
+            else {
 
-                        
-                        
-                        $bigimg->id_contract = $model->id_contract;
-                        
-                        $rate_bigimg = \backend\models\Sizebigimg::findOne($bigimg->size)->rate;
-                        
-                        
-                        
-                        $bigimg->save();
-                        
-                        $model->total = intval($rate_album)+$wagemakeup+$wagephoto+$rent_dress + $rate_bigimg;
-                        $model->save();
-                }
+                return $this->render('create', [
+                    'model' => $model,
+                    'dress'=>$dress,
+                    'dresscontract'=>$dresscontract,
+                    'photocontract'=>$photocontract,
+                    'makeupcontract'=>$makeupcontract,
+                    'album'=>$album,
+                    'bigimg'=>$bigimg,
 
-               
-
+                ]);
             }
-            
-            
-           
-            
-            return $this->redirect(['view', 'id' => $model->id_contract]);
-        } else {
-
-            return $this->render('create', [
-                'model' => $model,
-                'dress'=>$dress,
-                'dresscontract'=>$dresscontract,
-                'photocontract'=>$photocontract,
-                'makeupcontract'=>$makeupcontract,
-                'album'=>$album,
-                'bigimg'=>$bigimg,
-                
-            ]);
-        }
+       }else{
+           return $this->goHome();
+       }
     }
     public function actionViewcontractref($id)
     {
@@ -277,35 +290,40 @@ class ContractController extends Controller
      * @return mixed
      */
     public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
+    {   
+        $session = Yii::$app->session;
+        
+        if(isset($session)&&$session['type_user']==0){
+        
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
-            
-            
-            
-            
-            $query = new Query();
-            $tb = $query->select(['timework'])->from('localtion')->where(['id_local'=>$model->id_local])->one();
-            
-            $time_add = $tb['timework'] + $model->timeadd;
-            
-            
-            $date1 = str_replace('-', '/', $model->start_time);
-            $model->end_time = date('Y-m-d',strtotime($date1 ."+".$time_add. " days"));
-            
-            
-            
-            
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->id_contract]);
-        } else {
-            
-            
-            
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            if ($model->load(Yii::$app->request->post())) {
+
+
+
+
+                $query = new Query();
+                $tb = $query->select(['timework'])->from('localtion')->where(['id_local'=>$model->id_local])->one();
+
+                $time_add = $tb['timework'] + $model->timeadd;
+
+
+                $date1 = str_replace('-', '/', $model->start_time);
+                $model->end_time = date('Y-m-d',strtotime($date1 ."+".$time_add. " days"));
+
+
+
+
+                $model->save();
+                return $this->redirect(['view', 'id' => $model->id_contract]);
+            } else {
+
+
+
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         }
     }
 
