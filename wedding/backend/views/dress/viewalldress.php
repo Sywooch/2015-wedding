@@ -13,7 +13,7 @@ $this->title =$title;
     <ul>
     <?php foreach ($imgs as $img) {?>
         <li class="list-group-item">
-        <a href="<?php echo 'index.php?r=dress/view&&id='.$img['id_dress'] ?>"><img src="<?php echo $img['avatar']; ?>"></a>
+        <a href="<?php echo 'index.php?r=dress/viewimg&&id='.$img['id_dress'] ?>"><img src="<?php echo $img['avatar']; ?>"></a>
         <p> <?php echo $img['name_dress'] ?></p>
 
         <?=  Html::a('Add To Cart', 'index.php?r=dress/addtocart&&id='.$img['id_dress'],['class'=>'btn btn-success']) ?>

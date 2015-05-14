@@ -157,9 +157,9 @@ class DressController extends Controller
         $cart = new ShoppingCart();
         //echo $cart->getCount();
         $items = $cart->positions;
-        echo '<pre>';
-        print_r($items);
-        echo '</pre>';
+//        echo '<pre>';
+//        print_r($items);
+//        echo '</pre>';
         foreach ($items as $item) {
            
             echo $item->getCost().'<br>';

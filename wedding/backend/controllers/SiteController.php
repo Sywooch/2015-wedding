@@ -70,29 +70,56 @@ class SiteController extends Controller
         //return $this->render('about');
     }
     
+//    public function actionLogin()
+//    {
+//        if (!\Yii::$app->user->isGuest) {
+//            return $this->goHome();
+//        }
+//
+//        $model = new LoginForm();
+//        $user = new User();
+//        
+//        if ($model->load(Yii::$app->request->post()) &&$model->login()) {
+//            
+//            
+//            
+//            
+//          
+//                var_dump($model);
+//           
+//                $session = Yii::$app->session;
+//               // var_dump($user->getInfobyUsername($model->username));
+//               $session['username'] = $model->username;
+//                $session['id_user'] = $user->getInfobyUsername($model->username)->id;
+//                $session['type_user'] = $user->getInfobyUsername($model->username)->type_user;
+//                
+//            
+//                return $this->goBack();
+//            
+//            
+//        } else {
+//            return $this->render('login', [
+//                'model' => $model,
+//            ]);
+//        }
+//    }
+    
     public function actionLogin()
     {
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-
-        $model = new LoginForm();
-        $user = new User();
         
-        if ($model->load(Yii::$app->request->post()) ) {
+        
+        $user = new User();
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
             
-            
-            
-           // var_dump($model);
-            if($model->login()){
-           //var_dump($model->username);
-                $session = Yii::$app->session;
-               // var_dump($user->getInfobyUsername($model->username));
+             $session = Yii::$app->session;
+//               // var_dump($user->getInfobyUsername($model->username));
                $session['username'] = $model->username;
                 $session['id_user'] = $user->getInfobyUsername($model->username)->id;
                 $session['type_user'] = $user->getInfobyUsername($model->username)->type_user;
-                
-            }
             return $this->goBack();
         } else {
             return $this->render('login', [
@@ -100,7 +127,6 @@ class SiteController extends Controller
             ]);
         }
     }
-    
     public function actionSignup()
     {
         $model = new SignupForm();
