@@ -286,13 +286,23 @@ class UserController extends Controller
         if(isset($session['username'])&&($session['type_user']==0||$session['id_user']==$id)){
         
             $model = $this->findModel($id);
-
+            
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
-                return $this->render('update', [
+                if($model->type_user==0){
+                    return $this->render('update_admin', [
+                        'model' => $model,
+                    ]);
+                }else if($model->type_user==1){
+                    return $this->render('update_customer', [
+                        'model' => $model,
+                    ]);
+                }else {
+                    return $this->render('update', [
                     'model' => $model,
-                ]);
+                     ]);
+                }
             }
         }else return $this->goHome ();
     }
