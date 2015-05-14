@@ -186,11 +186,9 @@ class DressController extends Controller
         
         }else $test['imgs']= []; 
         $test['title'] = $id;
-        //$model->find()->all();
+
         return $this->render('viewid',$test);
-//        echo '<pre>';
-//       // print_r($img);
-//        echo '</pre>';
+
         
     }
     

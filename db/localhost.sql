@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 12, 2015 at 10:53 AM
+-- Generation Time: May 14, 2015 at 08:35 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -23,31 +23,77 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `album`
+--
+
+CREATE TABLE IF NOT EXISTS `album` (
+  `id_album` int(11) NOT NULL AUTO_INCREMENT,
+  `id_contract` int(11) NOT NULL,
+  `url_psd` varchar(350) COLLATE utf32_unicode_ci DEFAULT NULL,
+  `numpage` int(11) NOT NULL,
+  `time_complete` datetime DEFAULT NULL,
+  `url_folder` int(11) DEFAULT NULL,
+  `rate` bigint(20) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_album`),
+  KEY `id_customer` (`id_contract`),
+  KEY `id_contract` (`id_contract`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci AUTO_INCREMENT=18 ;
+
+--
+-- Dumping data for table `album`
+--
+
+INSERT INTO `album` (`id_album`, `id_contract`, `url_psd`, `numpage`, `time_complete`, `url_folder`, `rate`, `status`) VALUES
+(13, 17, NULL, 40, NULL, NULL, NULL, 0),
+(14, 18, NULL, 30, NULL, NULL, NULL, 0),
+(15, 19, NULL, 15, NULL, NULL, NULL, 0),
+(16, 20, NULL, 35, NULL, NULL, NULL, 0),
+(17, 21, NULL, 35, NULL, NULL, NULL, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ambience`
 --
 
 CREATE TABLE IF NOT EXISTS `ambience` (
   `id_local_amb` int(11) NOT NULL AUTO_INCREMENT,
-  `id_local` int(11) NOT NULL,
+  `id_local` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `name_amb` varchar(200) COLLATE utf32_unicode_ci NOT NULL,
   `info_amb` text COLLATE utf32_unicode_ci NOT NULL,
   `avatar` varchar(350) COLLATE utf32_unicode_ci NOT NULL,
   `status` int(1) NOT NULL,
   PRIMARY KEY (`id_local_amb`),
-  KEY `id_local` (`id_local`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci AUTO_INCREMENT=7 ;
+  KEY `id_local` (`id_local`),
+  KEY `id_local_2` (`id_local`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `ambience`
+-- Table structure for table `bigimg`
 --
 
-INSERT INTO `ambience` (`id_local_amb`, `id_local`, `name_amb`, `info_amb`, `avatar`, `status`) VALUES
-(1, 1, 'Nha xac', 'ten ten ten', 'uploads/1428284204615198659501.jpg', 1),
-(2, 1, 'Khu nhà cao tầng', 'phong cách hoang sơ\r\nĐẹp vờ lờ', 'uploads/142830585948619767959.jpg', 1),
-(3, 1, 'Khu nhà cao tầng 12', 'adas', 'uploads/142830593916942606885.png', 1),
-(4, 1, 'Chung cư phú Mỹ Hưng', 'đẹp vãi', 'uploads/1428306018515345282530.jpg', 1),
-(5, 2, 'hồ đá 1', '1213123', 'uploads/142830673613290199290.jpg', 1),
-(6, 2, 'Đền Hùng quận 9', 'Qua nhiều ngàn năm dựng nước và giữ nước, Việt Nam có rất nhiều di tích lịch sử và công trình văn hóa quý báu tiêu biểu cho truyền thống đấu tranh kiên cường của các thế hệ người VIệt Nam để bảo tồn và phát triển bản sắc dân tộc.\r\n\r\nThế nhưng các di tích lịch sử và công trình văn hóa của đất nước nằm trải dài từ Bắc đến Nam không phải ai cũng có điều kiện đến được; cho nên việc xây dựng và thể hiện những cột mốc lịch sử và văn hóa dân tộc ở một địa điểm tương đối tập trung là rất cần thiết cho việc giáo dục, phát huy truyền thống dân tộc và tạo điều kiện giao lưu văn hóa trong nước, giới thiệu văn hóa Việt Nam với nước ngoài.....', '', 1);
+CREATE TABLE IF NOT EXISTS `bigimg` (
+  `id_contract` int(11) NOT NULL,
+  `id_img` int(11) DEFAULT NULL,
+  `size` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  KEY `id_contract` (`id_contract`,`id_img`,`size`),
+  KEY `id_img` (`id_img`),
+  KEY `size` (`size`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `bigimg`
+--
+
+INSERT INTO `bigimg` (`id_contract`, `id_img`, `size`) VALUES
+(17, NULL, '60x90'),
+(18, NULL, '60x90'),
+(19, NULL, '50x75'),
+(20, NULL, '60x90'),
+(21, NULL, '60x90');
 
 -- --------------------------------------------------------
 
@@ -58,7 +104,7 @@ INSERT INTO `ambience` (`id_local_amb`, `id_local`, `name_amb`, `info_amb`, `ava
 CREATE TABLE IF NOT EXISTS `contract` (
   `id_contract` int(11) NOT NULL AUTO_INCREMENT,
   `id_user` int(11) NOT NULL,
-  `id_local` int(11) NOT NULL,
+  `id_local` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `start_time` date NOT NULL,
   `end_time` date DEFAULT NULL,
   `create_day` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -69,7 +115,9 @@ CREATE TABLE IF NOT EXISTS `contract` (
   `timephoto` date DEFAULT NULL,
   `timeadd` int(11) NOT NULL,
   `timecomplete` datetime DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
+  `have_album` int(11) DEFAULT '0',
+  `total_time` double NOT NULL DEFAULT '0',
+  `status` int(11) DEFAULT '1',
   PRIMARY KEY (`id_contract`),
   KEY `id_user` (`id_user`),
   KEY `id_contract` (`id_contract`),
@@ -77,19 +125,18 @@ CREATE TABLE IF NOT EXISTS `contract` (
   KEY `id_user_2` (`id_user`),
   KEY `id_contract_3` (`id_contract`),
   KEY `id_local` (`id_local`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=22 ;
 
 --
 -- Dumping data for table `contract`
 --
 
-INSERT INTO `contract` (`id_contract`, `id_user`, `id_local`, `start_time`, `end_time`, `create_day`, `total`, `payment1`, `payment2`, `payment3`, `timephoto`, `timeadd`, `timecomplete`, `status`) VALUES
-(2, 1, 1, '2015-04-28', '2015-04-16', '2015-04-08 15:48:26', NULL, '2015-04-07', '2015-04-14', '2015-04-09', '2015-04-09', 1, '0000-00-00 00:00:00', 1),
-(3, 1, 1, '2015-04-28', '2015-04-16', '2015-04-08 16:21:05', NULL, '2015-04-07', '2015-04-14', '2015-04-09', '2015-04-09', 1, '0000-00-00 00:00:00', 1),
-(4, 1, 1, '2015-04-01', '2015-04-08', '2015-04-08 16:35:12', 1, '2015-04-06', '2015-04-01', NULL, '2015-04-08', 2, '0000-00-00 00:00:00', 1),
-(5, 1, 1, '2015-04-28', '2015-05-05', '2015-04-08 17:12:11', NULL, '2015-04-21', NULL, NULL, '2015-04-07', 2, '0000-00-00 00:00:00', 1),
-(6, 1, 1, '2015-04-29', '2015-05-05', '2015-04-08 17:13:18', 1, '2015-04-24', NULL, NULL, NULL, 1, '0000-00-00 00:00:00', 1),
-(7, 1, 1, '2015-04-29', '2015-05-05', '2015-04-08 17:14:47', 1, '2015-04-24', NULL, NULL, NULL, 1, '0000-00-00 00:00:00', 1);
+INSERT INTO `contract` (`id_contract`, `id_user`, `id_local`, `start_time`, `end_time`, `create_day`, `total`, `payment1`, `payment2`, `payment3`, `timephoto`, `timeadd`, `timecomplete`, `have_album`, `total_time`, `status`) VALUES
+(17, 11, 'L1429634734', '2015-05-23', '2015-05-26', '2015-05-06 11:46:05', 368937413, '2015-05-23', NULL, NULL, NULL, 0, NULL, 0, 3, 1),
+(18, 13, 'L1429634734', '2015-05-10', '2015-05-13', '2015-05-06 22:37:34', 38970788, '2015-05-23', NULL, NULL, NULL, 0, NULL, 0, 3, 1),
+(19, 5, 'L1429606564', '2015-05-23', '2015-05-28', '2015-05-13 00:50:04', 16750945, '2015-05-23', NULL, NULL, NULL, 0, NULL, 0, 5, 1),
+(20, 7, 'L1429634759', '2015-05-04', '2015-05-05', '2015-05-13 00:58:58', 5950400, '2015-05-04', NULL, NULL, NULL, 0, NULL, 0, 1, 1),
+(21, 11, 'L1429606564', '2015-06-10', '2015-06-15', '2015-05-13 01:00:51', 17950945, '2015-06-10', NULL, NULL, NULL, 0, NULL, 0, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -98,7 +145,7 @@ INSERT INTO `contract` (`id_contract`, `id_user`, `id_local`, `start_time`, `end
 --
 
 CREATE TABLE IF NOT EXISTS `dress` (
-  `id_dress` int(11) NOT NULL AUTO_INCREMENT,
+  `id_dress` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `name_dress` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `avatar` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `type_dress` int(11) NOT NULL,
@@ -107,21 +154,22 @@ CREATE TABLE IF NOT EXISTS `dress` (
   `rate_sale` bigint(20) NOT NULL,
   `status` int(11) NOT NULL,
   PRIMARY KEY (`id_dress`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `dress`
 --
 
 INSERT INTO `dress` (`id_dress`, `name_dress`, `avatar`, `type_dress`, `info_dress`, `rate_hire`, `rate_sale`, `status`) VALUES
-(1, 'Áo cưới Phong cách châu âu', 'uploads/1428284204615198659501.jpg', 1, 'mang thương hiệu châu Âu', 100000, 1000, 1),
-(2, 'Áo cưới Phong cách châu âu 123', 'uploads/1428369098574548093256.jpg', 1, '123', 12, 12, 1),
-(3, 'Áo cưới Phong cách châu âu 123', 'uploads/1428069165428638082777jpg', 1, '123', 12, 12, 1),
-(4, 'Áo cưới Phong cách châu âu235', 'uploads/1428246186847715859733.jpg', 123, '123', 123, 123, 1),
-(5, 'Áo cưới Phong cách châu âu', 'uploads/142822328933956723834.jpg', 1, '1231', 1000, 1, 1),
-(6, 'Áo cưới Phong cách châu âu a', 'uploads/14281627654609623678.jpg', 1, 'ád', 12, 12, 1),
-(7, 'Phong cao Châu Phi', 'uploads/1428163241492973008073.jpg', 1, '12', 1, 1, 1),
-(8, 'Phong cao Châu Phi', 'uploads/1428163259780041227475.jpg', 1, '12', 1, 1, 1);
+('D1429595409', 'Phong cách cổ điển', 'uploads/1429595409159161461832.jpg', 1, '1', 1000000, 1000000, 1),
+('D1429605821', 'Áo cưới Phong cách châu âu 123', 'uploads/1429605821943542836411.jpg', 1, '1', 1000000, 1000000, 1),
+('D1429607851', 'Áo cưới ngắn cá tính', 'uploads/1429607851392487899522.jpg', 1, '1', 1000000, 1000000, 1),
+('D1429632433', 'Áo cưới Phong cách châu âu 123', 'uploads/142963243358671741637.jpg', 1, '1', 1000000, 12121212, 1),
+('D1429633073', 'Áo cưới Phong cách châu âu235', 'uploads/1429633073148455647617.jpg', 1, '1', 121212121, 10000012, 1),
+('D1429634405', 'Áo cưới Phong cách châu âuègfegf', 'uploads/1429634405170470153188.jpg', 1, 'q', 1000000, 1000000, 1),
+('D1429634456', 'Áo cưới Phong cách châu âu23532', 'uploads/1429634456951389266678.jpg', 1, '2', 12123234, 12312334, 1),
+('D1429634584', 'Phong cách cổ điển 12', 'uploads/142963458497246566350.jpg', 1, '1', 12, 12, 1),
+('D1431522087', 'Áo cưới chữ U', 'uploads/1431522087515093863961.jpg', 1, 'áo cưới chữ U', 1000000, 1000000, 1);
 
 -- --------------------------------------------------------
 
@@ -130,11 +178,32 @@ INSERT INTO `dress` (`id_dress`, `name_dress`, `avatar`, `type_dress`, `info_dre
 --
 
 CREATE TABLE IF NOT EXISTS `dresscontract` (
-  `id_dress` int(11) NOT NULL,
+  `id_dress` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `id_contract` int(11) NOT NULL,
   KEY `id_dress` (`id_dress`),
-  KEY `id_contract` (`id_contract`)
+  KEY `id_contract` (`id_contract`),
+  KEY `id_dress_2` (`id_dress`),
+  KEY `id_contract_2` (`id_contract`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `dresscontract`
+--
+
+INSERT INTO `dresscontract` (`id_dress`, `id_contract`) VALUES
+('D1429633073', 17),
+('D1429634405', 17),
+('D1429634456', 18),
+('D1429634584', 18),
+('D1429595409', 19),
+('D1429605821', 19),
+('D1429607851', 19),
+('D1429595409', 20),
+('D1429605821', 20),
+('D1429607851', 20),
+('D1429595409', 21),
+('D1429605821', 21),
+('D1429607851', 21);
 
 -- --------------------------------------------------------
 
@@ -149,77 +218,65 @@ CREATE TABLE IF NOT EXISTS `img` (
   `status` int(11) DEFAULT '1',
   PRIMARY KEY (`id_img`),
   KEY `url` (`url`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=119 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=191 ;
 
 --
 -- Dumping data for table `img`
 --
 
 INSERT INTO `img` (`id_img`, `url`, `title`, `status`) VALUES
-(55, 'uploads/dress/1428290693999451008428.jpg', NULL, 1),
-(56, 'uploads/dress/1428290693351737323277.jpg', NULL, 1),
-(57, 'uploads/dress/142829069479001529108.jpg', NULL, 1),
-(58, 'uploads/dress/1428290694885842266787.jpg', NULL, 1),
-(59, 'uploads/dress/1428290694630852772096.jpg', NULL, 1),
-(60, 'uploads/dress/14282906942274520974.jpg', NULL, 1),
-(61, 'uploads/dress/1428290695119677901931.jpg', NULL, 1),
-(62, 'uploads/dress/142829069593866215410.jpg', NULL, 1),
-(63, 'uploads/local/1428290940331515225314.jpg', NULL, 1),
-(64, 'uploads/local/1428290940346598878391.jpg', NULL, 1),
-(65, 'uploads/local/1428290940214840749407.jpg', NULL, 1),
-(66, 'uploads/local/1428290940672586528492.jpg', NULL, 1),
-(67, 'uploads/local/1428290940406349614510.jpg', NULL, 1),
-(68, 'uploads/local/1428290940265510446537.jpg', NULL, 1),
-(69, 'uploads/local/1428290940441175032537.jpg', NULL, 1),
-(70, 'uploads/local/1428290940989180438972.jpg', NULL, 1),
-(71, 'uploads/dress/1428375875144619413831.jpg', NULL, 1),
-(72, 'uploads/dress/1428375875843164078176.jpg', NULL, 1),
-(73, 'uploads/dress/1428375875647773891034.jpg', NULL, 1),
-(74, 'uploads/dress/1428375875821942596250.png', NULL, 1),
-(75, 'uploads/dress/1428375876501780084365.jpg', NULL, 1),
-(76, 'uploads/dress/1428375876845130438480.jpg', NULL, 1),
-(77, 'uploads/dress/1428375876898324294800.jpg', NULL, 1),
-(78, 'uploads/dress/1428375877557353001622.jpg', NULL, 1),
-(79, 'uploads/dress/142837587749752255504.jpg', NULL, 1),
-(80, 'uploads/dress/1428375878446832558374.jpg', NULL, 1),
-(81, 'uploads/dress/1428375878678244034328.jpg', NULL, 1),
-(82, 'uploads/dress/142837587895513219866.jpg', NULL, 1),
-(83, 'uploads/dress/1428375878788139086311.jpg', NULL, 1),
-(84, 'uploads/dress/1428375878429386038170.jpg', NULL, 1),
-(85, 'uploads/dress/1428375878393661236180.jpg', NULL, 1),
-(86, 'uploads/dress/1428375878967813868793.jpg', NULL, 1),
-(87, 'uploads/dress/1428377314682873281758.jpg', NULL, 1),
-(88, 'uploads/dress/14283773157623454764.jpg', NULL, 1),
-(89, 'uploads/dress/142837731519383073671.jpg', NULL, 1),
-(90, 'uploads/dress/1428377315949490518754.jpg', NULL, 1),
-(91, 'uploads/dress/1428377315491532039035.jpg', NULL, 1),
-(92, 'uploads/dress/142837731514876246581.jpg', NULL, 1),
-(93, 'uploads/dress/142837731528286681234.jpg', NULL, 1),
-(94, 'uploads/dress/1428377315931563675537.jpg', NULL, 1),
-(95, 'uploads/dress/142837731561856091589.jpg', NULL, 1),
-(96, 'uploads/dress/1428377315890539136597.jpg', NULL, 1),
-(97, 'uploads/dress/1428377315143239726857.jpg', NULL, 1),
-(98, 'uploads/dress/1428377316552298352926.jpg', NULL, 1),
-(99, 'uploads/dress/1428377316345225511732.jpg', NULL, 1),
-(100, 'uploads/dress/1428377316295471382374.jpg', NULL, 1),
-(101, 'uploads/dress/1428377317806562446350.jpg', NULL, 1),
-(102, 'uploads/dress/1428377317467847679983.jpg', NULL, 1),
-(103, 'uploads/local/1428377406276293736626.jpg', NULL, 1),
-(104, 'uploads/local/1428377406962620482159.jpg', NULL, 1),
-(105, 'uploads/local/1428377406852016212720.jpg', NULL, 1),
-(106, 'uploads/local/1428377406609960184614.jpg', NULL, 1),
-(107, 'uploads/local/1428377406196746283810.jpg', NULL, 1),
-(108, 'uploads/local/1428377406954019766184.jpg', NULL, 1),
-(109, 'uploads/local/1428377406158223369934.jpg', NULL, 1),
-(110, 'uploads/local/1428377406420540223941.jpg', NULL, 1),
-(111, 'uploads/dress/1428385010893856319433.jpg', NULL, 1),
-(112, 'uploads/dress/1428385011364860956367.jpg', NULL, 1),
-(113, 'uploads/dress/142838501177913115576.jpg', NULL, 1),
-(114, 'uploads/dress/14283850114431917660.jpg', NULL, 1),
-(115, 'uploads/dress/1428385012956962976324.jpg', NULL, 1),
-(116, 'uploads/dress/1428385012162752617365.jpg', NULL, 1),
-(117, 'uploads/dress/142838501287331554840.jpg', NULL, 1),
-(118, 'uploads/dress/1428385012208535288178.jpg', NULL, 1);
+(139, 'uploads/dress/1429605834763722965676.jpg', NULL, 1),
+(140, 'uploads/dress/142960583410369523277.jpg', NULL, 1),
+(141, 'uploads/dress/142960583556467403622.jpg', NULL, 1),
+(142, 'uploads/dress/1429605835900429393041.jpg', NULL, 1),
+(143, 'uploads/dress/142960583533364139745.jpg', NULL, 1),
+(144, 'uploads/dress/1429605835545747813444.jpg', NULL, 1),
+(145, 'uploads/dress/1429605835324980879643.jpg', NULL, 1),
+(146, 'uploads/dress/1429605835903456419371.jpg', NULL, 1),
+(147, 'uploads/dress/142960631976999713320.jpg', NULL, 1),
+(148, 'uploads/dress/1429606319955583279349.jpg', NULL, 1),
+(149, 'uploads/dress/1429606319872086892114.jpg', NULL, 1),
+(150, 'uploads/dress/1429606319784983185538.jpg', NULL, 1),
+(151, 'uploads/dress/1429606319682164074303.jpg', NULL, 1),
+(152, 'uploads/dress/142960632085402131961.jpg', NULL, 1),
+(153, 'uploads/dress/1429606320386211312736.jpg', NULL, 1),
+(154, 'uploads/dress/1429606320244991831750.jpg', NULL, 1),
+(155, 'uploads/local/1429606589195930716038.jpg', NULL, 1),
+(156, 'uploads/local/1429606589674340188163.jpg', NULL, 1),
+(157, 'uploads/local/142960658991437301839.jpg', NULL, 1),
+(158, 'uploads/local/1429606589128172277590.jpg', NULL, 1),
+(159, 'uploads/local/1429606589260958664980.jpg', NULL, 1),
+(160, 'uploads/local/142960659082588517351.jpg', NULL, 1),
+(161, 'uploads/local/1429606590208786726748.jpg', NULL, 1),
+(162, 'uploads/local/1429606590817832399769.jpg', NULL, 1),
+(163, 'uploads/dress/1429630559928665543650.jpg', NULL, 1),
+(164, 'uploads/dress/1429630560511128735733.jpg', NULL, 1),
+(165, 'uploads/dress/142963056097297245426.jpg', NULL, 1),
+(166, 'uploads/dress/1429630560207971158976.png', NULL, 1),
+(167, 'uploads/dress/1429630560538152811747.jpg', NULL, 1),
+(168, 'uploads/dress/14296305607051617625.jpg', NULL, 1),
+(169, 'uploads/dress/1429630560456471376248.jpg', NULL, 1),
+(170, 'uploads/dress/1429630561600115016423.jpg', NULL, 1),
+(171, 'uploads/dress/1430796920634376305248.jpg', NULL, 1),
+(172, 'uploads/dress/1430796920615762788703.jpg', NULL, 1),
+(173, 'uploads/dress/143079692078306961740.jpg', NULL, 1),
+(174, 'uploads/dress/143079692022567835686.jpg', NULL, 1),
+(175, 'uploads/dress/1430796920616829775045.jpg', NULL, 1),
+(176, 'uploads/dress/143079692033117998554.jpg', NULL, 1),
+(177, 'uploads/dress/14307969206552761667.jpg', NULL, 1),
+(178, 'uploads/dress/143079692096756243223.jpg', NULL, 1),
+(179, 'uploads/dress/143079692026152455.jpg', NULL, 1),
+(180, 'uploads/dress/1430796920888472776293.jpg', NULL, 1),
+(181, 'uploads/dress/1430796920892789323091.jpg', NULL, 1),
+(182, 'uploads/dress/1430796921816787947554.jpg', NULL, 1),
+(183, 'uploads/dress/1431522112100790422689.jpg', NULL, 1),
+(184, 'uploads/dress/1431522112889014351369.jpg', NULL, 1),
+(185, 'uploads/dress/1431522112955376929033.jpg', NULL, 1),
+(186, 'uploads/dress/1431522112500590543896.jpg', NULL, 1),
+(187, 'uploads/dress/1431522112348458888379.jpg', NULL, 1),
+(188, 'uploads/dress/143152211294194804954.jpg', NULL, 1),
+(189, 'uploads/dress/1431522113971672636705.jpg', NULL, 1),
+(190, 'uploads/dress/143152211381422516300.jpg', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -229,7 +286,7 @@ INSERT INTO `img` (`id_img`, `url`, `title`, `status`) VALUES
 
 CREATE TABLE IF NOT EXISTS `imgdress` (
   `id_img` int(11) NOT NULL,
-  `id_dress` int(11) NOT NULL,
+  `id_dress` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   KEY `id_img` (`id_img`,`id_dress`),
   KEY `id_dress` (`id_dress`),
   KEY `id_img_2` (`id_img`),
@@ -243,54 +300,42 @@ CREATE TABLE IF NOT EXISTS `imgdress` (
 --
 
 INSERT INTO `imgdress` (`id_img`, `id_dress`) VALUES
-(55, 1),
-(56, 1),
-(57, 1),
-(58, 1),
-(59, 1),
-(60, 1),
-(61, 1),
-(62, 1),
-(71, 2),
-(72, 2),
-(73, 2),
-(74, 2),
-(75, 2),
-(76, 2),
-(77, 2),
-(78, 2),
-(79, 2),
-(80, 2),
-(81, 2),
-(82, 2),
-(83, 2),
-(84, 2),
-(85, 2),
-(86, 2),
-(87, 1),
-(88, 1),
-(89, 1),
-(90, 1),
-(91, 1),
-(92, 1),
-(93, 1),
-(94, 1),
-(95, 1),
-(96, 1),
-(97, 1),
-(98, 1),
-(99, 1),
-(100, 1),
-(101, 1),
-(102, 1),
-(111, 1),
-(112, 1),
-(113, 1),
-(114, 1),
-(115, 1),
-(116, 1),
-(117, 1),
-(118, 1);
+(147, 'D1429605821'),
+(148, 'D1429605821'),
+(149, 'D1429605821'),
+(150, 'D1429605821'),
+(151, 'D1429605821'),
+(152, 'D1429605821'),
+(153, 'D1429605821'),
+(154, 'D1429605821'),
+(163, 'D1429595409'),
+(164, 'D1429595409'),
+(165, 'D1429595409'),
+(166, 'D1429595409'),
+(167, 'D1429595409'),
+(168, 'D1429595409'),
+(169, 'D1429595409'),
+(170, 'D1429595409'),
+(171, 'D1429633073'),
+(172, 'D1429633073'),
+(173, 'D1429633073'),
+(174, 'D1429633073'),
+(175, 'D1429633073'),
+(176, 'D1429633073'),
+(177, 'D1429633073'),
+(178, 'D1429633073'),
+(179, 'D1429633073'),
+(180, 'D1429633073'),
+(181, 'D1429633073'),
+(182, 'D1429633073'),
+(183, 'D1431522087'),
+(184, 'D1431522087'),
+(185, 'D1431522087'),
+(186, 'D1431522087'),
+(187, 'D1431522087'),
+(188, 'D1431522087'),
+(189, 'D1431522087'),
+(190, 'D1431522087');
 
 -- --------------------------------------------------------
 
@@ -299,7 +344,7 @@ INSERT INTO `imgdress` (`id_img`, `id_dress`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `imglocal` (
-  `id_local` int(11) NOT NULL,
+  `id_local` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `id_img` int(11) NOT NULL,
   KEY `id_local` (`id_local`,`id_img`),
   KEY `id_img` (`id_img`)
@@ -310,22 +355,14 @@ CREATE TABLE IF NOT EXISTS `imglocal` (
 --
 
 INSERT INTO `imglocal` (`id_local`, `id_img`) VALUES
-(1, 63),
-(1, 64),
-(1, 65),
-(1, 66),
-(1, 67),
-(1, 68),
-(1, 69),
-(1, 70),
-(2, 103),
-(2, 104),
-(2, 105),
-(2, 106),
-(2, 107),
-(2, 108),
-(2, 109),
-(2, 110);
+('L1429606564', 155),
+('L1429606564', 156),
+('L1429606564', 157),
+('L1429606564', 158),
+('L1429606564', 159),
+('L1429606564', 160),
+('L1429606564', 161),
+('L1429606564', 162);
 
 -- --------------------------------------------------------
 
@@ -347,7 +384,7 @@ CREATE TABLE IF NOT EXISTS `imgtool` (
 --
 
 CREATE TABLE IF NOT EXISTS `localtion` (
-  `id_local` int(11) NOT NULL AUTO_INCREMENT,
+  `id_local` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `name_local` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `info_local` text COLLATE utf8_unicode_ci NOT NULL,
   `rate` int(11) NOT NULL,
@@ -355,15 +392,40 @@ CREATE TABLE IF NOT EXISTS `localtion` (
   `timework` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   PRIMARY KEY (`id_local`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `localtion`
 --
 
 INSERT INTO `localtion` (`id_local`, `name_local`, `info_local`, `rate`, `avatar`, `timework`, `status`) VALUES
-(1, 'Phú Mỹ Hưng Quận 7', '123', 10000, 'uploads/1428287319217738861292.jpg', 5, 1),
-(2, 'Hồ Đá Thủ Đức', 'Ảnh cưới ở Hồ Đá ở Thủ Đức luôn được khá nhiều cặp đôi yêu thích nhờ khung cảnh thiên nhiên bình dị lý tưởng cho những đôi uyên ương yêu cảnh vật tự nhiên\r\n\r\nHồ Đá ở Thủ Đức được biết đến là một nơi có cảnh quan thiên nhiên bình dị với những hồ nước nguyên sơ mộc mạc, những đồi cỏ lau trắng thơ mộng, chính vì thế Hồ Đá luôn là một địa điểm chụp ảnh cưới lý tưởng được đông đảo cô dâu chú rể yêu thích.\r\n\r\nCùng Cưới Hỏi Việt Nam xem qua những thước ảnh cưới thật đẹp thật bình dị tại Hồ Đá Thủ Đức được chụp bởi studio áo cưới Estella Bridal và studio T Wedding', 25000, 'uploads/142830665722867745101.jpg', 3, 1);
+('L1429606564', 'Phú Mỹ Hưng Quận 7', 'Phú Mỹ Hưng Quận 7', 9500000, 'uploads/1429606564224921152356.jpg', 5, 1),
+('L1429634734', 'Ảnh cưới thác Giang Điền (Trảng Bom - Đồng Nai)', '1', 9500000, 'uploads/1429634734901451311129.jpg', 3, 1),
+('L1429634759', 'Hồ Đá Thủ Đức', '1', 1000012, 'uploads/142963475919661195557.jpg', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `makeupcontract`
+--
+
+CREATE TABLE IF NOT EXISTS `makeupcontract` (
+  `id_user` int(11) NOT NULL,
+  `id_contract` int(11) NOT NULL,
+  KEY `id_user` (`id_user`,`id_contract`),
+  KEY `id_contract` (`id_contract`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `makeupcontract`
+--
+
+INSERT INTO `makeupcontract` (`id_user`, `id_contract`) VALUES
+(16, 18),
+(16, 19),
+(16, 20),
+(16, 21),
+(20, 17);
 
 -- --------------------------------------------------------
 
@@ -388,6 +450,77 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `photocontract`
+--
+
+CREATE TABLE IF NOT EXISTS `photocontract` (
+  `id_user` int(11) NOT NULL,
+  `id_contract` int(11) NOT NULL,
+  KEY `id_user` (`id_user`),
+  KEY `id_contract` (`id_contract`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `photocontract`
+--
+
+INSERT INTO `photocontract` (`id_user`, `id_contract`) VALUES
+(17, 17),
+(17, 18),
+(10, 19),
+(18, 20),
+(10, 21);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ratealbum`
+--
+
+CREATE TABLE IF NOT EXISTS `ratealbum` (
+  `page_num` int(11) NOT NULL,
+  `rate` bigint(20) NOT NULL,
+  PRIMARY KEY (`page_num`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `ratealbum`
+--
+
+INSERT INTO `ratealbum` (`page_num`, `rate`) VALUES
+(15, 1000000),
+(20, 1200000),
+(25, 1400000),
+(30, 1650000),
+(35, 2000000),
+(40, 2300000),
+(45, 2500000),
+(50, 2750000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sizebigimg`
+--
+
+CREATE TABLE IF NOT EXISTS `sizebigimg` (
+  `size` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `rate` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`size`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `sizebigimg`
+--
+
+INSERT INTO `sizebigimg` (`size`, `rate`) VALUES
+('50x75', 750000),
+('60x90', 950000),
+('70x110', 1300000);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `staffcontract`
 --
 
@@ -397,6 +530,27 @@ CREATE TABLE IF NOT EXISTS `staffcontract` (
   KEY `id_user` (`id_user`,`id_contract`),
   KEY `id_contract` (`id_contract`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `status_album`
+--
+
+CREATE TABLE IF NOT EXISTS `status_album` (
+  `status_album` int(11) NOT NULL,
+  `name_status` varchar(50) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `status_album`
+--
+
+INSERT INTO `status_album` (`status_album`, `name_status`) VALUES
+(0, 'Chưa làm gì'),
+(1, 'Tạo file psd mẫu'),
+(3, 'Phòng In'),
+(4, 'Hoàn tất');
 
 -- --------------------------------------------------------
 
@@ -459,8 +613,11 @@ CREATE TABLE IF NOT EXISTS `type_user` (
 --
 
 INSERT INTO `type_user` (`id_type`, `name_type`) VALUES
+(0, 'Admin'),
 (1, 'Customer'),
-(2, 'Staff');
+(2, 'Photo'),
+(3, 'Make Up'),
+(4, 'Assistant');
 
 -- --------------------------------------------------------
 
@@ -476,7 +633,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password_reset_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `type_user` int(11) NOT NULL,
   `range_user` int(11) DEFAULT NULL,
-  `rate_user` int(11) DEFAULT NULL,
+  `rate_user` bigint(11) DEFAULT '0',
   `fullname` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
   `fullname2` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tell` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
@@ -491,33 +648,59 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=28 ;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `type_user`, `range_user`, `rate_user`, `fullname`, `fullname2`, `tell`, `tell2`, `email`, `email2`, `info_user`, `address`, `avatar`, `have_contract`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'admin', '', '$2y$13$0.jOKjGgjy8u5wdcaQHJfOykF/r3jJrnhEfhEKPDjqtKrxGXAmsfG', NULL, 1, NULL, NULL, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.com', NULL, '', '', '', 1, 10, 1427982490, 1427982490),
-(4, 'nhannguyen', 'Z79uTWbLCj6366cqfdw8tiDHLq5vrzsK', '$2y$13$E9j5kmFiCOWJKvnxIK0R1uNgvNu78jtyRASY.xf3uQ4RZbnfE4J02', NULL, 0, NULL, NULL, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.coms', NULL, '', '', '', 0, 10, 1428396746, 1428396746),
-(5, 'admin12', 'Z79uTWbLCj6366cqfdw8tiDHLq5vrzsK', '$2y$13$E9j5kmFiCOWJKvnxIK0R1uNgvNu78jtyRASY.xf3uQ4RZbnfE4J02', '', 1, 1, NULL, '1', '', '1', '', 'nhannguyen@gmail.com221', '', '1', '1', '1', 0, 1, 1, 1),
-(6, 'nhannguyen12', 'Z79uTWbLCj6366cqfdw8tiDHLq5vrzsK', '$2y$13$E9j5kmFiCOWJKvnxIK0R1uNgvNu78jtyRASY.xf3uQ4RZbnfE4J02', NULL, 0, NULL, NULL, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.coms', NULL, '', '', '', 0, 10, 1428396746, 1428396746),
-(7, 'zetnhan', 'AX5JIdDt7feAWqQGQV0Me1xh3LSZvCwX', '$2y$13$Dy.iwUPP6eP3vsQrXT7K2OlKX9BXwhTUx3OqmXQrOMg05Y4FkJokm', NULL, 0, NULL, NULL, '', NULL, '', NULL, 'admin@gmail.com', NULL, '', '', '', 0, 10, 1428459152, 1428459152),
-(8, 'zetnhantest', 'qx2prxjPEZ9LBL_HK4j1QUQ64fyU8IA8', '$2y$13$0uohBHCYvCFa.j/1otrDe.wOcVwtdOiW0yRx5NMczUQtzV51CCJDi', NULL, 0, NULL, NULL, '', NULL, '', NULL, 'admin1@gmail.com', NULL, '', '', '', 0, 10, 1428459597, 1428459597),
-(9, 'nhannguyencs101', 'szLkGOvsZlBcY41o6CEWKLko6ske3GZ8', '$2y$13$v56oTdIBwGt3yy/6HPcbeew18A0./9p0FRRaB3L1LqTg57cb2GauW', NULL, 0, NULL, NULL, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.coms1', NULL, '', '', '', 0, 10, 1428462747, 1428462747),
-(10, 'zetnhan1234', 'hX5fbK2UazahwVxg7CJoT2WOV3NTGN0g', '$2y$13$r8jdfVDLm/cVYnMfGIcBROKcvUNTz37T0oT9U1W4EA7d81vmllboW', NULL, 0, NULL, NULL, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.com1231', NULL, '', '', '', 0, 10, 1428463965, 1428463965),
-(11, 'admin1@gmail.com', 'CFFWhRAjwjFv4OCdaF6jKsoL1v-kqDHd', '$2y$13$MCm1WMxGMS72xFLuazrpy.zC2oVzI3Onds1JdDiweJe65uwVnkSly', NULL, 1, NULL, NULL, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com12312313', NULL, '', '268 Lý thường kiệt', '', 0, 10, 1428464258, 1428464258),
-(12, 'znhan', '3ZZ1CTIA58Rs3pzA7L-Kdstr3h5Hicku', '$2y$13$2kWi7hRL2raO4um2jfK91OWPkZKMce6swOx5ua/jxkkj8Zayua5sW', NULL, 1, NULL, NULL, 'Nguyễn Văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com123123sd', NULL, 'Tao là customer', '268 Lý thường kiệt', '', 0, 10, 1428488501, 1428488501);
+(4, 'nhannguyen', 'Z79uTWbLCj6366cqfdw8tiDHLq5vrzsK', '$2y$13$E9j5kmFiCOWJKvnxIK0R1uNgvNu78jtyRASY.xf3uQ4RZbnfE4J02', NULL, 0, NULL, 100, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.coms', NULL, '', '', '', 0, 10, 1428396746, 1428396746),
+(5, 'admin12', 'Z79uTWbLCj6366cqfdw8tiDHLq5vrzsK', '$2y$13$E9j5kmFiCOWJKvnxIK0R1uNgvNu78jtyRASY.xf3uQ4RZbnfE4J02', '', 1, 1, 200, '1', '', '1', '', 'nhannguyen@gmail.com221', '', '1', '1', '1', 1, 1, 1, 1),
+(6, 'nhannguyen12', 'Z79uTWbLCj6366cqfdw8tiDHLq5vrzsK', '$2y$13$E9j5kmFiCOWJKvnxIK0R1uNgvNu78jtyRASY.xf3uQ4RZbnfE4J02', NULL, 0, NULL, 200, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.coms', NULL, '', '', '', 0, 10, 1428396746, 1428396746),
+(7, 'zetnhan', 'AX5JIdDt7feAWqQGQV0Me1xh3LSZvCwX', '$2y$13$Dy.iwUPP6eP3vsQrXT7K2OlKX9BXwhTUx3OqmXQrOMg05Y4FkJokm', NULL, 1, NULL, 210, '', NULL, '', NULL, 'admin@gmail.com', NULL, '', '', '', 1, 10, 1428459152, 1428459152),
+(8, 'zetnhantest', 'qx2prxjPEZ9LBL_HK4j1QUQ64fyU8IA8', '$2y$13$0uohBHCYvCFa.j/1otrDe.wOcVwtdOiW0yRx5NMczUQtzV51CCJDi', NULL, 0, NULL, 100, '', NULL, '', NULL, 'admin1@gmail.com', NULL, '', '', '', 0, 10, 1428459597, 1428459597),
+(9, 'nhannguyencs101', 'szLkGOvsZlBcY41o6CEWKLko6ske3GZ8', '$2y$13$v56oTdIBwGt3yy/6HPcbeew18A0./9p0FRRaB3L1LqTg57cb2GauW', NULL, 0, NULL, 150, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.coms1', NULL, '', '', '', 0, 10, 1428462747, 1428462747),
+(10, 'zetnhan1234', 'hX5fbK2UazahwVxg7CJoT2WOV3NTGN0g', '$2y$13$r8jdfVDLm/cVYnMfGIcBROKcvUNTz37T0oT9U1W4EA7d81vmllboW', NULL, 2, NULL, 89, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.com1231', NULL, '', '', '', 0, 10, 1428463965, 1428463965),
+(11, 'admin1@gmail.com', 'CFFWhRAjwjFv4OCdaF6jKsoL1v-kqDHd', '$2y$13$MCm1WMxGMS72xFLuazrpy.zC2oVzI3Onds1JdDiweJe65uwVnkSly', NULL, 1, NULL, 102, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com12312313', NULL, '', '268 Lý thường kiệt', '', 1, 10, 1428464258, 1428464258),
+(12, 'znhan', '3ZZ1CTIA58Rs3pzA7L-Kdstr3h5Hicku', '$2y$13$2kWi7hRL2raO4um2jfK91OWPkZKMce6swOx5ua/jxkkj8Zayua5sW', NULL, 1, NULL, 90, 'Nguyễn Văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com123123sd', NULL, 'Tao là customer', '268 Lý thường kiệt', '', 0, 10, 1428488501, 1428488501),
+(13, 'adminkeke', 'fU0lUEwuvp8wAjaQU4d9QZzX5PA6rf1A', '$2y$13$hGagIdidM/44HyyMbbhdDOosYTQtZGHqaIZGWI5lZ8XJM772Rj15i', NULL, 1, NULL, 125, 'Nguyễn văn Nhàn', NULL, '1', NULL, 'vannhan.nguyen0405@gmail.com1', NULL, '1', '1', '', 0, 10, 1428903072, 1428903072),
+(14, 'wtf', '-_Deuj3D57wNktce-lxWQqivlTuZ8nue', '$2y$13$zFMLAyyYBxU2nQ30ZbvAo.22kxjC7p7RcDmfKtsTfMka9w5g0ytiG', NULL, 2, NULL, 94, '1', NULL, '1', NULL, 'vannhan.nguyen0405@gmail.com11231', NULL, '12', '12', '', 0, 10, 1428903113, 1428903113),
+(15, 'nguyenvannhan', 'mKn70uztNfrblknx3fEnTtmgV2vbbD2y', '$2y$13$I9ec3n6XEX9c1ia5MS68ge9y8NMqj8fUzzi4m9avmL.9IFFY20Hyu', NULL, 1, NULL, 175, 'Nguyễn Văn Nhàn', NULL, '0938194492', NULL, '51002201@hcmut.edu.vn', NULL, 'hello', '268 Lý thường kiệt', '', 0, 10, 1428992062, 1428992062),
+(16, 'hoho', 'IRDYCBz0kp57Ht0SMu-2hDvXRV8Y-vQC', '$2y$13$lvtF5kb2ySjBQ/gdxtT04OZJrd/LRKWIzlJxoeLGPYvyMr1lNl5Jq', NULL, 3, NULL, 100, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com1212', NULL, '1', '268 Lý thường kiệt', '', 0, 10, 1429684226, 1429684226),
+(17, 'nhannguyen92', 'zFI0KfVUiM3GzouGTsLpOutpwPEyhUhP', '$2y$13$rnMnxZ3DJ3y8LDNEvrdeHOhzI8UNAYcqWKaofehs0mO0SlbsqY.JG', NULL, 2, NULL, 250, 'Nguyễn văn Nhàn', NULL, '1', NULL, 'vannhan.nguyen0405@gmail.com21', NULL, '1', '1', '', 0, 10, 1429686424, 1429686424),
+(18, 'nhannguyencs10', 'pu69cNXfoWnIsg2n0YM6CO8X5PV_Xwh1', '$2y$13$k.uildQVWJiUxwWiimavNO.PzBzHrFWPTy7g2rc9ba7My6QFDGDVG', NULL, 2, NULL, 300, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com132', NULL, '1', '1', '', 0, 10, 1429686477, 1429686477),
+(19, 'znznznzn', '7gb2QYK3bYhMKROEQNoK4iJSIEZ04OAe', '$2y$13$mblPPR4nEBXvPPyrfTprJOSX9B8NJ7ra4ML2CHCz5ZFDeOZH012wq', NULL, 1, NULL, 82, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com765432', NULL, '1', '268 Lý thường kiệt', '', 0, 10, 1430731898, 1430731898),
+(20, 'nhannguyen123', 'cjMMFr4dGI5bAgy6v7Zh0y0jnC2oi24Y', '$2y$13$qO9jJf48XjveX6wq6FwWB.8f/.8.6LF0ikQfS4C7EPyh8/VTciGry', NULL, 3, NULL, 100, 'Nguyễn Văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com12', NULL, '12', '268 Lý thường kiệt', '', 0, 10, 1430746652, 1430746652),
+(21, 'nhannguyencs1234', 'zXfHg7T38ZS4YnUfxEmfVL18WowJFduu', '$2y$13$lJx9lc1JV9/QZYffESAH6.rObWVW.0Qa.L3WVnzrbwKIgfZ5NUpwe', NULL, 2, NULL, 0, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com1234', NULL, 'I''m photograper', '268 Lý thường kiệt', '', 0, 10, 1431424733, 1431424733),
+(22, 'vannhan', 'OY9AkcDkAkcvWnu3PQ4x66JGgGFeygwT', '$2y$13$gLzTN.9HYaMFOiFYVQcrC.xiuiIwC3UOVYuLiJOGjrust37jFnQmW', NULL, 2, 1, 150000, 'Nguyễn Văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com21213', NULL, 'I am photograper', '268 Lý thường kiệt', '', 0, 10, 1431441917, 1431441917),
+(25, 'admintor', 'IfHLn0HrLiG5VaP_xLOPI4kQkjWVmFB7', '$2y$13$w8izNT0uR3F24QYsngoteuapXIqK9Eq8xe37G2f.haKgfZ0O0h/6S', NULL, 0, NULL, NULL, 'Nguyễn Văn Nhàn', NULL, '0938194492', NULL, '51002201@hcmut.edu.vn12', NULL, '1', '268 Lý thường kiệt', '', 0, 10, 1431572471, 1431572471),
+(26, '123456', 'IEdZYvMnXUelV5bGTSfKtesZXfpE-qtT', '$2y$13$rmQog1huU5uhY8imtRJSiu47KMBWvsNIvDt4jy3UxKNDn/hHhbmNe', NULL, 0, NULL, 0, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.com1223', NULL, '', '', '', 0, 10, 1431574784, 1431574784),
+(27, 'admin', 'IEdZYvMnXUelV5bGTSfKtesZXfpE-qtT', '$2y$13$rmQog1huU5uhY8imtRJSiu47KMBWvsNIvDt4jy3UxKNDn/hHhbmNe', NULL, 0, NULL, NULL, '1', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com123123', NULL, '123', 'Tổ 10, KV8, P. Ngô Mây, TP. Quy Nhơn, tỉnh Bình Định', '', 0, 10, 1431584162, 1431584162);
 
 --
 -- Constraints for dumped tables
 --
 
 --
+-- Constraints for table `album`
+--
+ALTER TABLE `album`
+  ADD CONSTRAINT `album_ibfk_1` FOREIGN KEY (`id_contract`) REFERENCES `contract` (`id_contract`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `ambience`
 --
 ALTER TABLE `ambience`
   ADD CONSTRAINT `ambience_ibfk_1` FOREIGN KEY (`id_local`) REFERENCES `localtion` (`id_local`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `bigimg`
+--
+ALTER TABLE `bigimg`
+  ADD CONSTRAINT `bigimg_ibfk_1` FOREIGN KEY (`id_contract`) REFERENCES `contract` (`id_contract`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `bigimg_ibfk_2` FOREIGN KEY (`id_img`) REFERENCES `img` (`id_img`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `bigimg_ibfk_3` FOREIGN KEY (`size`) REFERENCES `sizebigimg` (`size`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `contract`
@@ -544,8 +727,8 @@ ALTER TABLE `imgdress`
 -- Constraints for table `imglocal`
 --
 ALTER TABLE `imglocal`
-  ADD CONSTRAINT `fk_img_local` FOREIGN KEY (`id_img`) REFERENCES `img` (`id_img`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_local_img` FOREIGN KEY (`id_local`) REFERENCES `localtion` (`id_local`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_contract_img` FOREIGN KEY (`id_local`) REFERENCES `localtion` (`id_local`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_img_local` FOREIGN KEY (`id_img`) REFERENCES `img` (`id_img`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `imgtool`
@@ -553,6 +736,20 @@ ALTER TABLE `imglocal`
 ALTER TABLE `imgtool`
   ADD CONSTRAINT `fk_img_tool` FOREIGN KEY (`id_tool`) REFERENCES `tool` (`id_tool`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_tool_img` FOREIGN KEY (`id_img`) REFERENCES `img` (`id_img`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `makeupcontract`
+--
+ALTER TABLE `makeupcontract`
+  ADD CONSTRAINT `makeupcontract_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `makeupcontract_ibfk_2` FOREIGN KEY (`id_contract`) REFERENCES `contract` (`id_contract`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `photocontract`
+--
+ALTER TABLE `photocontract`
+  ADD CONSTRAINT `photocontract_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `photocontract_ibfk_2` FOREIGN KEY (`id_contract`) REFERENCES `contract` (`id_contract`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `staffcontract`

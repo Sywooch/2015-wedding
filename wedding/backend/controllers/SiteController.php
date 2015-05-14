@@ -115,9 +115,9 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             
-             $session = Yii::$app->session;
+                  $session = Yii::$app->session;
 //               // var_dump($user->getInfobyUsername($model->username));
-               $session['username'] = $model->username;
+                $session['username'] = $model->username;
                 $session['id_user'] = $user->getInfobyUsername($model->username)->id;
                 $session['type_user'] = $user->getInfobyUsername($model->username)->type_user;
             return $this->goBack();
