@@ -134,6 +134,7 @@ class SiteController extends Controller
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
                     $session = Yii::$app->session;
+                    $session['username']=$user->username;
                     $session['id_user'] = $user->id;
                     $session['type_user'] = $user->type_user;
 //                  echo $session['id_user'];

@@ -71,91 +71,96 @@ class UserController extends Controller
     
     public function actionTask($id_user,$month){
         
+        
+        $session = Yii::$app->session;
+        
+        if(isset($session['username'])&&($session['id_user']==$id_user||$session['type_user']==0)){
         // find user 
-        $model = UserController::findModel($id_user);
-        
-        
-        if($model->type_user==2){
-            
-            // user is photo
-            $allcontract = Yii::$app->db->createCommand("SELECT id_contract FROM photocontract where id_user = '".$id_user."'")->queryAll();
-        }else if($model->type_user == 3){
-            //user is makeup
-             $allcontract = Yii::$app->db->createCommand("SELECT id_contract FROM makeupcontract where id_user = '".$id_user."'")->queryAll();
-        }else if($model->type_user == 4){
-            // user is assitant
-             $allcontract = Yii::$app->db->createCommand("SELECT id_contract FROM photocontract where id_user = '".$id_user."'")->queryAll();
-        }
-        
-        
-        
-       
-        // get all contract of user 
-        if(isset($allcontract)){
-            foreach ($allcontract as $key=>$contract) {
-                $allcontractofuser[] = $allcontract[$key]['id_contract'];
+            $model = UserController::findModel($id_user);
+
+
+            if($model->type_user==2){
+
+                // user is photo
+                $allcontract = Yii::$app->db->createCommand("SELECT id_contract FROM photocontract where id_user = '".$id_user."'")->queryAll();
+            }else if($model->type_user == 3){
+                //user is makeup
+                 $allcontract = Yii::$app->db->createCommand("SELECT id_contract FROM makeupcontract where id_user = '".$id_user."'")->queryAll();
+            }else if($model->type_user == 4){
+                // user is assitant
+                 $allcontract = Yii::$app->db->createCommand("SELECT id_contract FROM photocontract where id_user = '".$id_user."'")->queryAll();
             }
-            $modelcontract = new Contract();
-            //$gettime = new DateTime($time);
-            // get all contract in month
-            $allcontractinmonth = $modelcontract->getContractInMonth($month);
-            
-            
-            // get overall 2 arr
-            // the first is contract of user
-            // the second is contract in month
-            $result = $modelcontract->getJoinArr($allcontractinmonth,$allcontractofuser);
-            
-            $arr_time;
-            if($result!=NULL){
-            
-                foreach ($result as $key=>$value) {
-                    // get start time and end time of all contract
-                     $result_start_end[] = Yii::$app->db->createCommand("select start_time,end_time from CONTRACT WHERE id_contract = '".$value."'" )->queryOne();   
+
+
+
+
+            // get all contract of user 
+            if(isset($allcontract)){
+                foreach ($allcontract as $key=>$contract) {
+                    $allcontractofuser[] = $allcontract[$key]['id_contract'];
                 }
-            }
-            
-            // check isset 
-            if(isset($result_start_end)){
-                $time;
-                
-                // this session is arr time work ofcontract 
-                foreach ($result_start_end as $key=>$value) {
-                    
-                    $end = new DateTime($result_start_end[$key]['end_time']);
-                    $start = new DateTime($result_start_end[$key]['start_time']);
-                    
-                    $time[] = $start->diff($end);
+                $modelcontract = new Contract();
+                //$gettime = new DateTime($time);
+                // get all contract in month
+                $allcontractinmonth = $modelcontract->getContractInMonth($month);
+
+
+                // get overall 2 arr
+                // the first is contract of user
+                // the second is contract in month
+                $result = $modelcontract->getJoinArr($allcontractinmonth,$allcontractofuser);
+
+                $arr_time;
+                if($result!=NULL){
+
+                    foreach ($result as $key=>$value) {
+                        // get start time and end time of all contract
+                         $result_start_end[] = Yii::$app->db->createCommand("select start_time,end_time from CONTRACT WHERE id_contract = '".$value."'" )->queryOne();   
+                    }
                 }
-                
-                $arrtimework;
-                // format arr
-                foreach ($time as $key => $value) {
-                    $arrtimework[] = $time[$key]->d;
+
+                // check isset 
+                if(isset($result_start_end)){
+                    $time;
+
+                    // this session is arr time work ofcontract 
+                    foreach ($result_start_end as $key=>$value) {
+
+                        $end = new DateTime($result_start_end[$key]['end_time']);
+                        $start = new DateTime($result_start_end[$key]['start_time']);
+
+                        $time[] = $start->diff($end);
+                    }
+
+                    $arrtimework;
+                    // format arr
+                    foreach ($time as $key => $value) {
+                        $arrtimework[] = $time[$key]->d;
+                    }
+
+                    //all timework of user
+                    $timework = 0;
+                    foreach ($arrtimework as $value) {
+                        $timework += intval($value);
+                    }
+
+
+
+
+                    // set task of user
+                    $taskofuser;
+                    foreach ($result as $val) {
+                        $taskofuser[] = Yii::$app->db->createCommand("SELECT id_user,id_local,start_time,end_time,status FROM contract where id_contract = '".$val."'")->queryOne();
+                    }
+
+                    $modellocal = new Localtion();
+                    foreach ($taskofuser as $key => $value) {
+                        $taskofuser[$key]['name_local'] = $modellocal->getName($value['id_local']);
+                    }
+
+                    $array['taskofuser'] = $taskofuser;
+                    return $this->render('taskuser',$array);
                 }
-                
-                //all timework of user
-                $timework = 0;
-                foreach ($arrtimework as $value) {
-                    $timework += intval($value);
-                }
-                
-                
-              
-                
-                // set task of user
-                $taskofuser;
-                foreach ($result as $val) {
-                    $taskofuser[] = Yii::$app->db->createCommand("SELECT id_user,id_local,start_time,end_time,status FROM contract where id_contract = '".$val."'")->queryOne();
-                }
-               
-                $modellocal = new Localtion();
-                foreach ($taskofuser as $key => $value) {
-                    $taskofuser[$key]['name_local'] = $modellocal->getName($value['id_local']);
-                }
-                
-                $array['taskofuser'] = $taskofuser;
-                return $this->render('taskuser',$array);
             }
         }
     }
@@ -164,37 +169,53 @@ class UserController extends Controller
     
     //get all photo
     public function actionGetallphoto(){
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams,2);
-       // $model = User::getUserByType(3);
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            //'model'=>$model,
-        ]);
-    }
-    // get all makeup
-    public function actionGetallmakeup() {
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams,3);
-       // $model = User::getUserByType(3);
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            //'model'=>$model,
-        ]);
-    }
-    
-    // get all assistant
-    public function actionGetallassistant() {
+        
+        $session = \Yii::$app->session;
+        if(isset($session['username'])&&$session['type_user']==0){
+        
             $searchModel = new UserSearch();
-            $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams,4);
-           
+            $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams,2);
+           // $model = User::getUserByType(3);
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 //'model'=>$model,
             ]);
+        
+        } else           return $this->goHome ();
+    }
+    // get all makeup
+    public function actionGetallmakeup() {
+         $session = \Yii::$app->session;
+        if(isset($session['username'])&&$session['type_user']==0){
+        
+            $searchModel = new UserSearch();
+            $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams,3);
+           // $model = User::getUserByType(3);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                //'model'=>$model,
+            ]);
+        
+        } else     return $this->goHome ();
+    }
+    
+    // get all assistant
+    public function actionGetallassistant() {
+             $session = \Yii::$app->session;
+        if(isset($session['username'])&&$session['type_user']==0){
+        
+            $searchModel = new UserSearch();
+            $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams,4);
+           // $model = User::getUserByType(3);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                //'model'=>$model,
+            ]);
+        
+        } else        return    $this->goHome ();
     }
     
     // get all all photo free from start to end
@@ -224,9 +245,14 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
+        $session = Yii::$app->session;
+        if(isset($session['username'])&&($session['type_user']==0||$session['id_user']==$id)){
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+        
+        }
+        else        return    $this->goHome ();
     }
 
     /**
@@ -255,15 +281,20 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        
+        $session= \Yii::$app->session;
+        if(isset($session['username'])&&($session['type_user']==0||$session['id_user']==$id)){
+        
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        }else return $this->goHome ();
     }
 
     /**

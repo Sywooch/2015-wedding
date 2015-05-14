@@ -54,7 +54,7 @@ class ContractController extends Controller
     public function actionIndex()
     {
         $session = Yii::$app->session;
-        if(isset($session)&&$session['type_user']==0){
+        if(isset($session['username'])&&$session['type_user']==0){
 
             $searchModel = new ContractSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -91,7 +91,7 @@ class ContractController extends Controller
         
        $session = Yii::$app->session;
        
-       if(isset($session)&&$session['type_user']==0){
+       if(isset($session['username'])&&$session['type_user']==0){
         
            $model = new Contract();
             $dress = new Dress();
@@ -293,7 +293,7 @@ class ContractController extends Controller
     {   
         $session = Yii::$app->session;
         
-        if(isset($session)&&$session['type_user']==0){
+        if(isset($session['username'])&&$session['type_user']==0){
         
             $model = $this->findModel($id);
 

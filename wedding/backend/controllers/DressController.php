@@ -41,15 +41,20 @@ class DressController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new DressSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
-//        var_dump($dataProvider);
         
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $session = Yii::$app->session;
+        if(isset($session['username'])&&$session['type_user']==0){
+            $searchModel = new DressSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+    //        var_dump($dataProvider);
+
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else return $this->goHome ();
     }
     
     //test model get dress free
@@ -63,13 +68,13 @@ class DressController extends Controller
         
     }
     
-    public function actionTest($start,$end){
-        $model = new Dress();
-        $arr = $model->getAllDressFree($start, $end);
-        echo '<pre>';
-        print_r($arr);
-        echo '</pre>';
-    }
+//    public function actionTest($start,$end){
+//        $model = new Dress();
+//        $arr = $model->getAllDressFree($start, $end);
+//        echo '<pre>';
+//        print_r($arr);
+//        echo '</pre>';
+//    }
     // get all dress don't have task from start to end
     public function actionGetalldressfree($start, $end){
         $model = new Dress();
@@ -174,21 +179,25 @@ class DressController extends Controller
     public function actionViewimg($id){
         
         //$model = new Imgdress();
-        $query = new Query();
-        $rows = $query->select(['*'])->from('imgdress')->where(['id_dress'=>$id])->all();
-       // $imgs;
-        foreach ($rows as $row) {
-            $qr = new Query();
-            $imgs[] = $qr->select(['url','id_img'])->from('img')->where(['id_img'=>$row,'status'=>'1'])->one();
-        }
-        if(isset($imgs)){
-            $test['imgs']= $imgs; 
         
-        }else $test['imgs']= []; 
-        $test['title'] = $id;
+        $session = Yii::$app->session;
+        if(isset($session['username'])&&$session['type_user']==0){
+        
+            $query = new Query();
+            $rows = $query->select(['*'])->from('imgdress')->where(['id_dress'=>$id])->all();
+           // $imgs;
+            foreach ($rows as $row) {
+                $qr = new Query();
+                $imgs[] = $qr->select(['url','id_img'])->from('img')->where(['id_img'=>$row,'status'=>'1'])->one();
+            }
+            if(isset($imgs)){
+                $test['imgs']= $imgs; 
 
-        return $this->render('viewid',$test);
+            }else $test['imgs']= []; 
+            $test['title'] = $id;
 
+            return $this->render('viewid',$test);
+        }else return $this->goBack ();
         
     }
     
@@ -216,7 +225,8 @@ class DressController extends Controller
         $model = new Dress();
        // $image[] = new Img();
         $session = Yii::$app->session;
-        if(isset($session)&&$session['type_user']==0){
+       
+        if(isset($session['username'])&&$session['type_user']==0){
             if ($model->load(Yii::$app->request->post())) {
                 // get the instane of upload file
 
@@ -250,29 +260,34 @@ class DressController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-        $url_avatar = $model->avatar;
-        if ($model->load(Yii::$app->request->post())) {
-            
-             $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
-            $model->avatar = UploadedFile::getInstance($model, 'avatar');
-            //var_dump($model->avatar);
-            if($model->avatar!=NULL){
-                 $model->avatar->saveAs( 'uploads/'.$imgname.'.'.$model->avatar->extension );
-            
-            //save in db
-            
-            $model->avatar = 'uploads/'.$imgname.'.'. $model->avatar->extension;
-            }else{
-                $model->avatar = $url_avatar;
+        $session = Yii::$app->session;
+        
+        
+        if(isset($session)&&$session['type_user']==0){
+            $model = $this->findModel($id);
+            $url_avatar = $model->avatar;
+            if ($model->load(Yii::$app->request->post())) {
+
+                 $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
+                $model->avatar = UploadedFile::getInstance($model, 'avatar');
+                //var_dump($model->avatar);
+                if($model->avatar!=NULL){
+                     $model->avatar->saveAs( 'uploads/'.$imgname.'.'.$model->avatar->extension );
+
+                //save in db
+
+                $model->avatar = 'uploads/'.$imgname.'.'. $model->avatar->extension;
+                }else{
+                    $model->avatar = $url_avatar;
+                }
+                $model->save();
+                return $this->redirect(['view', 'id' => $model->id_dress]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
             }
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->id_dress]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+        }else return $this->goHome ();
     }
 
     /**
