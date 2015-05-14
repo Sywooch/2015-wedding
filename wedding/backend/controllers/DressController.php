@@ -215,31 +215,33 @@ class DressController extends Controller
     {
         $model = new Dress();
        // $image[] = new Img();
+        $session = Yii::$app->session;
+        if(isset($session)&&$session['type_user']==0){
+            if ($model->load(Yii::$app->request->post())) {
+                // get the instane of upload file
 
-        if ($model->load(Yii::$app->request->post())) {
-            // get the instane of upload file
-            
-            $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
-            $model->avatar = UploadedFile::getInstance($model, 'avatar');
-            //var_dump($model->avatar);
-            if($model->avatar!=NULL){
-                $model->avatar->saveAs( 'uploads/'.$imgname.'.'.$model->avatar->extension );
+                $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
+                $model->avatar = UploadedFile::getInstance($model, 'avatar');
+                //var_dump($model->avatar);
+                if($model->avatar!=NULL){
+                    $model->avatar->saveAs( 'uploads/'.$imgname.'.'.$model->avatar->extension );
 
-                //save in db
+                    //save in db
 
-                $model->avatar = 'uploads/'.$imgname.'.'. $model->avatar->extension;
+                    $model->avatar = 'uploads/'.$imgname.'.'. $model->avatar->extension;
+                }
+                $model->id_dress ='D'.time();
+                $model->save();
+                return $this->redirect(['view', 'id' => $model->id_dress]);
             }
-            $model->id_dress ='D'.time();
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->id_dress]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-                
-            ]);
-        }
-    }
+            else {
+                return $this->render('create', [
+                        'model' => $model,
 
+                    ]);
+                }
+        }else return $this->goHome ();
+     }   
     /**
      * Updates an existing Dress model.
      * If update is successful, the browser will be redirected to the 'view' page.
