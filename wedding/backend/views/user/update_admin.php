@@ -11,7 +11,14 @@ $this->params['breadcrumbs'][] = ['label' => $model->username, 'url' => ['view',
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="user-update">
-
+    
+    <?php 
+    echo '<pre>';
+    
+    print_r($model);
+    echo '</pre>';
+    ?>
+    
     <h1><?= Html::encode($this->title) ?></h1>
 
      <?php $form = ActiveForm::begin(); ?>
@@ -20,7 +27,7 @@ $this->params['breadcrumbs'][] = 'Update';
     
     <?= $form->field($model, 'type_user')->textInput(['readonly'=>true]) ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'email')->textInput(['maxlength' => 255,'readonly'=>true]) ?>
     
     <?= $form->field($model, 'fullname')->textInput(['maxlength' => 250]) ?>
 

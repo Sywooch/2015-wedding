@@ -182,7 +182,7 @@ class UserController extends Controller
                 //'model'=>$model,
             ]);
         
-        } else           return $this->goHome ();
+        } else  return $this->goHome ();
     }
     // get all makeup
     public function actionGetallmakeup() {
@@ -287,8 +287,16 @@ class UserController extends Controller
         
             $model = $this->findModel($id);
             
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load(Yii::$app->request->post())) {
+                echo '<pre>';
+                var_dump($model->save());
+                echo '</pre>';
+                if($model->save()){
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }else
+                {
+                    
+                }
             } else {
                 if($model->type_user==0){
                     return $this->render('update_admin', [
@@ -298,11 +306,11 @@ class UserController extends Controller
                     return $this->render('update_customer', [
                         'model' => $model,
                     ]);
-                }else {
+                }
                     return $this->render('update', [
                     'model' => $model,
                      ]);
-                }
+                
             }
         }else return $this->goHome ();
     }
