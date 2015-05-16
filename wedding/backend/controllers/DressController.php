@@ -194,7 +194,7 @@ class DressController extends Controller
                 $test['imgs']= $imgs; 
 
             }else $test['imgs']= []; 
-            $test['title'] = $id;
+            $test['title'] = DressController::findModel($id)->name_dress;
 
             return $this->render('viewid',$test);
         }else return $this->goBack ();

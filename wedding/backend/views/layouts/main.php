@@ -26,7 +26,7 @@ AppAsset::register($this);
         <div id="header">
 
            <div id="logo_menu" class="pagewrap">
-               <a href="" class="logo" title="Việt Khanh Bridal"><img src="images/logo.png" width="478" alt="Việt Khanh Bridal"></a>
+               <a href="" class="logo" title=""><img src="images/logo.png" width="478" alt="Việt Khanh Bridal"></a>
                <div id="menuMain">
                    <ul id="menu">
                        <li class=""><a href="" title="Trang chủ">Trang chủ</a></li>
@@ -109,13 +109,15 @@ AppAsset::register($this);
        
 
         <div class="container">
-            <div id="colLeft">
-                 <div class="leftBox">
-                    <?= Breadcrumbs::widget([
-                        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                    ]) ?>
-                    <?= $content ?>
-                     <div class="clr"></div>
+            <div class="content">
+                <div id="colLeft">
+                     <div class="leftBox">
+                        <?= Breadcrumbs::widget([
+                            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                        ]) ?>
+                        <?= $content ?>
+                         <div class="clr"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -126,19 +128,19 @@ AppAsset::register($this);
     	<ul class="fooLink">
         	<h1><span>DANH MỤC</span></h1>
             <li>
-                <a href="index-2.html">Trang chủ</a>
-				<a href="gioi-thieu.html">Giới thiệu</a>
-				<a href="dich-vu-cuoi.html">Dịch vụ cưới</a>
-				<a href="bang-gia.html">Bảng giá</a>
-				<a href="album-anh.html">Album ảnh</a>
-				<a href="dia-diem-chup-hinh-cuoi.html">Địa điểm chụp hình cưới</a>
+                <a href="">Trang chủ</a>
+				<a href="">Giới thiệu</a>
+				<a href="">Dịch vụ cưới</a>
+				<a href="">Bảng giá</a>
+				<a href="">Album ảnh</a>
+				<a href="">Địa điểm chụp hình cưới</a>
             </li>
             <li class="right">
-            	<a href="tin-tuc-cuoi.html">Tin tức cưới</a>
-				<a href="#bubble">Album khách hàng</a>
-				<a href="video.html">Video clip</a>
-				<a href="site-map.html">Sitemap</a>
-				<a href="lien-he.html">Liên hệ</a>
+            	<a href="">Tin tức cưới</a>
+				<a href="">Album khách hàng</a>
+				<a href="">Video clip</a>
+				<a href="">Sitemap</a>
+				<a href="">Liên hệ</a>
             </li>
             <div class="clr"></div>
         </ul>
@@ -146,9 +148,9 @@ AppAsset::register($this);
         	<h1><span>DANH MỤC XEM NHIỀU</span></h1>
 			 
         	<li>
-            	<a href='http://vietkhanhphoto.com/chup-hinh-cuoi-sdv' title='Chụp hình Cưới'>Chụp hình Cưới</a> <a href='http://vietkhanhphoto.com/ao-cuoi-sdv' title='Áo Cưới'>Áo Cưới</a> <a href='http://vietkhanhphoto.com/trang-diem-co-dau-sdv' title='Trang điểm cô dâu'>Trang điểm cô dâu</a> <a href='http://vietkhanhphoto.com/nhan-cuoi-sdv' title='Nhẫn Cưới'>Nhẫn Cưới</a> <a href='http://vietkhanhphoto.com/hoa-cuoi-sdv' title='Hoa Cưới'>Hoa Cưới</a>             </li>
+            	<a href='' title='Chụp hình Cưới'>Chụp hình Cưới</a> <a href='http://vietkhanhphoto.com/ao-cuoi-sdv' title='Áo Cưới'>Áo Cưới</a> <a href='http://vietkhanhphoto.com/trang-diem-co-dau-sdv' title='Trang điểm cô dâu'>Trang điểm cô dâu</a> <a href='http://vietkhanhphoto.com/nhan-cuoi-sdv' title='Nhẫn Cưới'>Nhẫn Cưới</a> <a href='http://vietkhanhphoto.com/hoa-cuoi-sdv' title='Hoa Cưới'>Hoa Cưới</a>             </li>
             <li class="right">
-            	<a href='http://vietkhanhphoto.com/dia-diem-chup-hinh-cuoi' title='Địa điểm chụp hình cưới'>Địa điểm chụp hình cưới</a> <a href='http://vietkhanhphoto.com/ao-cuoi-dep-sab-c2' title='Áo cưới đẹp'>Áo cưới đẹp</a> <a href='http://vietkhanhphoto.com/lam-toc-co-dau-sab-c3' title='Làm tóc cô dâu'>Làm tóc cô dâu</a> <a href='http://vietkhanhphoto.com/chup-anh-chan-dung-sab-c5' title='Chụp ảnh chân dung'>Chụp ảnh chân dung</a> <a href='http://vietkhanhphoto.com/chup-anh-thoi-trang-sab-c5' title='Chụp ảnh thời trang'>Chụp ảnh thời trang</a>             </li>
+            	<a href='' title='Địa điểm chụp hình cưới'>Địa điểm chụp hình cưới</a> <a href='http://vietkhanhphoto.com/ao-cuoi-dep-sab-c2' title='Áo cưới đẹp'>Áo cưới đẹp</a> <a href='http://vietkhanhphoto.com/lam-toc-co-dau-sab-c3' title='Làm tóc cô dâu'>Làm tóc cô dâu</a> <a href='http://vietkhanhphoto.com/chup-anh-chan-dung-sab-c5' title='Chụp ảnh chân dung'>Chụp ảnh chân dung</a> <a href='http://vietkhanhphoto.com/chup-anh-thoi-trang-sab-c5' title='Chụp ảnh thời trang'>Chụp ảnh thời trang</a>             </li>
         </ul>
         
         <div class="clr"></div>
