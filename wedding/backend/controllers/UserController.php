@@ -63,7 +63,11 @@ class UserController extends Controller
     public function  actionTimework(){
         $model = new Contract();
         //$test = $model->getContractInMonth(1);
-        echo Yii::$app->request->baseUrl;
+        //var_dump(Yii::$app->user);
+        echo '<pre>';
+        print_r(Yii::$app->user);
+        echo '</pre>';
+        
         //var_dump($test);
     }
     // view task yourself
