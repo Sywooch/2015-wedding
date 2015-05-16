@@ -40,7 +40,7 @@ AppAsset::register($this);
                                 <li><a href='' title='Hoa Cưới'>Hoa Cưới</a></li> 
                            </ul>
                        </li>
-                       <li class="haveSub current"><a href="" title="Album ảnh">Album ảnh</a><span></span>
+                       <li class="haveSub"><a href="" title="Album ảnh">Album ảnh</a><span></span>
                            <ul>
                                <li><a href='' title='Album Cưới'>Album Cưới</a></li>
                                <li><a href='' title='Áo Cưới'>Áo Cưới</a></li>
