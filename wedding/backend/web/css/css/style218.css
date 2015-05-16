@@ -1149,7 +1149,7 @@ img { border: none;}
 .cap { text-transform: uppercase;}
 /*colLeft colRight*/
 #colLeft {
-	width: 75%;
+	width: 100%;
 	float: left;
 }
 #colRight {
@@ -1159,7 +1159,7 @@ img { border: none;}
 .leftBox {
 	background: #fff;
 	margin-bottom: 30px;
-	border: solid 1px #E6E6E6;
+	/*border: solid 1px #E6E6E6;*/
 }
 .rightBox {
 	background: url(../images/bg-rightBox.png);
@@ -2064,7 +2064,7 @@ img { border: none;}
 		color: #fff;
 		font-size: 16px;
 		text-align: right;
-		background-image: url(../images/menu-mobile.png);
+		background-image: url(../../images/menu-mobile.png);
 		background-repeat: no-repeat;
 		background-position: 10px center;
 		background-color: #444;
@@ -2105,7 +2105,7 @@ img { border: none;}
 		float: left;
 		width: 34px;
 		height: 34px;
-		background-image: url(../images/icon-home.png);
+		background-image: url(../../images/icon-home.png);
 		background-repeat: no-repeat;
 		background-position: center center;
 		background-color: #444;
