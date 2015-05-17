@@ -35,7 +35,7 @@ class AppAsset extends AssetBundle
         'js/ui.multiselect.js',
         'js/js/galleria.folio.min.js',
         'js/js/galleria-1.2.8.min.js',
-//        'js/js/jquery-2.1.4.min.js',
+        'js/js/jquery-2.1.4.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -8,7 +8,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 
-<div style="margin: 0 auto" id='albumView'>
+<div id="albumView">
 <?php 
 foreach ($imgs as $img) {
 //    echo 'asdfjksdbjadfjsadf';

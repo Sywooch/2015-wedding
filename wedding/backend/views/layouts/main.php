@@ -4,11 +4,15 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
+use yii\helpers\Url;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
 AppAsset::register($this);
+ $session = Yii::$app->session;
+//echo $session['type_user'];
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -28,9 +32,11 @@ AppAsset::register($this);
            <div id="logo_menu" class="pagewrap">
                <a href="" class="logo" title=""><img src="images/logo.png" width="478" alt="Việt Khanh Bridal"></a>
                <div id="menuMain">
+                   
+                   <?php if(!isset($session['username'])){ ?>
                    <ul id="menu">
                        <li class=""><a href="" title="Trang chủ">Trang chủ</a></li>
-                       <li class=""><a href="" title="Giới thiệu">Giới thiệu</a></li>
+                       <li class=""><a href="" title="Giới thiệu">Album cưới</a></li>
                        <li class="haveSub "><a href="">Dịch vụ cưới</a><span></span>
                            <ul>
                                 <li><a href='' title='Chụp hình Cưới'>Chụp hình Cưới</a></li>
@@ -40,52 +46,106 @@ AppAsset::register($this);
                                 <li><a href='' title='Hoa Cưới'>Hoa Cưới</a></li> 
                            </ul>
                        </li>
-                       <li class="haveSub"><a href="" title="Album ảnh">Album ảnh</a><span></span>
-                           <ul>
-                               <li><a href='' title='Album Cưới'>Album Cưới</a></li>
-                               <li><a href='' title='Áo Cưới'>Áo Cưới</a></li>
-                               <li><a href='' title='Trang Điểm'>Trang Điểm</a></li>
-                               <li><a href='' title='Thời Trang'>Thời Trang</a></li>
-                               <li><a href='' title='Gia Đình'>Gia Đình</a></li>
-                               <li><a href='' title='Quảng Cáo'>Quảng Cáo</a></li>                   
-                           </ul>
+                       <li><a href="" title="Album ảnh">Địa điểm</a><span></span>
+                           
                        </li>
-                       <li class="haveSub "><a href="" title="Bảng giá">Bảng giá</a><span></span>
+                       <li class="haveSub "><a href="" title="Bảng giá">Áo cưới</a><span></span>
                            <ul>
                                <li><a href='' title='Bảng giá'>Bảng giá</a></li> 
                            </ul>
                        </li>
-                       <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Địa điểm chụp hình cưới</a></li>
-                       <li class=""><a href="" title="Tin tức">Tin tức</a></li>
-                       <li class=""><a href="" title="Khuyến mãi">Khuyến mãi</a><label>HOT</label></li>
+                       <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Liên lạc</a></li>
+                       <li class=""><a href="" title="Tin tức">Đăng Nhập</a></li>
+                       <!--<li class=""><a href="" title="Khuyến mãi">Khuyến mãi</a><label>HOT</label></li>-->
                    </ul>
+                       <?php }else if(isset($session['username'])){ ?>
+                        <?php if($session['type_user']==1){ ?>
+                            <ul id="menu">
+                                <li class=""><a href="" title="Trang chủ">Trang chủ</a></li>
+                                <li class="haveSub"><a href="" title="Giới thiệu">Album cưới</a>
+                                    <ul>
+                                         <li class=""><a href="" title="">Album Của Tôi</a></li>
+                                         <li class=""><a href="" title="">Tất Cả Album</a></li>
+                                        
+                                    </ul>
+                                </li>
+                                <li class="haveSub "><a href="">Dịch vụ cưới</a><span></span>
+                                    <ul>
+                                         <li><a href='' title='Chụp hình Cưới'>Chụp hình Cưới</a></li>
+                                         <li><a href='' title='Áo Cưới'>Áo Cưới</a></li>
+                                         <li><a href='' title='Trang điểm cô dâu'>Trang điểm cô dâu</a></li>
+                                         <li><a href='' title='Nhẫn Cưới'>Nhẫn Cưới</a></li>
+                                         <li><a href='' title='Hoa Cưới'>Hoa Cưới</a></li> 
+                                    </ul>
+                                </li>
+                                <li><a href="" title="Album ảnh">Địa điểm</a><span></span>
+
+                                </li>
+                                <li class="haveSub "><a href="" title="Bảng giá">Áo cưới</a><span></span>
+                                    <ul>
+                                        <li><a href='' title='Bảng giá'>Bảng giá</a></li> 
+                                    </ul>
+                                </li>
+                                <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Liên lạc</a></li>
+                                
+                                <li class=""><a href="" title="Tin tức">Hợp Đồng</a></li>
+                                <li class=""><a href="" title="Khuyến mãi">Thông Tin Cá Nhân</a></li>
+                                <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Đăng Xuất</a></li>
+                            </ul>
+                        <?php } else if($session['type_user']== 0) { ?>
+                            <ul id="menu">
+                                <li class=""><a href="" title="Trang chủ">Trang chủ</a></li>
+                                <li class="haveSub"><a href="" title="Giới thiệu">Album cưới</a>
+                                    <ul>
+                                         <li class=""><a href="" title="">Album Của Tôi</a></li>
+                                         <li class=""><a href="" title="">Tất Cả Album</a></li>
+                                        
+                                    </ul>
+                                </li>
+                                <li class="haveSub "><a href="">Dịch vụ cưới</a><span></span>
+                                    <ul>
+                                         <li><a href='' title='Chụp hình Cưới'>Chụp hình Cưới</a></li>
+                                         <li><a href='' title='Áo Cưới'>Áo Cưới</a></li>
+                                         <li><a href='' title='Trang điểm cô dâu'>Trang điểm cô dâu</a></li>
+                                         <li><a href='' title='Nhẫn Cưới'>Nhẫn Cưới</a></li>
+                                         <li><a href='' title='Hoa Cưới'>Hoa Cưới</a></li> 
+                                    </ul>
+                                </li>
+                                <li class="haveSub"><a href="" title="Album ảnh">Địa điểm</a><span></span>
+                                    <ul>
+                                         <li class=""><a href="" title="">Tất Cả Địa Điểm</a></li>
+                                         <li class=""><a href="" title="">Thêm Mới</a></li>
+                                        
+                                    </ul>
+                                </li>
+                                <li class="haveSub "><a href="" title="">Áo cưới</a><span></span>
+                                    <ul>
+                                        <li class=""><a href="" title="">Tất Cả Áo Cưới</a></li>
+                                         <li class=""><a href="" title="">Thêm Mới</a></li>
+                                    </ul>
+                                </li>
+                                <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Liên lạc</a></li>
+                                
+                                <li class=""><a href="" title="Tin tức">Hợp Đồng</a></li>
+                                <li class=""><a href="" title="Khuyến mãi">Thông Tin Cá Nhân</a></li>
+                                <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Đăng Xuất</a></li>
+                            </ul>
+                        <?php }
+                        else { ?>
+                            <ul id="menu">
+                                
+                                <li class="haveSub "><a href="<?php echo Url::base().'/index.php?r=user/task&&id_user='.$session['id_user']; ?>" title="">Nhiệm Vụ</a><span></span>
+                                    
+                                </li>
+                                <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Thông Tin Cá Nhân</a></li>
+                                 <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Đăng Xuất</a></li>
+                                
+                            </ul>
+                            
+                   <?php    }
+                       }        ?>
                    <div class="clr"></div>
-                   <div id="menuHide">
-                       <div id="menuMobile">
-                               <a href="" class="homeButton" title="Trang chủ">Trang chủ</a>
-                           <h1>MENU</h1>
-                           <ul>
-                               <li><a href="" title="Giới thiệu">Giới thiệu</a></li>
-                                       <h2>Dịch vụ cưới</h2>
-                               <ul>
-                                   <li><a href='' title='Chụp hình Cưới'>Chụp hình Cưới</a></li><li><a href='ao-cuoi-sdv.html' title='Áo Cưới'>Áo Cưới</a></li><li><a href='trang-diem-co-dau-sdv.html' title='Trang điểm cô dâu'>Trang điểm cô dâu</a></li><li><a href='nhan-cuoi-sdv.html' title='Nhẫn Cưới'>Nhẫn Cưới</a></li><li><a href='hoa-cuoi-sdv.html' title='Hoa Cưới'>Hoa Cưới</a></li>                        </ul>
-                                       <h2>Album ảnh</h2>
-                               <ul>
-                                  <li><a href='' title='Album Cưới'>Album Cưới</a></li><li><a href='ao-cuoi-sab.html' title='Áo Cưới'>Áo Cưới</a></li><li><a href='trang-diem-sab.html' title='Trang Điểm'>Trang Điểm</a></li><li><a href='thoi-trang-sab.html' title='Thời Trang'>Thời Trang</a></li><li><a href='gia-dinh-sab.html' title='Gia Đình'>Gia Đình</a></li><li><a href='quang-cao-sab.html' title='Quảng Cáo'>Quảng Cáo</a></li>                        </ul>
-                                       <h2>Bảng giá</h2>
-                               <ul>
-                                   <li><a href='' title='Bảng giá'>Bảng giá</a></li>                        </ul>
-                                       <li><a href="" title="Địa điểm Chụp hình cưới" class="place">Địa điểm Chụp hình cưới</a></li>
-                                       <li><a href="l" title="Tin tức">Tin tức</a></li>
-                                       <li><a href="" title="Khuyến mãi">Khuyến mãi</a></li>
-                               <li><a href="" title="Video">Video</a></li>
-                               <li><a href="" title="Album khách hàng">Album khách hàng</a></li>
-                               <li><a href="" title="Sitemap">Sitemap</a></li>
-                               <li><a href="" title="Liên hệ<">Liên hệ</a></li>
-                           </ul>
-                       </div><!--menu menuMobile-->
-                               <div class="clr"></div>
-                           </div><!--menu menuHide-->
+                  
                </div><!--end menuMain-->
                <div class="bgHeader">
                     <img src="images/bg-header/1.png" width="122" class="img1" alt="" />
