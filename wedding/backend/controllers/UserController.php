@@ -171,6 +171,9 @@ class UserController extends Controller
 
                     $array['taskofuser'] = $taskofuser;
                     return $this->render('taskuser',$array);
+                }else {
+                    $noti['mess'] = 'Không có nhiệm vụ nào trong tháng này';
+                    return $this->render('taskuser',$noti);
                 }
             }
         }

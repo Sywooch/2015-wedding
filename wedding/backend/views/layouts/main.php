@@ -90,7 +90,7 @@ AppAsset::register($this);
                                 
                                 <li class=""><a href="" title="Tin tức">Hợp Đồng</a></li>
                                 <li class=""><a href="" title="Khuyến mãi">Thông Tin Cá Nhân</a></li>
-                                <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Đăng Xuất</a></li>
+                                <li class=""><a href="<?php echo Url::base().'/index.php?r=site/logout' ?>" data-method = "post" class="place">Đăng Xuất</a></li>
                             </ul>
                         <?php } else if($session['type_user']== 0) { ?>
                             <ul id="menu">
@@ -128,7 +128,7 @@ AppAsset::register($this);
                                 
                                 <li class=""><a href="" title="Tin tức">Hợp Đồng</a></li>
                                 <li class=""><a href="" title="Khuyến mãi">Thông Tin Cá Nhân</a></li>
-                                <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Đăng Xuất</a></li>
+                                <li class=""><a href="<?php echo Url::base().'/index.php?r=site/logout' ?>" data-method = "post" class="place">Đăng Xuất</a></li>
                             </ul>
                         <?php }
                         else { ?>
@@ -142,7 +142,7 @@ AppAsset::register($this);
                                     </ul>
                                 </li>
                                 <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Thông Tin Cá Nhân</a></li>
-                                <li class=""><a href="<?php echo Url::base().'/index.php?r=site/logout' ?>" title="Địa điểm chụp hình cưới" class="place">Đăng Xuất</a></li>
+                                <li class=""><a href="<?php echo Url::base().'/index.php?r=site/logout' ?>" data-method = "post" title="Địa điểm chụp hình cưới" class="place">Đăng Xuất</a></li>
                                 
                             </ul>
                             

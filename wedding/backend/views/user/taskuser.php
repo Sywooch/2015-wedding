@@ -41,8 +41,10 @@ $this->params['breadcrumbs'][] = $this->title;
         </tr>
                 
     
-        <?php      }?>
+        <?php      } ?>
     </table>
+    <?php } else { ?>
+    <h2> <?php echo $mess;?>  </h2>
     <?php } ?>
 
 </div>
