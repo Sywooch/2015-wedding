@@ -181,7 +181,7 @@ class DressController extends Controller
         //$model = new Imgdress();
         
         $session = Yii::$app->session;
-        if(isset($session['username'])&&$session['type_user']==0){
+//        if(isset($session['username'])&&$session['type_user']==0){
         
             $query = new Query();
             $rows = $query->select(['*'])->from('imgdress')->where(['id_dress'=>$id])->all();
@@ -197,7 +197,7 @@ class DressController extends Controller
             $test['title'] = DressController::findModel($id)->name_dress;
 
             return $this->render('viewid',$test);
-        }else return $this->goBack ();
+//        }else return $this->goBack ();
         
     }
     
