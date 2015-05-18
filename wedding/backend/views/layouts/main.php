@@ -138,7 +138,7 @@ AppAsset::register($this);
                                     
                                 </li>
                                 <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Thông Tin Cá Nhân</a></li>
-                                 <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Đăng Xuất</a></li>
+                                <li class=""><a href="<?php echo Url::base().'/index.php?r=site/logout' ?>" title="Địa điểm chụp hình cưới" class="place">Đăng Xuất</a></li>
                                 
                             </ul>
                             
