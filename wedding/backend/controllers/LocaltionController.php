@@ -37,8 +37,7 @@ class LocaltionController extends Controller
         
         //$model = new Imgdress();
         
-        $session = Yii::$app->session;
-//        if(isset($session['username'])&&$session['type_user']==0){
+       
         
             $query = new Query();
             $rows = $query->select(['*'])->from('imglocal')->where(['id_local'=>$id])->all();

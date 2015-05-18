@@ -46,7 +46,7 @@ AppAsset::register($this);
                                 <li><a href='' title='Hoa Cưới'>Hoa Cưới</a></li> 
                            </ul>
                        </li>
-                       <li><a href="" title="Album ảnh">Địa điểm</a><span></span>
+                       <li><a href="<?php echo Url::base().'/index.php?r=localtion/alllocal' ?>" title="Album ảnh">Địa điểm</a><span></span>
                            
                        </li>
                        <li class="haveSub "><a href="<?php echo Url::base().'/index.php?r=dress/alldress' ?>" title="Bảng giá">Áo cưới</a><span></span>
