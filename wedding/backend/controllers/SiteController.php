@@ -151,8 +151,8 @@ class SiteController extends Controller
 
     public function actionLogout()
     {
-        //Yii::$app->user->logout();
-        session_destroy ();
+        Yii::$app->user->logout();
+//        session_destroy ();
         return $this->goHome();
     }
 

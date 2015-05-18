@@ -106,7 +106,14 @@ class UserController extends Controller
                 $modelcontract = new Contract();
                 //$gettime = new DateTime($time);
                 // get all contract in month
-                $allcontractinmonth = $modelcontract->getContractInMonth(date('m'));
+                
+                
+                if(isset($_GET['month'])){
+                    $allcontractinmonth = $modelcontract->getContractInMonth($_GET['month']);
+                }else{
+                    $allcontractinmonth = $modelcontract->getContractInMonth(date('m'));
+                }
+                
 
 
                 // get overall 2 arr

@@ -55,7 +55,7 @@ AppAsset::register($this);
                            </ul>
                        </li>
                        <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Liên lạc</a></li>
-                       <li class=""><a href="" title="Tin tức">Đăng Nhập</a></li>
+                       <li class=""><a href="<?php echo Url::base().'/index.php?r=site/login' ?>" title="">Đăng Nhập</a></li>
                        <!--<li class=""><a href="" title="Khuyến mãi">Khuyến mãi</a><label>HOT</label></li>-->
                    </ul>
                        <?php }else if(isset($session['username'])){ ?>
@@ -135,7 +135,11 @@ AppAsset::register($this);
                             <ul id="menu">
                                 
                                 <li class="haveSub "><a href="<?php echo Url::base().'/index.php?r=user/task&&id_user='.$session['id_user']; ?>" title="">Nhiệm Vụ</a><span></span>
-                                    
+                                    <ul>
+                                    <?php for($i=1;$i<=12;$i++){ ?>
+                                        <li><a href="<?php echo Url::base().'/index.php?r=user/task&&id_user='.$session['id_user'].'&&month='.$i; ?>" title=""><?php echo 'Tháng '.$i ?></a><span></span></li>
+                                    <?php } ?>
+                                    </ul>
                                 </li>
                                 <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Thông Tin Cá Nhân</a></li>
                                 <li class=""><a href="<?php echo Url::base().'/index.php?r=site/logout' ?>" title="Địa điểm chụp hình cưới" class="place">Đăng Xuất</a></li>
