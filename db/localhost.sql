@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 14, 2015 at 08:35 AM
+-- Generation Time: May 19, 2015 at 09:49 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -169,7 +169,8 @@ INSERT INTO `dress` (`id_dress`, `name_dress`, `avatar`, `type_dress`, `info_dre
 ('D1429634405', 'Áo cưới Phong cách châu âuègfegf', 'uploads/1429634405170470153188.jpg', 1, 'q', 1000000, 1000000, 1),
 ('D1429634456', 'Áo cưới Phong cách châu âu23532', 'uploads/1429634456951389266678.jpg', 1, '2', 12123234, 12312334, 1),
 ('D1429634584', 'Phong cách cổ điển 12', 'uploads/142963458497246566350.jpg', 1, '1', 12, 12, 1),
-('D1431522087', 'Áo cưới chữ U', 'uploads/1431522087515093863961.jpg', 1, 'áo cưới chữ U', 1000000, 1000000, 1);
+('D1431522087', 'Áo cưới chữ U', 'uploads/1431522087515093863961.jpg', 1, 'áo cưới chữ U', 1000000, 1000000, 1),
+('D1431585670', 'Áo cưới chữ T', 'uploads/1431585670334313347201.jpg', 1, '12', 1300000, 1000000, 1);
 
 -- --------------------------------------------------------
 
@@ -218,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `img` (
   `status` int(11) DEFAULT '1',
   PRIMARY KEY (`id_img`),
   KEY `url` (`url`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=191 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=207 ;
 
 --
 -- Dumping data for table `img`
@@ -276,7 +277,23 @@ INSERT INTO `img` (`id_img`, `url`, `title`, `status`) VALUES
 (187, 'uploads/dress/1431522112348458888379.jpg', NULL, 1),
 (188, 'uploads/dress/143152211294194804954.jpg', NULL, 1),
 (189, 'uploads/dress/1431522113971672636705.jpg', NULL, 1),
-(190, 'uploads/dress/143152211381422516300.jpg', NULL, 1);
+(190, 'uploads/dress/143152211381422516300.jpg', NULL, 1),
+(191, 'uploads/dress/143158568714217273514.jpg', NULL, 1),
+(192, 'uploads/dress/14315856874025334112.jpg', NULL, 1),
+(193, 'uploads/dress/1431585687915725736751.jpg', NULL, 1),
+(194, 'uploads/dress/1431585687944838727196.jpg', NULL, 1),
+(195, 'uploads/dress/1431585687876242176849.jpg', NULL, 1),
+(196, 'uploads/dress/1431585687234682534357.jpg', NULL, 1),
+(197, 'uploads/dress/1431585688527614619912.jpg', NULL, 1),
+(198, 'uploads/dress/143158568880613382978.jpg', NULL, 1),
+(199, 'uploads/local/143158572813022566910.jpg', NULL, 1),
+(200, 'uploads/local/143158572977499112904.jpg', NULL, 1),
+(201, 'uploads/local/14315857296881844484.jpg', NULL, 1),
+(202, 'uploads/local/1431585729798777288147.jpg', NULL, 1),
+(203, 'uploads/local/143158572953734395217.jpg', NULL, 1),
+(204, 'uploads/local/143158572950743759200.jpg', NULL, 1),
+(205, 'uploads/local/1431585729534394053836.jpg', NULL, 1),
+(206, 'uploads/local/1431585729420852934574.png', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -335,7 +352,15 @@ INSERT INTO `imgdress` (`id_img`, `id_dress`) VALUES
 (187, 'D1431522087'),
 (188, 'D1431522087'),
 (189, 'D1431522087'),
-(190, 'D1431522087');
+(190, 'D1431522087'),
+(191, 'D1431585670'),
+(192, 'D1431585670'),
+(193, 'D1431585670'),
+(194, 'D1431585670'),
+(195, 'D1431585670'),
+(196, 'D1431585670'),
+(197, 'D1431585670'),
+(198, 'D1431585670');
 
 -- --------------------------------------------------------
 
@@ -362,7 +387,15 @@ INSERT INTO `imglocal` (`id_local`, `id_img`) VALUES
 ('L1429606564', 159),
 ('L1429606564', 160),
 ('L1429606564', 161),
-('L1429606564', 162);
+('L1429606564', 162),
+('L1431585715', 199),
+('L1431585715', 200),
+('L1431585715', 201),
+('L1431585715', 202),
+('L1431585715', 203),
+('L1431585715', 204),
+('L1431585715', 205),
+('L1431585715', 206);
 
 -- --------------------------------------------------------
 
@@ -401,7 +434,8 @@ CREATE TABLE IF NOT EXISTS `localtion` (
 INSERT INTO `localtion` (`id_local`, `name_local`, `info_local`, `rate`, `avatar`, `timework`, `status`) VALUES
 ('L1429606564', 'Phú Mỹ Hưng Quận 7', 'Phú Mỹ Hưng Quận 7', 9500000, 'uploads/1429606564224921152356.jpg', 5, 1),
 ('L1429634734', 'Ảnh cưới thác Giang Điền (Trảng Bom - Đồng Nai)', '1', 9500000, 'uploads/1429634734901451311129.jpg', 3, 1),
-('L1429634759', 'Hồ Đá Thủ Đức', '1', 1000012, 'uploads/142963475919661195557.jpg', 1, 1);
+('L1429634759', 'Hồ Đá Thủ Đức', '1', 1000012, 'uploads/142963475919661195557.jpg', 1, 1),
+('L1431585715', 'Rừng cao su Bù Đăng - Bình Phước', 'd', 9500000, 'uploads/1431585715664053424896.jpg', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -648,35 +682,36 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=29 ;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `type_user`, `range_user`, `rate_user`, `fullname`, `fullname2`, `tell`, `tell2`, `email`, `email2`, `info_user`, `address`, `avatar`, `have_contract`, `status`, `created_at`, `updated_at`) VALUES
-(4, 'nhannguyen', 'Z79uTWbLCj6366cqfdw8tiDHLq5vrzsK', '$2y$13$E9j5kmFiCOWJKvnxIK0R1uNgvNu78jtyRASY.xf3uQ4RZbnfE4J02', NULL, 0, NULL, 100, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.coms', NULL, '', '', '', 0, 10, 1428396746, 1428396746),
-(5, 'admin12', 'Z79uTWbLCj6366cqfdw8tiDHLq5vrzsK', '$2y$13$E9j5kmFiCOWJKvnxIK0R1uNgvNu78jtyRASY.xf3uQ4RZbnfE4J02', '', 1, 1, 200, '1', '', '1', '', 'nhannguyen@gmail.com221', '', '1', '1', '1', 1, 1, 1, 1),
-(6, 'nhannguyen12', 'Z79uTWbLCj6366cqfdw8tiDHLq5vrzsK', '$2y$13$E9j5kmFiCOWJKvnxIK0R1uNgvNu78jtyRASY.xf3uQ4RZbnfE4J02', NULL, 0, NULL, 200, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.coms', NULL, '', '', '', 0, 10, 1428396746, 1428396746),
-(7, 'zetnhan', 'AX5JIdDt7feAWqQGQV0Me1xh3LSZvCwX', '$2y$13$Dy.iwUPP6eP3vsQrXT7K2OlKX9BXwhTUx3OqmXQrOMg05Y4FkJokm', NULL, 1, NULL, 210, '', NULL, '', NULL, 'admin@gmail.com', NULL, '', '', '', 1, 10, 1428459152, 1428459152),
-(8, 'zetnhantest', 'qx2prxjPEZ9LBL_HK4j1QUQ64fyU8IA8', '$2y$13$0uohBHCYvCFa.j/1otrDe.wOcVwtdOiW0yRx5NMczUQtzV51CCJDi', NULL, 0, NULL, 100, '', NULL, '', NULL, 'admin1@gmail.com', NULL, '', '', '', 0, 10, 1428459597, 1428459597),
-(9, 'nhannguyencs101', 'szLkGOvsZlBcY41o6CEWKLko6ske3GZ8', '$2y$13$v56oTdIBwGt3yy/6HPcbeew18A0./9p0FRRaB3L1LqTg57cb2GauW', NULL, 0, NULL, 150, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.coms1', NULL, '', '', '', 0, 10, 1428462747, 1428462747),
-(10, 'zetnhan1234', 'hX5fbK2UazahwVxg7CJoT2WOV3NTGN0g', '$2y$13$r8jdfVDLm/cVYnMfGIcBROKcvUNTz37T0oT9U1W4EA7d81vmllboW', NULL, 2, NULL, 89, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.com1231', NULL, '', '', '', 0, 10, 1428463965, 1428463965),
-(11, 'admin1@gmail.com', 'CFFWhRAjwjFv4OCdaF6jKsoL1v-kqDHd', '$2y$13$MCm1WMxGMS72xFLuazrpy.zC2oVzI3Onds1JdDiweJe65uwVnkSly', NULL, 1, NULL, 102, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com12312313', NULL, '', '268 Lý thường kiệt', '', 1, 10, 1428464258, 1428464258),
-(12, 'znhan', '3ZZ1CTIA58Rs3pzA7L-Kdstr3h5Hicku', '$2y$13$2kWi7hRL2raO4um2jfK91OWPkZKMce6swOx5ua/jxkkj8Zayua5sW', NULL, 1, NULL, 90, 'Nguyễn Văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com123123sd', NULL, 'Tao là customer', '268 Lý thường kiệt', '', 0, 10, 1428488501, 1428488501),
-(13, 'adminkeke', 'fU0lUEwuvp8wAjaQU4d9QZzX5PA6rf1A', '$2y$13$hGagIdidM/44HyyMbbhdDOosYTQtZGHqaIZGWI5lZ8XJM772Rj15i', NULL, 1, NULL, 125, 'Nguyễn văn Nhàn', NULL, '1', NULL, 'vannhan.nguyen0405@gmail.com1', NULL, '1', '1', '', 0, 10, 1428903072, 1428903072),
-(14, 'wtf', '-_Deuj3D57wNktce-lxWQqivlTuZ8nue', '$2y$13$zFMLAyyYBxU2nQ30ZbvAo.22kxjC7p7RcDmfKtsTfMka9w5g0ytiG', NULL, 2, NULL, 94, '1', NULL, '1', NULL, 'vannhan.nguyen0405@gmail.com11231', NULL, '12', '12', '', 0, 10, 1428903113, 1428903113),
-(15, 'nguyenvannhan', 'mKn70uztNfrblknx3fEnTtmgV2vbbD2y', '$2y$13$I9ec3n6XEX9c1ia5MS68ge9y8NMqj8fUzzi4m9avmL.9IFFY20Hyu', NULL, 1, NULL, 175, 'Nguyễn Văn Nhàn', NULL, '0938194492', NULL, '51002201@hcmut.edu.vn', NULL, 'hello', '268 Lý thường kiệt', '', 0, 10, 1428992062, 1428992062),
-(16, 'hoho', 'IRDYCBz0kp57Ht0SMu-2hDvXRV8Y-vQC', '$2y$13$lvtF5kb2ySjBQ/gdxtT04OZJrd/LRKWIzlJxoeLGPYvyMr1lNl5Jq', NULL, 3, NULL, 100, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com1212', NULL, '1', '268 Lý thường kiệt', '', 0, 10, 1429684226, 1429684226),
-(17, 'nhannguyen92', 'zFI0KfVUiM3GzouGTsLpOutpwPEyhUhP', '$2y$13$rnMnxZ3DJ3y8LDNEvrdeHOhzI8UNAYcqWKaofehs0mO0SlbsqY.JG', NULL, 2, NULL, 250, 'Nguyễn văn Nhàn', NULL, '1', NULL, 'vannhan.nguyen0405@gmail.com21', NULL, '1', '1', '', 0, 10, 1429686424, 1429686424),
-(18, 'nhannguyencs10', 'pu69cNXfoWnIsg2n0YM6CO8X5PV_Xwh1', '$2y$13$k.uildQVWJiUxwWiimavNO.PzBzHrFWPTy7g2rc9ba7My6QFDGDVG', NULL, 2, NULL, 300, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com132', NULL, '1', '1', '', 0, 10, 1429686477, 1429686477),
-(19, 'znznznzn', '7gb2QYK3bYhMKROEQNoK4iJSIEZ04OAe', '$2y$13$mblPPR4nEBXvPPyrfTprJOSX9B8NJ7ra4ML2CHCz5ZFDeOZH012wq', NULL, 1, NULL, 82, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com765432', NULL, '1', '268 Lý thường kiệt', '', 0, 10, 1430731898, 1430731898),
-(20, 'nhannguyen123', 'cjMMFr4dGI5bAgy6v7Zh0y0jnC2oi24Y', '$2y$13$qO9jJf48XjveX6wq6FwWB.8f/.8.6LF0ikQfS4C7EPyh8/VTciGry', NULL, 3, NULL, 100, 'Nguyễn Văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com12', NULL, '12', '268 Lý thường kiệt', '', 0, 10, 1430746652, 1430746652),
-(21, 'nhannguyencs1234', 'zXfHg7T38ZS4YnUfxEmfVL18WowJFduu', '$2y$13$lJx9lc1JV9/QZYffESAH6.rObWVW.0Qa.L3WVnzrbwKIgfZ5NUpwe', NULL, 2, NULL, 0, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com1234', NULL, 'I''m photograper', '268 Lý thường kiệt', '', 0, 10, 1431424733, 1431424733),
-(22, 'vannhan', 'OY9AkcDkAkcvWnu3PQ4x66JGgGFeygwT', '$2y$13$gLzTN.9HYaMFOiFYVQcrC.xiuiIwC3UOVYuLiJOGjrust37jFnQmW', NULL, 2, 1, 150000, 'Nguyễn Văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com21213', NULL, 'I am photograper', '268 Lý thường kiệt', '', 0, 10, 1431441917, 1431441917),
-(25, 'admintor', 'IfHLn0HrLiG5VaP_xLOPI4kQkjWVmFB7', '$2y$13$w8izNT0uR3F24QYsngoteuapXIqK9Eq8xe37G2f.haKgfZ0O0h/6S', NULL, 0, NULL, NULL, 'Nguyễn Văn Nhàn', NULL, '0938194492', NULL, '51002201@hcmut.edu.vn12', NULL, '1', '268 Lý thường kiệt', '', 0, 10, 1431572471, 1431572471),
-(26, '123456', 'IEdZYvMnXUelV5bGTSfKtesZXfpE-qtT', '$2y$13$rmQog1huU5uhY8imtRJSiu47KMBWvsNIvDt4jy3UxKNDn/hHhbmNe', NULL, 0, NULL, 0, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.com1223', NULL, '', '', '', 0, 10, 1431574784, 1431574784),
-(27, 'admin', 'IEdZYvMnXUelV5bGTSfKtesZXfpE-qtT', '$2y$13$rmQog1huU5uhY8imtRJSiu47KMBWvsNIvDt4jy3UxKNDn/hHhbmNe', NULL, 0, NULL, NULL, '1', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com123123', NULL, '123', 'Tổ 10, KV8, P. Ngô Mây, TP. Quy Nhơn, tỉnh Bình Định', '', 0, 10, 1431584162, 1431584162);
+(4, 'nhannguyen', 'Z79uTWbLCj6366cqfdw8tiDHLq5vrzsK', '$2y$13$E9j5kmFiCOWJKvnxIK0R1uNgvNu78jtyRASY.xf3uQ4RZbnfE4J02', NULL, 0, NULL, 100, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.coms', NULL, '', '', 'uploads/avatar/avatar.jpg', 0, 10, 1428396746, 1428396746),
+(5, 'admin12', 'IEdZYvMnXUelV5bGTSfKtesZXfpE-qtT', '$2y$13$rmQog1huU5uhY8imtRJSiu47KMBWvsNIvDt4jy3UxKNDn/hHhbmNe', '', 1, 1, 200, '1', '', '1', '', 'nhannguyen@gmail.com221', '', '1', '1', 'uploads/avatar/avatar.jpg', 1, 1, 1, 1),
+(6, 'nhannguyen12', 'Z79uTWbLCj6366cqfdw8tiDHLq5vrzsK', '$2y$13$E9j5kmFiCOWJKvnxIK0R1uNgvNu78jtyRASY.xf3uQ4RZbnfE4J02', NULL, 0, NULL, 200, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.coms', NULL, '', '', 'uploads/avatar/avatar.jpg', 0, 10, 1428396746, 1428396746),
+(7, 'zetnhan', 'AX5JIdDt7feAWqQGQV0Me1xh3LSZvCwX', '$2y$13$Dy.iwUPP6eP3vsQrXT7K2OlKX9BXwhTUx3OqmXQrOMg05Y4FkJokm', NULL, 1, NULL, 210, '', NULL, '', NULL, 'admin@gmail.com', NULL, '', '', 'uploads/avatar/avatar.jpg', 1, 10, 1428459152, 1428459152),
+(8, 'zetnhantest', 'qx2prxjPEZ9LBL_HK4j1QUQ64fyU8IA8', '$2y$13$0uohBHCYvCFa.j/1otrDe.wOcVwtdOiW0yRx5NMczUQtzV51CCJDi', NULL, 0, NULL, 100, '', NULL, '', NULL, 'admin1@gmail.com', NULL, '', '', 'uploads/avatar/avatar.jpg', 0, 10, 1428459597, 1428459597),
+(9, 'nhannguyencs101', 'szLkGOvsZlBcY41o6CEWKLko6ske3GZ8', '$2y$13$v56oTdIBwGt3yy/6HPcbeew18A0./9p0FRRaB3L1LqTg57cb2GauW', NULL, 0, NULL, 150, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.coms1', NULL, '', '', 'uploads/avatar/avatar.jpg', 0, 10, 1428462747, 1428462747),
+(10, 'zetnhan1234', 'hX5fbK2UazahwVxg7CJoT2WOV3NTGN0g', '$2y$13$r8jdfVDLm/cVYnMfGIcBROKcvUNTz37T0oT9U1W4EA7d81vmllboW', NULL, 2, NULL, 89, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.com1231', NULL, '', '', 'uploads/avatar/avatar.jpg', 0, 10, 1428463965, 1428463965),
+(11, 'admin1@gmail.com', 'CFFWhRAjwjFv4OCdaF6jKsoL1v-kqDHd', '$2y$13$MCm1WMxGMS72xFLuazrpy.zC2oVzI3Onds1JdDiweJe65uwVnkSly', NULL, 1, NULL, 102, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com12312313', NULL, '', '268 Lý thường kiệt', 'uploads/avatar/avatar.jpg', 1, 10, 1428464258, 1428464258),
+(12, 'znhan', '3ZZ1CTIA58Rs3pzA7L-Kdstr3h5Hicku', '$2y$13$2kWi7hRL2raO4um2jfK91OWPkZKMce6swOx5ua/jxkkj8Zayua5sW', NULL, 1, NULL, 90, 'Nguyễn Văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com123123sd', NULL, 'Tao là customer', '268 Lý thường kiệt', 'uploads/avatar/avatar.jpg', 0, 10, 1428488501, 1428488501),
+(13, 'adminkeke', 'fU0lUEwuvp8wAjaQU4d9QZzX5PA6rf1A', '$2y$13$hGagIdidM/44HyyMbbhdDOosYTQtZGHqaIZGWI5lZ8XJM772Rj15i', NULL, 1, NULL, 125, 'Nguyễn văn Nhàn', NULL, '1', NULL, 'vannhan.nguyen0405@gmail.com1', NULL, '1', '1', 'uploads/avatar/avatar.jpg', 0, 10, 1428903072, 1428903072),
+(14, 'wtf', '-_Deuj3D57wNktce-lxWQqivlTuZ8nue', '$2y$13$zFMLAyyYBxU2nQ30ZbvAo.22kxjC7p7RcDmfKtsTfMka9w5g0ytiG', NULL, 2, NULL, 94, '1', NULL, '1', NULL, 'vannhan.nguyen0405@gmail.com11231', NULL, '12', '12', 'uploads/avatar/avatar.jpg', 0, 10, 1428903113, 1428903113),
+(15, 'nguyenvannhan', 'mKn70uztNfrblknx3fEnTtmgV2vbbD2y', '$2y$13$I9ec3n6XEX9c1ia5MS68ge9y8NMqj8fUzzi4m9avmL.9IFFY20Hyu', NULL, 1, NULL, 175, 'Nguyễn Văn Nhàn', NULL, '0938194492', NULL, '51002201@hcmut.edu.vn', NULL, 'hello', '268 Lý thường kiệt', 'uploads/avatar/avatar.jpg', 0, 10, 1428992062, 1428992062),
+(16, 'hoho', 'IRDYCBz0kp57Ht0SMu-2hDvXRV8Y-vQC', '$2y$13$lvtF5kb2ySjBQ/gdxtT04OZJrd/LRKWIzlJxoeLGPYvyMr1lNl5Jq', NULL, 3, NULL, 100, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com1212', NULL, '1', '268 Lý thường kiệt', 'uploads/avatar/avatar.jpg', 0, 10, 1429684226, 1429684226),
+(17, 'nhannguyen92', 'IEdZYvMnXUelV5bGTSfKtesZXfpE-qtT', '$2y$13$rmQog1huU5uhY8imtRJSiu47KMBWvsNIvDt4jy3UxKNDn/hHhbmNe', NULL, 2, NULL, 250, 'Nguyễn văn Nhàn', NULL, '1', NULL, 'vannhan.nguyen0405@gmail.com21', NULL, '1', '1', 'uploads/avatar/avatar.jpg', 0, 10, 1429686424, 1429686424),
+(18, 'nhannguyencs10', 'pu69cNXfoWnIsg2n0YM6CO8X5PV_Xwh1', '$2y$13$k.uildQVWJiUxwWiimavNO.PzBzHrFWPTy7g2rc9ba7My6QFDGDVG', NULL, 2, NULL, 300, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com132', NULL, '1', '1', 'uploads/avatar/avatar.jpg', 0, 10, 1429686477, 1429686477),
+(19, 'znznznzn', '7gb2QYK3bYhMKROEQNoK4iJSIEZ04OAe', '$2y$13$mblPPR4nEBXvPPyrfTprJOSX9B8NJ7ra4ML2CHCz5ZFDeOZH012wq', NULL, 1, NULL, 82, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com765432', NULL, '1', '268 Lý thường kiệt', 'uploads/avatar/avatar.jpg', 0, 10, 1430731898, 1430731898),
+(20, 'nhannguyen123', 'cjMMFr4dGI5bAgy6v7Zh0y0jnC2oi24Y', '$2y$13$qO9jJf48XjveX6wq6FwWB.8f/.8.6LF0ikQfS4C7EPyh8/VTciGry', NULL, 3, NULL, 100, 'Nguyễn Văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com12', NULL, '12', '268 Lý thường kiệt', 'uploads/avatar/avatar.jpg', 0, 10, 1430746652, 1430746652),
+(21, 'nhannguyencs1234', 'zXfHg7T38ZS4YnUfxEmfVL18WowJFduu', '$2y$13$lJx9lc1JV9/QZYffESAH6.rObWVW.0Qa.L3WVnzrbwKIgfZ5NUpwe', NULL, 2, NULL, 0, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com1234', NULL, 'I''m photograper', '268 Lý thường kiệt', 'uploads/avatar/avatar.jpg', 0, 10, 1431424733, 1431424733),
+(22, 'vannhan', 'OY9AkcDkAkcvWnu3PQ4x66JGgGFeygwT', '$2y$13$gLzTN.9HYaMFOiFYVQcrC.xiuiIwC3UOVYuLiJOGjrust37jFnQmW', NULL, 2, 1, 150000, 'Nguyễn Văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com21213', NULL, 'I am photograper', '268 Lý thường kiệt', 'uploads/avatar/avatar.jpg', 0, 10, 1431441917, 1431441917),
+(25, 'admintor', 'IfHLn0HrLiG5VaP_xLOPI4kQkjWVmFB7', '$2y$13$w8izNT0uR3F24QYsngoteuapXIqK9Eq8xe37G2f.haKgfZ0O0h/6S', NULL, 0, NULL, NULL, 'Nguyễn Văn Nhàn', NULL, '0938194492', NULL, '51002201@hcmut.edu.vn12', NULL, '1', '268 Lý thường kiệt', 'uploads/avatar/avatar.jpg', 0, 10, 1431572471, 1431572471),
+(26, '123456', 'IEdZYvMnXUelV5bGTSfKtesZXfpE-qtT', '$2y$13$rmQog1huU5uhY8imtRJSiu47KMBWvsNIvDt4jy3UxKNDn/hHhbmNe', NULL, 0, NULL, 0, 'Nguyen van nhan', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com1223', NULL, '1234', '12345', 'uploads/avatar/avatar.jpg', 0, 10, 1431574784, 1431574784),
+(27, 'admin', 'IEdZYvMnXUelV5bGTSfKtesZXfpE-qtT', '$2y$13$rmQog1huU5uhY8imtRJSiu47KMBWvsNIvDt4jy3UxKNDn/hHhbmNe', NULL, 0, NULL, NULL, '1', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com123123', NULL, '123', 'Tổ 10, KV8, P. Ngô Mây, TP. Quy Nhơn, tỉnh Bình Định', 'uploads/avatar/avatar.jpg', 0, 10, 1431584162, 1431584162),
+(28, 'customer', '5mzebdn-9NDXrYIXw0q70_9GJ7oAl3Kz', '$2y$13$WwgjVJUFxTkCjeaXAutuz.8OQFKirgcViNy0RZXkCAC1AqacPqgge', NULL, 1, NULL, NULL, 'Nhan Nguyen', NULL, '0938194492', NULL, 'hoho@gmail.com', NULL, 'I''m customer', 'Tổ 10, KV8, P. Ngô Mây, TP. Quy Nhơn, tỉnh Bình Định', 'uploads/avatar/avatar.jpg', 0, 10, 1431589231, 1431589231);
 
 --
 -- Constraints for dumped tables
