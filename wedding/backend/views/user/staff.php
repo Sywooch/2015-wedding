@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </tr>
         <?php foreach ($photos as $photo) {?>
          <tr>
-             <td><img src="<?php echo $photo['avatar']; ?>" style="width: 50px; height: 50px;"></td>
+             <td style="text-align:center"><img src="<?php echo $photo['avatar']; ?>" style="width: 50px; height: 50px;"></td>
             <td><?=$photo['fullname']?></td>
             <td><?=$photo['email']?></td>
             <td><?=$photo['info_user']?></td>

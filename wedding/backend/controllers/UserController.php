@@ -35,6 +35,8 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
+        $session = Yii::$app->session;
+        if(isset($session['username'])&&$session['type_user']==0){
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
@@ -45,6 +47,7 @@ class UserController extends Controller
             'dataProvider' => $dataProvider,
             
         ]);
+        }else return $this->goBack ();
     }
     
     // get all customer
@@ -179,16 +182,26 @@ class UserController extends Controller
         }
     }
     
-    public function actionGetallphotoby(){
+    public function actionAllphotograper(){
         $modeluser = new User();
         
         return $this->render('staff',[
-            'title'=>'Photos',
+            'title'=>'Photograper',
             'photos'=>$modeluser->getallphoto(),
         ]);
     }
+    
+    public function actionAllmakeup(){
+        $model = new User();
+        return $this->render('staff',[
+            'title'=>'Make up',
+            'photos'=>$model->getallmakeup(),
+        ]);
+    }
 
-        //get all photo
+
+
+    //get all photo
     public function actionGetallphoto(){
         
         $session = \Yii::$app->session;
