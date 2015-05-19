@@ -37,13 +37,11 @@ AppAsset::register($this);
                    <ul id="menu">
                        <li class=""><a href="<?php echo Url::base().'/index.php' ?>" title="Trang chủ">Trang chủ</a></li>
                        <li class=""><a href="" title="Giới thiệu">Album cưới</a></li>
-                       <li class="haveSub "><a href="">Dịch vụ cưới</a><span></span>
+                       <li class="haveSub "><a href="">Nhân Viên</a><span></span>
                            <ul>
-                                <li><a href='' title='Chụp hình Cưới'>Chụp hình Cưới</a></li>
-                                <li><a href='<?php echo Url::base().'/index.php?r=dress/alldress' ?>' title='Áo Cưới'>Áo Cưới</a></li>
-                                <li><a href='' title='Trang điểm cô dâu'>Trang điểm cô dâu</a></li>
-                                <li><a href='' title='Nhẫn Cưới'>Nhẫn Cưới</a></li>
-                                <li><a href='' title='Hoa Cưới'>Hoa Cưới</a></li> 
+                                <li><a href='' title='Chụp hình Cưới'>Thợ chụp ảnh</a></li>
+                                <li><a href='<?php echo Url::base().'/index.php?r=dress/alldress' ?>' title='Áo Cưới'>Thợ Trang Điểm</a></li>
+                               
                            </ul>
                        </li>
                        <li><a href="<?php echo Url::base().'/index.php?r=localtion/alllocal' ?>" title="Album ảnh">Địa điểm</a><span></span>
@@ -67,6 +65,13 @@ AppAsset::register($this);
                                          <li class=""><a href="" title="">Album Của Tôi</a></li>
                                          <li class=""><a href="" title="">Tất Cả Album</a></li>
                                         
+                                    </ul>
+                                </li>
+                                <li class="haveSub "><a href="">Nhân Viên</a><span></span>
+                                    <ul>
+                                         <li><a href='' title='Chụp hình Cưới'>Thợ chụp ảnh</a></li>
+                                         <li><a href='<?php echo Url::base().'/index.php?r=dress/alldress' ?>' title='Áo Cưới'>Thợ Trang Điểm</a></li>
+
                                     </ul>
                                 </li>
                                 <li class="haveSub "><a href="">Dịch vụ cưới</a><span></span>

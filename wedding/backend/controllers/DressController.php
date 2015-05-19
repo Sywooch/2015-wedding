@@ -234,11 +234,11 @@ class DressController extends Controller
                 $model->avatar = UploadedFile::getInstance($model, 'avatar');
                 //var_dump($model->avatar);
                 if($model->avatar!=NULL){
-                    $model->avatar->saveAs( 'uploads/'.$imgname.'.'.$model->avatar->extension );
+                    $model->avatar->saveAs( 'uploads/avatar/'.$imgname.'.'.$model->avatar->extension );
 
                     //save in db
 
-                    $model->avatar = 'uploads/'.$imgname.'.'. $model->avatar->extension;
+                    $model->avatar = 'uploads/avatar/'.$imgname.'.'. $model->avatar->extension;
                 }
                 $model->id_dress ='D'.time();
                 $model->save();

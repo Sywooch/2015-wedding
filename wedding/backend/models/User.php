@@ -138,6 +138,15 @@ class User extends \yii\db\ActiveRecord
     }
     
     
+    public function getallphoto(){
+        $photo = \Yii::$app->db->createCommand('SELECT * FROM user where type_user = 2 and status != 0')->queryAll();
+        if(isset($photo)&&$photo!=NULL){
+            return $photo;
+        }else {return NULL;}
+    }
+
+    
+
     public function getPhotofree($start,$end){
         
         $contract = $this->getUserfress($start, $end);

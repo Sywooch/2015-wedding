@@ -131,6 +131,18 @@ class SiteController extends Controller
     {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
+            
+            $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
+                $model->avatar = UploadedFile::getInstance($model, 'avatar');
+                //var_dump($model->avatar);
+                if($model->avatar!=NULL){
+                    $model->avatar->saveAs( 'uploads/'.$imgname.'.'.$model->avatar->extension );
+
+                    //save in db
+
+                    $model->avatar = 'uploads/'.$imgname.'.'. $model->avatar->extension;
+                }else {$model->avatar = 'uploads/avatar/avatar.jpg';}
+            
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
                     $session = Yii::$app->session;

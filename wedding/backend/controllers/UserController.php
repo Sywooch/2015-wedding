@@ -179,9 +179,16 @@ class UserController extends Controller
         }
     }
     
-    
-    
-    //get all photo
+    public function actionGetallphotoby(){
+        $modeluser = new User();
+        
+        return $this->render('staff',[
+            'title'=>'Photos',
+            'photos'=>$modeluser->getallphoto(),
+        ]);
+    }
+
+        //get all photo
     public function actionGetallphoto(){
         
         $session = \Yii::$app->session;
