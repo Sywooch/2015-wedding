@@ -241,7 +241,10 @@ class DressController extends Controller
                     $model->avatar = 'uploads/avatar/'.$imgname.'.'. $model->avatar->extension;
                 }
                 $model->id_dress ='D'.time();
-                $model->save();
+//                $model->save();
+                if($model->save()){
+//                    return $this->redirect('index.php?r=img/create&&id='.$model->id_dress.'&&type=dress');
+                }
                 return $this->redirect(['view', 'id' => $model->id_dress]);
             }
             else {

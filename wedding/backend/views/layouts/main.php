@@ -98,20 +98,15 @@ AppAsset::register($this);
                         <?php } else if($session['type_user']== 0) { ?>
                             <ul id="menu">
                                 <li class=""><a href="" title="Trang chủ">Trang chủ</a></li>
-                                <li class="haveSub"><a href="" title="Giới thiệu">Album cưới</a>
+                                
+                                <li class="haveSub "><a href="">Tài Khoản </a><span></span>
                                     <ul>
-                                         
-                                         <li class=""><a href="" title="">Tất Cả Album</a></li>
+                                         <li class=""><a href='<?php echo Url::base().'/index.php?r=user/getallphoto' ?>' title=''>Thợ Chụp Hình</a></li>
+                                         <li class=""><a href='<?php echo Url::base().'/index.php?r=user/getallmakeup' ?>' title=''>Thợ Trang Điểm</a></li>
                                         
-                                    </ul>
-                                </li>
-                                <li class="haveSub "><a href="">Dịch vụ cưới</a><span></span>
-                                    <ul>
-                                         <li><a href='' title='Chụp hình Cưới'>Chụp hình Cưới</a></li>
-                                         <li><a href='' title='Áo Cưới'>Áo Cưới</a></li>
-                                         <li><a href='' title='Trang điểm cô dâu'>Trang điểm cô dâu</a></li>
-                                         <li><a href='' title='Nhẫn Cưới'>Nhẫn Cưới</a></li>
-                                         <li><a href='' title='Hoa Cưới'>Hoa Cưới</a></li> 
+                                         <li><a href='<?php echo Url::base().'/index.php?r=user/getallcustomer' ?>' title='Áo Cưới'>Khách Hàng</a></li>
+                                         <li><a href='<?php echo Url::base().'/index.php?r=site/signup' ?>' title=''>Thêm Tài Khoản</a></li>
+                                         
                                     </ul>
                                 </li>
                                 <li class="haveSub"><a href="" title="">Địa điểm</a><span></span>
@@ -150,9 +145,17 @@ AppAsset::register($this);
                                     <?php } ?>
                                     </ul>
                                 </li>
-                                <li class=""><a href="<?php echo Url::base().'/index.php?r=user/view&&id='.$session['id_user']?>"  class="place">Thông Tin Cá Nhân</a></li>
-                                <li class=""><a href="<?php echo Url::base().'/index.php?r=site/logout' ?>" data-method = "post" title="Địa điểm chụp hình cưới" class="place">Đăng Xuất</a></li>
-                                
+                                <?php 
+                                    $x =$session['type_user'];
+                                    if($x == 2) $type = 'photographer';else if($x == 3 )$type = 'make up'; 
+                                    ?>
+                                <li class="haveSub"><a href="" title=""><?php echo $type.'('. $session['username'].')' ?></a><span></span>
+                                    <ul>
+                                        <li class=""><a href="<?php echo Url::base().'/index.php?r=user/view&&id='.$session['id_user']?>"  class="place">Thông Tin Cá Nhân</a></li>
+                                       <li class=""><a href="<?php echo Url::base().'/index.php?r=site/logout' ?>" data-method = "post" title="Địa điểm chụp hình cưới" class="place">Đăng Xuất</a></li>
+                                        
+                                    </ul>
+                                </li>
                             </ul>
                             
                    <?php    }

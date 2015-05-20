@@ -12,6 +12,8 @@ use backend\models\SignupForm;
 use backend\models\ContactForm;
 use yii\web\Session;
 use backend\models\User;
+//use backend\models\UploadForm;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -132,7 +134,7 @@ class SiteController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             
-            $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
+                $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
                 $model->avatar = UploadedFile::getInstance($model, 'avatar');
                 //var_dump($model->avatar);
                 if($model->avatar!=NULL){
@@ -144,15 +146,16 @@ class SiteController extends Controller
                 }else {$model->avatar = 'uploads/avatar/avatar.jpg';}
             
             if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    $session = Yii::$app->session;
-                    $session['username']=$user->username;
-                    $session['id_user'] = $user->id;
-                    $session['type_user'] = $user->type_user;
-//                  echo $session['id_user'];
-//                    echo  $session['type_user'];
-                     return $this->goHome();
-                }
+//                if (Yii::$app->getUser()->login($user)) {
+//                    $session = Yii::$app->session;
+//                    $session['username']=$user->username;
+//                    $session['id_user'] = $user->id;
+//                    $session['type_user'] = $user->type_user;
+////                  echo $session['id_user'];
+////                    echo  $session['type_user'];
+//                     return $this->goHome();
+//                }
+                return $this->goHome();
             }
         }
 

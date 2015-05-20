@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\Contract;
 use DateTime;
+use yii\web\UploadedFile;
 use backend\models\Localtion;
 
 /**
@@ -316,20 +317,30 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         
-        $session= \Yii::$app->session;
+        $session= Yii::$app->session;
         if(isset($session['username'])&&($session['type_user']==0||$session['id_user']==$id)){
         
             $model = $this->findModel($id);
+            $url_avar = $model->avatar;
             
             if ($model->load(Yii::$app->request->post())) {
-                echo '<pre>';
-                var_dump($model->save());
-                echo '</pre>';
+//                echo '<pre>';
+//                var_dump($model->save());
+//                echo '</pre>';
+                if($model->avatar==NULL){
+                    $model->avatar = $url_avar;
+                }else{
+                    
+                    $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
+                    $model->avatar = UploadedFile::getInstance($model, 'avatar');
+                    $model->avatar->saveAs( 'uploads/'.$imgname.'.'.$model->avatar->extension );
+
+                    //save in db
+
+                    $model->avatar = 'uploads/'.$imgname.'.'. $model->avatar->extension;
+                }
                 if($model->save()){
                     return $this->redirect(['view', 'id' => $model->id]);
-                }else
-                {
-                    
                 }
             } else {
                 if($model->type_user==0){

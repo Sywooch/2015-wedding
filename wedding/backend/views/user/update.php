@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => 255,'readonly'=>true]) ?>
 
@@ -33,6 +33,8 @@ $this->params['breadcrumbs'][] = 'Update';
     <?= $form->field($model, 'info_user')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'address')->textInput(['maxlength' => 250]) ?>
+    
+    <?=$form->field($model, 'avatar')->fileInput()?>
 
     <div class="form-group">
         <?= Html::submitButton('Update', ['class' =>'btn btn-primary']) ?>

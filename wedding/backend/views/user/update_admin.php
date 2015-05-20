@@ -13,15 +13,15 @@ $this->params['breadcrumbs'][] = 'Update';
 <div class="user-update">
     
     <?php 
-    echo '<pre>';
-    
-    print_r($model);
-    echo '</pre>';
+//    echo '<pre>';
+//    
+//    print_r($model);
+//    echo '</pre>';
     ?>
     
     <h1><?= Html::encode($this->title) ?></h1>
 
-     <?php $form = ActiveForm::begin(); ?>
+     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => 255,'readonly'=>true]); ?>
     
@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $form->field($model, 'address')->textInput(['maxlength' => 250]) ?>
 
-    
+    <?=$form->field($model, 'avatar')->fileInput()?>
 
     
 

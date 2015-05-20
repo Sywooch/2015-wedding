@@ -55,7 +55,7 @@ class User extends ActiveRecord implements CartPositionInterface
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'type_user', 'fullname', 'tell', 'email', 'info_user', 'address', 'avatar', 'created_at', 'updated_at'], 'required'],
+            [['username', 'auth_key', 'password_hash', 'type_user', 'fullname', 'tell', 'email', 'info_user', 'address', 'created_at', 'updated_at'], 'required'],
             [['type_user', 'range_user', 'rate_user', 'have_contract', 'status', 'created_at', 'updated_at'], 'integer'],
             [['info_user'], 'string'],
             [['username', 'password_hash', 'password_reset_token', 'email', 'email2', 'avatar'], 'string', 'max' => 255],
