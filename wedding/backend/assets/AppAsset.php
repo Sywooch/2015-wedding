@@ -26,16 +26,16 @@ class AppAsset extends AssetBundle
 //        'css/stylesheets/theme.css',	
          'css/cssjquery.fancybox.css',
          'css/css/style218.css',
-         'css/css/galleria.folio.css',
+//         'css/css/galleria.folio.css',
      ];		     
 
     public $js = [
         'js/main.js',
         'js/jquery.localisation-min.js',
         'js/ui.multiselect.js',
-        'js/js/galleria.folio.min.js',
-        'js/js/galleria-1.2.8.min.js',
-        'js/js/jquery-2.1.4.min.js',
+//        'js/js/galleria.folio.min.js',
+//        'js/js/galleria-1.2.8.min.js',
+//        'js/js/jquery-2.1.4.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
