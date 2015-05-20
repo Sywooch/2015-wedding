@@ -203,7 +203,7 @@ class LocaltionController extends Controller
     
     public function actionAlllocal(){
         $query = new Query();
-        $rows = $query->select(['id_local','avatar','name_local'])->from('localtion')->where(['status'=>1])->all();
+        $rows = $query->select(['id_local','avatar','name_local','rate','timework'])->from('localtion')->where(['status'=>1])->all();
         $imgs;
        // $i =0;
         foreach ($rows as $row) {

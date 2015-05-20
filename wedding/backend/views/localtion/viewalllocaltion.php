@@ -10,19 +10,26 @@ use yii\helpers\Url;
 $this->title =$title;
 ?>
 <div class = "dress-index">
-    <ul>
+    
     <?php foreach ($imgs as $img) {?>
-        <li class="list-group-item">
-        <a href="<?php echo 'index.php?r=localtion/viewimg&&id='.$img['id_local'] ?>"><img src="<?php echo $img['avatar']; ?>"></a>
-        <p> <?php echo $img['name_local'] ?></p>
-
-        <?=  Html::a('Add To Cart', 'index.php?r=localtion/addtocart&&id='.$img['id_local'],['class'=>'btn btn-success']) ?>
+        <li class='oneSer oneAlbum ' >
+	        <a href='<?php echo 'index.php?r=localtion/viewimg&&id='.$img['id_local'] ?>' class='thumb' style='background-image:url(<?php echo $img['avatar'] ?>);'>
+		<img src='<?php echo $img['avatar'] ?>' /></a>
+	            <ul class='mask'>
+	                <!--<h2><a href='chup-anh-cuoi-lau-dai-tajmasago-khaisilk-sab-c1.html'>Chụp ảnh cưới lâu đài Tajmasago Khaisilk</a></h2>-->
+	                <p><a href='<?php echo 'index.php?r=localtion/viewimg&&id='.$img['id_local'] ?>'  title=''><?php echo $img['name_local'] ?></a></p>
+                        <p><a href='<?php echo 'index.php?r=localtion/viewimg&&id='.$img['id_local'] ?>'  title=''><?php echo $img['rate'].'VND' ?></a></p>
+                        <p><a href='<?php echo 'index.php?r=localtion/viewimg&&id='.$img['id_local'] ?>'  title=''><?php echo $img['timework'].' Ngày' ?></a></p>
+                        <p><?=  Html::a('Add To Cart', 'index.php?r=localtion/addtocart&&id='.$img['id_local'],['class'=>'btn btn-success addcart']) ?></p>
+                    </ul>
+	        <h1><a href='<?php echo 'index.php?r=dress/viewimg&&id='.$img['id_local'] ?>' title=''><?php echo $img['name_local'] ?></a></h1>
+                
         </li>
     <?php
         
     } ?>
         
-    </ul>    
+       
         
 </div>
 
