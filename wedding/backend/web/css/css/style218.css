@@ -930,9 +930,10 @@ img { border: none;}
 	margin-right: 25px;
 }
 .oneSer.oneAlbum {
-	width: 100%;
-	margin: 0 0 20px 0;
+	/*width: 100%;*/
+	/*margin: 0 0 20px 0;*/
 	background: none;
+        margin-bottom: 20px;
 }
 .slideBottom .oneSer.oneAlbum { margin: 0 20px 0 0;}
 .oneSer.oneAlbum img {
@@ -1159,6 +1160,7 @@ img { border: none;}
 .leftBox {
 	background: #fff;
 	margin-bottom: 30px;
+        padding-left: 20px;
 	/*border: solid 1px #E6E6E6;*/
 }
 .rightBox {

@@ -8,7 +8,7 @@ use yii\bootstrap\Modal;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Localtion */
 
-$this->title = $model->id_local;
+$this->title = $model->name_local;
 $this->params['breadcrumbs'][] = ['label' => 'Localtions', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
