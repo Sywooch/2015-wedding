@@ -15,6 +15,9 @@ body {
     font-size: 14px;
     font-weight: normal;
 }
+/*.addcart{
+    margin-top: 10px;
+}*/
 .clr { clear: both; display: block;}
 .transition02, .logo, #menu li label, #menu li ul, #bannerLeft ul li a, .camera_prev span, .camera_next span, #topFollow a, .slideBoxNav, .newsThumb span, .navBox a, #nicePic .caption a, #rightNews li .thumb span, #c-follow li a, #faceHide, #showSup {
 	-webkit-transition: all 0.2s;
