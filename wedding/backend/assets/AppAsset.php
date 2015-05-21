@@ -24,7 +24,7 @@ class AppAsset extends AssetBundle
 //        'css/stylesheets/isotope.css',		
 //        'css/stylesheets/premium.css',		
 //        'css/stylesheets/theme.css',	
-         'css/cssjquery.fancybox.css',
+         'css/css/jquery.fancybox.css',
          'css/css/style218.css',
 //         'css/css/galleria.folio.css',
      ];		     

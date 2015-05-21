@@ -45,5 +45,34 @@ $(document).ready(function (){
                 } 
             });
 });
+$(function(){
+    $("#contract-start_time").change(function(){
+
+    	$("#contract-timeadd").change(function(){
+            
+            
+                
+    		var x = document.getElementById("contract-start_time").value;
+    		var y = document.getElementById("contract-timeadd").value;
+                var z = document.getElementById("contract-id_local").value;
+                
+                
+                
+                  
+                 
+                //var baseurl='<?php echo Yii::$app->request->baseUrl();?>';
+    		window.location.href ='index.php?r=contract%2Fcreate'+ '&&start='+x+'&&end='+x+'&&id_local='+z;
+
+//                $.ajax({
+//                url: $form.attr('action'),
+//                type: 'POST',
+//                data: $form.serialize(),
+//                success: function(result) {
+//                    // ... Process the result ...
+//                }
+//            });
+    	});
+    });
+});
 
 				
