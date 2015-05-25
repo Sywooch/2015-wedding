@@ -24,12 +24,13 @@ use Yii;
  * @property integer $have_album
  * @property double $total_time
  * @property Localtion $idLocal
- * @property User $idUser
+ * @property $idUser = new User() 
  * @property Dresscontract[] $dresscontracts
  * @property Staffcontract[] $staffcontracts
  * @property Toolcontract[] $toolcontracts
  */
 class Contract extends \yii\db\ActiveRecord
+//class Contract extends User
 {
     /**
      * @inheritdoc

@@ -9,6 +9,7 @@ use yii\grid\GridView;
 
 $this->title = 'Contracts';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="contract-index">
 
@@ -26,10 +27,19 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id_contract',
+            'idLocal.name_local',
             'id_user',
             'id_local',
+            [
+            'attribute' => 'idUser.fullname', 
+            'sortLinkOptions'=>  yii\helpers\Url::base().'/index.php?r=contract/index&sort=idUser.fullname',     
+            'value' => 'idUser.fullname',
+            ],
+//            'idUser.fullname',
             'start_time',
             'end_time',
+            
+          //  'local.name_local',
             // 'create_day',
             // 'total',
             // 'payment1',
@@ -38,7 +48,9 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'timephoto',
             // 'timeadd:datetime',
             // 'timecomplete',
-            // 'status',
+             'status',
+//            'idUser.fullname',
+            
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

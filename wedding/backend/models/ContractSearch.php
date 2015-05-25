@@ -26,6 +26,9 @@ class ContractSearch extends Contract
     }
     
     public $user;
+    
+    
+    
 
         /**
      * @inheritdoc
@@ -48,15 +51,18 @@ class ContractSearch extends Contract
         //$query = Contract::find();
         
         $query =Contract::find()->joinWith('idUser');
+        
         //var_dump($query);exit;
-        $test = Yii::$app->db->createCommand('select * from contract INNER JOIN user ON contract.id_user = user.id')->execute();
-        
-         
-        
+        $test = Yii::$app->db->createCommand('select * from contract INNER JOIN user ON contract.id_user = user.id')->queryAll();
+        //var_dump($test);exit;
+//         echo '<pre>';
+//         print_r($user);
+//         echo '</pre>';
+//         exit;
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
+        
         $this->load($params);
 
         if (!$this->validate()) {
@@ -64,24 +70,33 @@ class ContractSearch extends Contract
             // $query->where('0=1');
             return $dataProvider;
         }
-
-        $query->andFilterWhere([
-            'id_contract' => $this->id_contract,
-            'id_user' => $this->id_user,
-            'id_local' => $this->id_local,
-            'start_time' => $this->start_time,
-            'end_time' => $this->end_time,
-            'create_day' => $this->create_day,
-            'total' => $this->total,
-            'payment1' => $this->payment1,
-            'payment2' => $this->payment2,
-            'payment3' => $this->payment3,
-            'timephoto' => $this->timephoto,
-            'timeadd' => $this->timeadd,
-            'timecomplete' => $this->timecomplete,
-            'status' => $this->status,
-        ]);
-
+        
+//        var_dump($query->all());exit;
+        
+//        $query->andFilterWhere([
+//            
+//            'id_contract' => $this->id_contract,
+//            'id_user' => $this->id_user,
+//            'id_local' => $this->id_local,
+//            'start_time' => $this->start_time,
+//            'end_time' => $this->end_time,
+//            'create_day' => $this->create_day,
+//            'total' => $this->total,
+//            'payment1' => $this->payment1,
+//            'payment2' => $this->payment2,
+//            'payment3' => $this->payment3,
+//            'timephoto' => $this->timephoto,
+//            'timeadd' => $this->timeadd,
+//            'timecomplete' => $this->timecomplete,
+//            'status' => $this->status,
+//           // 'name_local'=>  $this->idUser->name_local,
+//            
+//            
+//        ]);
+//        echo '<pre>';
+//         print_r($query->all());
+//         echo '</pre>';
+//         exit;
         return $dataProvider;
     }
 }
