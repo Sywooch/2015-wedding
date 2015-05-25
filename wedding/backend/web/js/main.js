@@ -46,32 +46,40 @@ $(document).ready(function (){
             });
 });
 $(function(){
-    $("#contract-start_time").change(function(){
+//     $("#contract-start_time").change(function(){
 
-    	$("#contract-timeadd").change(function(){
+//     	$("#contract-timeadd").change(function(){
             
             
                 
-    		var x = document.getElementById("contract-start_time").value;
-    		var y = document.getElementById("contract-timeadd").value;
-                var z = document.getElementById("contract-id_local").value;
+//     		var x = document.getElementById("contract-start_time").value;
+//     		var y = document.getElementById("contract-timeadd").value;
+//                 var z = document.getElementById("contract-id_local").value;
                 
                 
                 
                   
                  
-                //var baseurl='<?php echo Yii::$app->request->baseUrl();?>';
-    		window.location.href ='index.php?r=contract%2Fcreate'+ '&&start='+x+'&&end='+x+'&&id_local='+z;
+//                 //var baseurl='<?php echo Yii::$app->request->baseUrl();?>';
+//     		window.location.href ='index.php?r=contract%2Fcreate'+ '&&start='+x+'&&end='+x+'&&id_local='+z;
 
-//                $.ajax({
-//                url: $form.attr('action'),
-//                type: 'POST',
-//                data: $form.serialize(),
-//                success: function(result) {
-//                    // ... Process the result ...
-//                }
-//            });
-    	});
-    });
+// //                $.ajax({
+// //                url: $form.attr('action'),
+// //                type: 'POST',
+// //                data: $form.serialize(),
+// //                success: function(result) {
+// //                    // ... Process the result ...
+// //                }
+// //            });
+//     	});
+//     });
+    $(".a").change(function(){
+        if( $('#contract-id_local').val() && $('#contract-start_time').val() && $('#contract-timeadd').val() ) {
+            var x = document.getElementById("contract-start_time").value;
+            var y = document.getElementById("contract-timeadd").value;
+            var z = document.getElementById("contract-id_local").value;
+            window.location.href ='index.php?r=contract%2Fcreate'+ '&&start='+x+'&&end='+x+'&&id_local='+z;
+        }
+    });    
 });
 

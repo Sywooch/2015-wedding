@@ -32,7 +32,7 @@ $opt = [15,20,25,30,35,40,45,50];
     <div class = "timestart">
     <?= $form->field($model, 'id_local')->dropDownList(
                     ArrayHelper::map(Localtion::find()->all(), 'id_local', 'name_local'),
-                        ['prompt'=>'Select Localtion',]
+                        ['prompt'=>'Select Localtion','class'=> "form-control a"]
                         ) ?>
         
         <?= $form->field($model, 'start_time')->widget(
@@ -41,9 +41,10 @@ $opt = [15,20,25,30,35,40,45,50];
               'clientOptions'=>[
                   'autoclose'=>true,
                   'format'=>'yyyy-mm-dd'
-              ]
+              ],
+              'options'=> ['class'=>'a'],
         ]);?>
-        <?= $form->field($model, 'timeadd')->textInput() ?>
+        <?= $form->field($model, 'timeadd')->textInput(['class'=>'form-control a']) ?>
                 
     </div>
     <?php }?>
