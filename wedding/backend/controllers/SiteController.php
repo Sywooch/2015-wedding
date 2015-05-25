@@ -14,6 +14,7 @@ use yii\web\Session;
 use backend\models\User;
 //use backend\models\UploadForm;
 use yii\web\UploadedFile;
+use yii\web\Cookie;
 
 /**
  * Site controller
@@ -63,6 +64,20 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+        $cookie = Yii::$app->response->cookies;
+        $session = Yii::$app->session;
+        
+        //if(isset($cookie['username'])&&!isset($session['username'])) {
+        if(Yii::$app->user->identity){
+            $user = new User();
+            $session['username'] = Yii::$app->user->identity->username;
+            $session['id_user'] = $user->getInfobyUsername($session['username'])->id;
+            $session['type_user'] = $user->getInfobyUsername($session['username'])->type_user;
+        }
+        
+//        echo '<pre>';
+//        print_r($cookie);
+//        echo '</pre>';
         return $this->render('index');
     }
 
@@ -167,6 +182,10 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
+        $cookies = Yii::$app->response->cookies;
+        if(isset($cookies['username'])){
+            unset($cookies['username']);
+        }
 //        session_destroy ();
         return $this->goHome();
     }
