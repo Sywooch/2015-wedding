@@ -3,6 +3,10 @@
 namespace backend\models;
 
 use Yii;
+use yz\shoppingcart\CartPositionInterface;
+use yz\shoppingcart\CartPositionProviderInterface;
+use yz\shoppingcart\CartPositionTrait;
+use yii\db\ActiveRecord; 
 
 /**
  * This is the model class for table "user".
@@ -33,11 +37,13 @@ use Yii;
  * @property Staffcontract[] $staffcontracts
  * @property Timework[] $timeworks
  */
-class User extends \yii\db\ActiveRecord
+class User extends ActiveRecord implements CartPositionInterface
 {
     /**
      * @inheritdoc
      */
+    
+    use CartPositionTrait;
     public static function tableName()
     {
         return 'user';
@@ -49,7 +55,7 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'type_user', 'fullname', 'tell', 'email', 'info_user', 'address', 'avatar', 'created_at', 'updated_at'], 'required'],
+            [['username', 'auth_key', 'password_hash', 'type_user', 'fullname', 'tell', 'email', 'info_user', 'address', 'created_at', 'updated_at'], 'required'],
             [['type_user', 'range_user', 'rate_user', 'have_contract', 'status', 'created_at', 'updated_at'], 'integer'],
             [['info_user'], 'string'],
             [['username', 'password_hash', 'password_reset_token', 'email', 'email2', 'avatar'], 'string', 'max' => 255],
@@ -89,6 +95,15 @@ class User extends \yii\db\ActiveRecord
         ];
     }
 
+     public function getPrice()
+    {
+        return $this->rate_user;
+    }
+
+    public function getId()
+    {
+        return $this->id_user;
+    }
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -138,6 +153,22 @@ class User extends \yii\db\ActiveRecord
     }
     
     
+    public function getallphoto(){
+        $photo = \Yii::$app->db->createCommand('SELECT * FROM user where type_user = 2 and status != 0')->queryAll();
+        if(isset($photo)&&$photo!=NULL){
+            return $photo;
+        }else {return NULL;}
+    }
+    
+    public function getallmakeup(){
+        $makeups = \Yii::$app->db->createCommand('SELECT * FROM user where type_user = 3 and status != 0')->queryAll();
+        if(isset($makeups)&&$makeups!=NULL){
+            return $makeups;
+        }else {return NULL;}
+    }
+
+    
+
     public function getPhotofree($start,$end){
         
         $contract = $this->getUserfress($start, $end);

@@ -33,24 +33,27 @@ class LocaltionController extends Controller
      * Lists all Localtion models.
      * @return mixed
      */
-    public function actionViewimg($id){
+   public function actionViewimg($id){
         
         //$model = new Imgdress();
-        $query = new Query();
-        $rows = $query->select(['*'])->from('imglocal')->where(['id_local'=>$id])->all();
-        $imgs;
-        foreach ($rows as $row) {
-            $qr = new Query();
-            $imgs[] = $qr->select(['url','id_img'])->from('img')->where(['id_img'=>$row,'status'=>'1'])->one();
-        }
         
-        $test['imgs']= $imgs; 
-        $test['title'] = $id;
-        //$model->find()->all();
-        return $this->render('viewid',$test);
-        echo '<pre>';
-       // print_r($img);
-        echo '</pre>';
+       
+        
+            $query = new Query();
+            $rows = $query->select(['*'])->from('imglocal')->where(['id_local'=>$id])->all();
+           // $imgs;
+            foreach ($rows as $row) {
+                $qr = new Query();
+                $imgs[] = $qr->select(['url','id_img'])->from('img')->where(['id_img'=>$row,'status'=>'1'])->one();
+            }
+            if(isset($imgs)){
+                $test['imgs']= $imgs; 
+
+            }else $test['imgs']= []; 
+            $test['title'] = LocaltionController::findModel($id)->name_local;
+
+            return $this->render('viewid',$test);
+//        }else return $this->goBack ();
         
     }
     
@@ -194,6 +197,25 @@ class LocaltionController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+    
+    //
+    
+    public function actionAlllocal(){
+        $query = new Query();
+        $rows = $query->select(['id_local','avatar','name_local','rate','timework'])->from('localtion')->where(['status'=>1])->all();
+        $imgs;
+       // $i =0;
+        foreach ($rows as $row) {
+           $imgs[] = $row;
+        }
+        
+       
+        
+        $test['imgs']= $imgs; 
+        $test['title'] = 'All Localtion';
+        //$model->find()->all();
+        return $this->render('viewalllocaltion',$test);
     }
 
     /**

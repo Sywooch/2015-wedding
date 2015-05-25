@@ -27,7 +27,28 @@ $opt = [15,20,25,30,35,40,45,50];
 <div class="contract-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
+    
+    <?php if(!isset($_GET['start'])) {?>
+    <div class = "timestart">
+    <?= $form->field($model, 'id_local')->dropDownList(
+                    ArrayHelper::map(Localtion::find()->all(), 'id_local', 'name_local'),
+                        ['prompt'=>'Select Localtion',]
+                        ) ?>
+        
+        <?= $form->field($model, 'start_time')->widget(
+            DatePicker::className(), [
+              'inline'=>false,
+              'clientOptions'=>[
+                  'autoclose'=>true,
+                  'format'=>'yyyy-mm-dd'
+              ]
+        ]);?>
+        <?= $form->field($model, 'timeadd')->textInput() ?>
+                
+    </div>
+    <?php }?>
+    <div class ="info_contract">
+    
     
     <?php if($model->isNewRecord) {?>
         <?= $form->field($model, 'id_user')->dropDownList(
@@ -38,24 +59,7 @@ $opt = [15,20,25,30,35,40,45,50];
          echo $form->field($model,'id_user')->textInput(['readonly'=>true]);
         }
     ?>
-   
 
-    <?= $form->field($model, 'id_local')->dropDownList(
-                    ArrayHelper::map(Localtion::find()->all(), 'id_local', 'name_local'),
-                        ['prompt'=>'Select Localtion',]
-                        ) ?>
-
-   
-    <?= $form->field($model, 'start_time')->widget(
-            DatePicker::className(), [
-              'inline'=>false,
-              'clientOptions'=>[
-                  'autoclose'=>true,
-                  'format'=>'yyyy-mm-dd'
-              ]
-        ]);?>
-   
-    
      <?= $form->field($model, 'payment1')->widget(
             DatePicker::className(), [
               'inline'=>false,
@@ -92,7 +96,7 @@ $opt = [15,20,25,30,35,40,45,50];
               ]
         ]);?>
 
-    <?= $form->field($model, 'timeadd')->textInput() ?>
+    
 
     <?= $form->field($model, 'timecomplete')->textInput() ?>
     
@@ -172,7 +176,7 @@ $opt = [15,20,25,30,35,40,45,50];
         <?= Html::submitButton( 'Review', ['class' => 'btn btn-success']) ?>
 
     </div>
-
+        </div>    
     <?php ActiveForm::end(); ?>
 
 </div>

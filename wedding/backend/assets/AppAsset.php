@@ -17,17 +17,27 @@ class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
-    public $css = [
-        'css/site.css',
-//        'css/stylesheets/elements.css',
-//        'css/stylesheets/isotope.css',
-//        'css/stylesheets/premium.css',
-//        'css/stylesheets/theme.css',
-    ];
+
+        
+     public $css = [		    
+       'css/site.css',		
+//        'css/stylesheets/elements.css',	
+//        'css/stylesheets/isotope.css',		
+//        'css/stylesheets/premium.css',		
+//        'css/stylesheets/theme.css',	
+         'css/css/jquery.fancybox.css',
+         'css/css/style218.css',
+//         'css/css/galleria.folio.css',
+     ];		     
+
+
     public $js = [
         'js/main.js',
         'js/jquery.localisation-min.js',
         'js/ui.multiselect.js',
+//        'js/js/galleria.folio.min.js',
+//        'js/js/galleria-1.2.8.min.js',
+//        'js/js/jquery-2.1.4.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

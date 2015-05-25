@@ -43,6 +43,7 @@ class SignupForm extends Model
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
+            
             ['email', 'email'],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
             [['type_user','fullname','tell','info_user','address'],'required'],
@@ -80,6 +81,9 @@ class SignupForm extends Model
             if(isset($this->rate_user)){
                 $user->rate_user = $this->rate_user;
             }
+            
+            $user->avatar = $this->avatar;
+
             $user->setPassword($this->password);
             $user->generateAuthKey();
             if ($user->save()) {

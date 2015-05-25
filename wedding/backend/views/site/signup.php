@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row">
         <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
+            <?php $form = ActiveForm::begin(['id' => 'form-signup','options' => ['enctype' => 'multipart/form-data']]); ?>
                 <?= $form->field($model, 'username') ?>
                 <?= $form->field($model, 'password')->passwordInput() ?>
                 
@@ -56,13 +56,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <?= $form->field($model, 'info_user')->textarea(['rows' => 6]) ?>
 
-                    <?= $form->field($model, 'address')->textInput(['maxlength' => 250]) ?>
 
-                    <?= $form->field($model, 'avatar')->textInput(['maxlength' => 255]) ?>
-
-                   
-            
-            
+                    <?= $form->field($model, 'address')->textInput(['maxlength' => 250]) ?>            
             <div id ="staff" class="staff" style="display: none;">
                 <?= $form->field($model, 'range_user')->dropDownList([
                         '1'=>'A',
@@ -71,9 +66,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],['prompt'=>'Select Range User']) ?>
                 
                  <?= $form->field($model, 'rate_user')->textInput() ?>
+
                 
                 
             </div>
+                <?=$form->field($model, 'avatar')->fileInput()?>
+
                 <div class="form-group">
                     <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
                 </div>
