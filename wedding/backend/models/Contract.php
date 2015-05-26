@@ -24,7 +24,7 @@ use Yii;
  * @property integer $have_album
  * @property double $total_time
  * @property Localtion $idLocal
- * @property $idUser = new User() 
+ * @property User $idUser
  * @property Dresscontract[] $dresscontracts
  * @property Staffcontract[] $staffcontracts
  * @property Toolcontract[] $toolcontracts
@@ -73,6 +73,7 @@ class Contract extends \yii\db\ActiveRecord
             'timeadd' => 'Timeadd',
             'timecomplete' => 'Timecomplete',
             'status' => 'Status',
+            'fullname'=>  Yii::t('app', 'Fullname'),
         ];
     }
 
@@ -169,7 +170,6 @@ class Contract extends \yii\db\ActiveRecord
         $startmonth = $year.'-'.$monthyear.'-'.'01';
         
         $contract = Yii::$app->db->createCommand("SELECT id_contract FROM contract WHERE start_time >='".$startmonth."' AND start_time<='".$endmonth."' ORDER BY start_time")->queryAll();
-
         
         //var_dump($contract);
         

@@ -21,9 +21,7 @@ use backend\models\Ratealbum;
 use backend\models\Bigimg;
 use app\base\Model;
 use backend\models\Localtion;
-
 use yii\web\Session;
-
 //use backend\controllers\UserController;
 //use backend\controllers\DressController;
 //use backend\controllers\RatealbumController;

@@ -17,7 +17,6 @@ class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
-
         
      public $css = [		    
        'css/site.css',		
@@ -29,7 +28,6 @@ class AppAsset extends AssetBundle
          'css/css/style218.css',
 //         'css/css/galleria.folio.css',
      ];		     
-
 
     public $js = [
         'js/main.js',
