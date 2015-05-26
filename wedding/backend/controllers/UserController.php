@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use backend\models\Contract;
 use DateTime;
 use yii\web\UploadedFile;
+
 use backend\models\Localtion;
 
 /**
@@ -179,6 +180,7 @@ class UserController extends Controller
                     $noti['mess'] = 'Không có nhiệm vụ nào trong tháng này';
                     return $this->render('taskuser',$noti);
                 }
+
             }
         }
     }

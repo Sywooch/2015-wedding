@@ -169,6 +169,7 @@ class Contract extends \yii\db\ActiveRecord
         $startmonth = $year.'-'.$monthyear.'-'.'01';
         
         $contract = Yii::$app->db->createCommand("SELECT id_contract FROM contract WHERE start_time >='".$startmonth."' AND start_time<='".$endmonth."' ORDER BY start_time")->queryAll();
+
         
         //var_dump($contract);
         

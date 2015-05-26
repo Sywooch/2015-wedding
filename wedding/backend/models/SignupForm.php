@@ -83,7 +83,7 @@ class SignupForm extends Model
             }
             
             $user->avatar = $this->avatar;
-            
+
             $user->setPassword($this->password);
             $user->generateAuthKey();
             if ($user->save()) {
