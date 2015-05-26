@@ -22,12 +22,22 @@ class ContractSearch extends Contract
         return [
             [['id_contract', 'id_user', 'id_local', 'total', 'timeadd', 'status'], 'integer'],
             [['start_time', 'end_time', 'create_day', 'payment1', 'payment2', 'payment3', 'timephoto', 'timecomplete','fullname'], 'safe'],
+//            [['idUser.fullname'],'safe'],
         ];
     }
     
     public $user;
     
     public $fullname;
+
+
+    
+//    public function attributes() {
+//        return array_merge( parent::attributes(),['idUser.fullname']);
+//
+//    }
+
+    
 
 
 
@@ -52,10 +62,16 @@ class ContractSearch extends Contract
         //$query = Contract::find();
         
         $query =Contract::find();
+        $query1 = User::find();
         
-        $subqr = User::find();
+       // $query->joinWith('idUser');
         
-        $query->innerJoin('user', 'user.id = id_user');
+//        echo '<pre>';
+//        print_r($query->all());
+//        echo '</pre>';exit;
+//        $subqr = User::find();
+        
+      //  $query->innerJoin('user', 'user.id = id_user');
         
         //var_dump($query);exit;
         $test = Yii::$app->db->createCommand('select * from contract INNER JOIN user ON contract.id_user = user.id')->queryAll();
@@ -64,26 +80,31 @@ class ContractSearch extends Contract
             'query' => $query,
         ]);
         
-//        echo '<pre>';
-//        print_r($dataProvider);
-//        echo '</pre>';
-//        exit;
-        
-        $dataProvider->setSort([
-            'attributes' =>[
-                'id_contract',
-                'id_user',
-                'id_local',
-                'start_time',
-                'fullname'=>[
-                    'asc' => ['user.fullname' => SORT_ASC],
-                    'desc' => ['user.fullname' => SORT_DESC],
-                    'label' => 'Fullname'
-                ]
 
-            ]    
-        ]);
         
+//        $dataProvider->setSort([
+//            'attributes' =>[
+//                'id_contract',
+//                'id_user',
+//                'id_local',
+//                'start_time',
+//                'fullname'=>[
+//                    'asc' => ['user.fullname' => SORT_ASC],
+//                    'desc' => ['user.fullname' => SORT_DESC],
+//                    'label' => 'Fullname'
+//                ]
+//
+//            ]    
+//        ]);
+        
+        
+//        $dataProvider->sort->attributes['idUser.fullname']=[
+//            
+//            'asc' => ['idUser.fullname' => SORT_ASC],
+//             'desc' => ['idUser.fullname' => SORT_DESC],
+//            
+//        ];
+        $query->joinWith(['idUser']); 
         $this->load($params);
 
         if (!$this->validate()) {

@@ -359,6 +359,11 @@ class UserController extends Controller
             }
         }else return $this->goHome ();
     }
+    
+    public function actionTest(){
+        $model = new User();
+        $model->getContractinmonth('2015-07-21');
+    }
 
     /**
      * Deletes an existing User model.
