@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 //$this->registerJsFile(Url::base().'/js/plot/jquery.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
-$this->registerJsFile(Url::base().'/js/plot/plot.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile(Url::base().'/js/plot/plot.js', ['depends' => [\yii\web\JqueryAsset::className()],'position'=>1]);
 $this->registerJsFile(Url::base().'/js/plot/jquery.flot.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerJsFile(Url::base().'/js/plot/jquery.flot.categories.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerCssFile(Url::base().'/css/plot/examples.css', ['depends' => [BootstrapAsset::className()],]);  
@@ -31,12 +31,16 @@ $this->registerCssFile(Url::base().'/css/plot/examples.css', ['depends' => [Boot
     foreach ($contracts as $contract) {
         $test[] = intval($contract);
     }
-    var_dump($test);
+    //var_dump($test);
     
+    $data = [ ["January", $test[0]], ["February", $test[1]], ["March", $test[2]], ["April", $test[3]], ["May", $test[4]], ["June", $test[5]] ,["July", $test[6]],["Aug", $test[7]] ,["Sep", $test[8]],["Oct", $test[9]],["Nov", $test[10]],["Dec", $test[11]]];
     
+    //$test ='1';
     ?>
-   
-    <div type="image" id="placeholder" class="demo-placeholder" style="height: 200px" onload="test();"></div>
-   <img onload="test()" width="100" height="132">
+    <div class="demo-container">
+
+     <div id="placeholder" class="demo-placeholder" ></div>
+    </div>
 </div>
 
+<script type="text/javascript">document.onload = plot(<?php echo json_encode($data); ?>);</script>

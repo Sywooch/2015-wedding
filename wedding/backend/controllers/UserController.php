@@ -360,11 +360,11 @@ class UserController extends Controller
         }else return $this->goHome ();
     }
     
-    public function actionTest(){
+    public function actionTest($month){
         $model = new User();
         
         
-        $contracts = $model->getContractYear('2015');
+        $contracts = $model->getContractYear($month);
         
         $sender['title'] = '';
         $sender['contracts'] = $contracts;
