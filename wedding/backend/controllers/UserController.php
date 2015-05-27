@@ -362,7 +362,14 @@ class UserController extends Controller
     
     public function actionTest(){
         $model = new User();
-        $model->getContractinmonth('2015-07-21');
+        
+        
+        $contracts = $model->getContractYear('2015');
+        
+        $sender['title'] = '';
+        $sender['contracts'] = $contracts;
+        
+        return $this->render('contractyear',$sender);
     }
 
     /**

@@ -317,4 +317,40 @@ class User extends ActiveRecord implements CartPositionInterface
         echo  $result;
         return $result['count(*)'];
     }
+    
+    public function getdate($month,$year){
+        switch ($month){
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:     $date = 31;                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11: $date = 30;                break;
+            default :
+                if(($year%4==0 && $year%100!=0)||$year%400==0){
+                    $date = 29;
+                }else $date = 28;
+                break;
+        }
+        return $date;
+    }
+
+    public function getContractYear($year){
+        $year = intval($year);
+        for($i=1;$i<13;$i++){
+            $date = $this->getdate($i, $year);
+            $endmonth = $year.'-'.$i.'-'.$date;
+            $startmonth = $year.'-'.$i.'-'.'01';
+            $numcontract = Yii::$app->db->createCommand("SELECT count(*) FROM contract WHERE start_time >='".$startmonth."' AND start_time<='".$endmonth."'")->queryOne();
+        
+             $result[$i] =$numcontract['count(*)'];
+        }
+        
+       return $result;
+    }
 }
