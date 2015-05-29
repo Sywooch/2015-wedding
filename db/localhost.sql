@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 25, 2015 at 07:03 AM
+-- Generation Time: May 29, 2015 at 09:45 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `album` (
   `url_psd` varchar(350) COLLATE utf32_unicode_ci DEFAULT NULL,
   `numpage` int(11) NOT NULL,
   `time_complete` datetime DEFAULT NULL,
-  `url_folder` int(11) DEFAULT NULL,
+  `url_folder` varchar(250) COLLATE utf32_unicode_ci DEFAULT NULL,
   `rate` bigint(20) DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_album`),
@@ -45,9 +45,9 @@ CREATE TABLE IF NOT EXISTS `album` (
 --
 
 INSERT INTO `album` (`id_album`, `id_contract`, `url_psd`, `numpage`, `time_complete`, `url_folder`, `rate`, `status`) VALUES
-(13, 17, '', 40, NULL, NULL, NULL, 1),
-(14, 18, NULL, 30, NULL, NULL, NULL, 0),
-(15, 19, NULL, 15, NULL, NULL, NULL, 0),
+(13, 17, '', 40, NULL, NULL, NULL, 3),
+(14, 18, '', 30, NULL, '', NULL, 4),
+(15, 19, '', 15, NULL, '', NULL, 4),
 (16, 20, NULL, 35, NULL, NULL, NULL, 0),
 (17, 21, NULL, 35, NULL, NULL, NULL, 0);
 
@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `img` (
   `status` int(11) DEFAULT '1',
   PRIMARY KEY (`id_img`),
   KEY `url` (`url`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=288 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=341 ;
 
 --
 -- Dumping data for table `img`
@@ -375,7 +375,131 @@ INSERT INTO `img` (`id_img`, `url`, `title`, `status`) VALUES
 (284, 'uploads/dress/1432142230489381862541.jpg', NULL, 1),
 (285, 'uploads/dress/1432142230341428025884.jpg', NULL, 1),
 (286, 'uploads/dress/1432142230485461822566.jpg', NULL, 1),
-(287, 'uploads/dress/1432142230583019924789.jpg', NULL, 1);
+(287, 'uploads/dress/1432142230583019924789.jpg', NULL, 1),
+(288, 'uploads/album/13/1432876029834150641567.jpg', NULL, 1),
+(289, 'uploads/album/13/1432876030211288331811.jpg', NULL, 1),
+(290, 'uploads/album/13/1432876030759774041258.jpg', NULL, 1),
+(291, 'uploads/album/13/1432876030932066532676.jpg', NULL, 1),
+(292, 'uploads/album/13/1432879704715890128369.jpg', NULL, 1),
+(293, 'uploads/album/13/1432879704875013908444.jpg', NULL, 1),
+(294, 'uploads/album/13/1432879704212210239900.png', NULL, 1),
+(295, 'uploads/album/13/1432879820372875009014.jpg', NULL, 1),
+(296, 'uploads/album/13/1432879820513111299847.jpg', NULL, 1),
+(297, 'uploads/album/13/1432879820800759842261.jpg', NULL, 1),
+(298, 'uploads/album/13/1432879820881686992052.jpg', NULL, 1),
+(299, 'uploads/album/13/1432879820181053423277.jpg', NULL, 1),
+(300, 'uploads/album/13/1432879820177294665366.jpg', NULL, 1),
+(301, 'uploads/album/13/1432879820893185839914.jpg', NULL, 1),
+(302, 'uploads/album/13/143287982198237845920.jpg', NULL, 1),
+(303, 'uploads/album/13/1432879906284246507209.jpg', NULL, 1),
+(304, 'uploads/album/13/143287992022232938786.jpg', NULL, 1),
+(305, 'uploads/album/13/143287994092109279891.jpg', NULL, 1),
+(306, 'uploads/album/13/143287994141691034472.jpg', NULL, 1),
+(307, 'uploads/album/13/1432879941838657364872.jpg', NULL, 1),
+(308, 'uploads/album/13/1432879941929581111422.jpg', NULL, 1),
+(309, 'uploads/album/13/143287994179088313754.jpg', NULL, 1),
+(310, 'uploads/album/13/1432879941216823303520.jpg', NULL, 1),
+(311, 'uploads/album/13/1432879941500339105327.jpg', NULL, 1),
+(312, 'uploads/album/13/143287994179965457586.jpg', NULL, 1),
+(313, 'uploads/album/14/14328800086510755365.jpg', NULL, 1),
+(314, 'uploads/album/14/1432880008280365205171.jpg', NULL, 1),
+(315, 'uploads/album/14/1432880008989622014047.jpg', NULL, 1),
+(316, 'uploads/album/14/1432880008635672196033.jpg', NULL, 1),
+(317, 'uploads/album/14/1432880008483730697022.jpg', NULL, 1),
+(318, 'uploads/album/14/143288000823660768747.jpg', NULL, 1),
+(319, 'uploads/album/14/1432880008399357489953.jpg', NULL, 1),
+(320, 'uploads/album/14/1432880008182678208506.png', NULL, 1),
+(321, 'uploads/album/14/1432880044365257463190.jpg', NULL, 1),
+(322, 'uploads/album/14/1432880044944793648943.jpg', NULL, 1),
+(323, 'uploads/album/14/1432880044979145094275.jpg', NULL, 1),
+(324, 'uploads/album/14/1432880044485523084629.jpg', NULL, 1),
+(325, 'uploads/album/14/14328800445721919432.jpg', NULL, 1),
+(326, 'uploads/album/14/1432880044574754443573.jpg', NULL, 1),
+(327, 'uploads/album/14/1432880044885087971077.jpg', NULL, 1),
+(328, 'uploads/album/14/1432880044825572479719.png', NULL, 1),
+(329, 'uploads/album/15/1432880164306534975477.jpg', NULL, 1),
+(330, 'uploads/album/15/1432880164916496226270.jpg', NULL, 1),
+(331, 'uploads/album/15/1432880164327321212643.jpg', NULL, 1),
+(332, 'uploads/album/15/1432880164371098795216.jpg', NULL, 1),
+(333, 'uploads/album/15/143288016456655061229.jpg', NULL, 1),
+(334, 'uploads/album/15/1432880164563568306344.jpg', NULL, 1),
+(335, 'uploads/album/15/1432880164826555659871.jpg', NULL, 1),
+(336, 'uploads/album/15/1432880165591369212194.jpg', NULL, 1),
+(337, 'uploads/album/15/1432880165312689018136.jpg', NULL, 1),
+(338, 'uploads/album/15/1432880165771150344993.jpg', NULL, 1),
+(339, 'uploads/album/15/1432880165784693029032.jpg', NULL, 1),
+(340, 'uploads/album/15/1432880165887969919154.png', NULL, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `imgalbum`
+--
+
+CREATE TABLE IF NOT EXISTS `imgalbum` (
+  `id_album` int(11) NOT NULL,
+  `id_img` int(11) NOT NULL,
+  KEY `id_album` (`id_album`,`id_img`),
+  KEY `id_img` (`id_img`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `imgalbum`
+--
+
+INSERT INTO `imgalbum` (`id_album`, `id_img`) VALUES
+(13, 288),
+(13, 289),
+(13, 290),
+(13, 291),
+(13, 292),
+(13, 293),
+(13, 294),
+(13, 295),
+(13, 296),
+(13, 297),
+(13, 298),
+(13, 299),
+(13, 300),
+(13, 301),
+(13, 302),
+(13, 303),
+(13, 305),
+(13, 306),
+(13, 307),
+(13, 308),
+(13, 309),
+(13, 310),
+(13, 311),
+(13, 312),
+(14, 313),
+(14, 314),
+(14, 315),
+(14, 316),
+(14, 317),
+(14, 318),
+(14, 319),
+(14, 320),
+(14, 321),
+(14, 322),
+(14, 323),
+(14, 324),
+(14, 325),
+(14, 326),
+(14, 327),
+(14, 328),
+(15, 329),
+(15, 330),
+(15, 331),
+(15, 332),
+(15, 333),
+(15, 334),
+(15, 335),
+(15, 336),
+(15, 337),
+(15, 338),
+(15, 339),
+(15, 340);
 
 -- --------------------------------------------------------
 
@@ -931,6 +1055,13 @@ ALTER TABLE `contract`
 ALTER TABLE `dresscontract`
   ADD CONSTRAINT `fk_contract_dress` FOREIGN KEY (`id_contract`) REFERENCES `contract` (`id_contract`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_dress_contract` FOREIGN KEY (`id_dress`) REFERENCES `dress` (`id_dress`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `imgalbum`
+--
+ALTER TABLE `imgalbum`
+  ADD CONSTRAINT `imgalbum_ibfk_1` FOREIGN KEY (`id_album`) REFERENCES `album` (`id_album`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `imgalbum_ibfk_2` FOREIGN KEY (`id_img`) REFERENCES `img` (`id_img`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `imgdress`
