@@ -284,39 +284,39 @@ class User extends ActiveRecord implements CartPositionInterface
 //        $result = Yii::$app->db->createCommand("SELECT id_contract From")->queryAll();
 //        return $result;
 //    }
-    public function getContractinmonth($month_year){
-        $year = intval(date('Y',  strtotime($month_year)));
-        $monthyear = intval(date('m',  strtotime($month_year)));
-        if($monthyear<=0 || $monthyear >12)return NULL;
-        switch ($monthyear){
-            case 1:
-            case 3:
-            case 5:
-            case 7:
-            case 8:
-            case 10:
-            case 12:     $date = 31;                break;
-            case 4:
-            case 6:
-            case 9:
-            case 11: $date = 30;                break;
-            default :
-                if(($year%4==0 && $year%100!=0)||$year%400==0){
-                    $date = 29;
-                }else $date = 28;
-                break;
-        }
-        
-        $endmonth = $year.'-'.$monthyear.'-'.$date;
-        $startmonth = $year.'-'.$monthyear.'-'.'01';
-        $result = Yii::$app->db->createCommand("SELECT count(*) FROM contract WHERE start_time >='".$startmonth."' AND start_time<='".$endmonth."'")->queryOne();
-      //  echo date("Y",strtotime($month_year));exit;
-      echo '<pre>';
-      print_r($result['count(*)']);
-      echo '</pre>';exit;
-        echo  $result;
-        return $result['count(*)'];
-    }
+//    public function getContractinmonth($month_year){
+//        $year = intval(date('Y',  strtotime($month_year)));
+//        $monthyear = intval(date('m',  strtotime($month_year)));
+//        if($monthyear<=0 || $monthyear >12)return NULL;
+//        switch ($monthyear){
+//            case 1:
+//            case 3:
+//            case 5:
+//            case 7:
+//            case 8:
+//            case 10:
+//            case 12:     $date = 31;                break;
+//            case 4:
+//            case 6:
+//            case 9:
+//            case 11: $date = 30;                break;
+//            default :
+//                if(($year%4==0 && $year%100!=0)||$year%400==0){
+//                    $date = 29;
+//                }else $date = 28;
+//                break;
+//        }
+//        
+//        $endmonth = $year.'-'.$monthyear.'-'.$date;
+//        $startmonth = $year.'-'.$monthyear.'-'.'01';
+//        $result = Yii::$app->db->createCommand("SELECT count(*) FROM contract WHERE start_time >='".$startmonth."' AND start_time<='".$endmonth."'")->queryOne();
+//      //  echo date("Y",strtotime($month_year));exit;
+////      echo '<pre>';
+////      print_r($result['count(*)']);
+////      echo '</pre>';exit;
+////        echo  $result;
+//        return $result['count(*)'];
+//    }
     
     public function getdate($month,$year){
         switch ($month){
@@ -352,5 +352,35 @@ class User extends ActiveRecord implements CartPositionInterface
         }
         
        return $result;
+    }
+    
+    
+    public function arrContractinYear($year){
+        $year = intval($year);
+        for($i = 1; $i<=12 ;$i++){
+             $date = $this->getdate($i, $year);
+            $endmonth = $year.'-'.$i.'-'.$date;
+            $startmonth = $year.'-'.$i.'-'.'01';
+            $contracts[] = Yii::$app->db->createCommand("SELECT id_contract FROM contract WHERE start_time >='".$startmonth."' AND start_time<='".$endmonth."'")->queryAll();
+        }
+       // var_dump($contracts);
+//        echo '<pre>';
+//        print_r($contracts);
+//        echo '</pre>';
+//        
+//        exit;
+        foreach ($contracts as $month => $contract) {
+            foreach ($contract as $value) {
+                $allcontract[] = $value['id_contract'];
+            }
+        }
+        foreach ($allcontract as $contract) {
+            
+        }
+        echo '<pre>';
+        print_r($allcontract);
+        echo '</pre>';
+        
+        exit;
     }
 }

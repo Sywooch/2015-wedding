@@ -8,6 +8,11 @@ use backend\models\AlbumSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\models\UploadForm;
+use yii\web\UploadedFile;
+use backend\models\Img;
+use backend\models\Imgalbum;
+use yii\helpers\Url;
 
 /**
  * AlbumController implements the CRUD actions for Album model.
@@ -75,6 +80,24 @@ class AlbumController extends Controller
             ]);
         }
     }
+    //
+    
+    public function actionAllalbum(){
+        $album = new Album;
+        $model['allalbum'] = $album->getAllalbum();
+        $model['title'] = 'All Album';
+        $model['']= '';
+        
+        
+        
+        return $this->render('allalbum',$model);
+    }
+
+    
+    public function actionAlbum($id){
+        $album = new Album();
+        $album->getImgOfAlbum($id);
+    }
 
     /**
      * Updates an existing Album model.
@@ -86,8 +109,44 @@ class AlbumController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) ) {
+            
+            $img = new UploadForm();
+            $img->file = UploadedFile::getInstances($model,'url_folder');
+            $dirpath = 'uploads/album/'.$id;
+           // var_dump(!is_dir($dirpath));
+             if(!is_dir($dirpath)) {
+                mkdir($dirpath,0777,true);     
+             }
+            
+             if($img->file!=NULL){
+                   foreach ($img->file as $file) {
+                        $image = new Img();
+                        $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
+
+
+                        $file->saveAs($dirpath.'/'.$imgname.'.'.$file->extension);
+
+                        $image->url = $dirpath.'/'.$imgname.'.'.$file->extension;
+
+                        $image->save();
+                         
+                        $imgalbum = new Imgalbum();
+                        $imgalbum->id_album = $id;
+                        $imgalbum->id_img = $image->id_img;
+                        $imgalbum->save();
+                       
+
+                    }
+             }
+                 $model->url_folder = '';
+//            echo '<pre>';
+//            print_r($model);
+//            echo '</pre>';
+            
+            if($model->save()){
             return $this->redirect(['view', 'id' => $model->id_album]);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,

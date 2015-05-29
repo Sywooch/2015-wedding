@@ -14,7 +14,7 @@ use dosamigos\datepicker\DatePicker;
 
 <div class="album-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
    
     
@@ -38,7 +38,7 @@ use dosamigos\datepicker\DatePicker;
               ]
         ]);?>
 
-    <?= $form->field($model, 'url_folder')->textInput() ?>
+    <?= $form->field($model, 'url_folder[]')->fileInput(['maxlength' => 250,'multiple' => true]) ?>
 
     <?= $form->field($model, 'rate')->textInput(['maxlength' => 20]) ?>
 

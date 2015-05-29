@@ -33,7 +33,7 @@ $this->registerCssFile(Url::base().'/css/plot/examples.css', ['depends' => [Boot
     }
     //var_dump($test);
     
-    $data = [ ["January", $test[0]], ["February", $test[1]], ["March", $test[2]], ["April", $test[3]], ["May", $test[4]], ["June", $test[5]] ,["July", $test[6]],["Aug", $test[7]] ,["Sep", $test[8]],["Oct", $test[9]],["Nov", $test[10]],["Dec", $test[11]]];
+    $data = [ ["Jan", $test[0]], ["Feb", $test[1]], ["Mar", $test[2]], ["April", $test[3]], ["May", $test[4]], ["June", $test[5]] ,["July", $test[6]],["Aug", $test[7]] ,["Sep", $test[8]],["Oct", $test[9]],["Nov", $test[10]],["Dec", $test[11]]];
     
     //$test ='1';
     ?>
