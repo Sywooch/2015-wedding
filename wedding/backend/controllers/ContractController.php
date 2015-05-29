@@ -78,6 +78,20 @@ class ContractController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+    
+    
+    
+    public function actionGetendtime($timeadd,$start,$id_local){
+       // $model = $this->findModel($id_local);
+        $query = new Query();
+        $tb = $query->select(['timework'])->from('localtion')->where(['id_local'=>$id_local])->one();
+
+        $time_add = $tb['timework'] + $timeadd;
+        $date1 = str_replace('-', '/', $start);
+        $end = date('Y-m-d',strtotime($date1 ."+".$time_add. " days"));
+        return $this->redirect('index.php?r=contract/create&&start='.$start.'&&end='.$end.'&&id_local='.$id_local);
+        
+    }
 
     /**
      * Creates a new Contract model.
