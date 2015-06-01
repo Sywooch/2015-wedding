@@ -117,8 +117,15 @@ $opt = [15,20,25,30,35,40,45,50];
      } ?>
     
     <?php if(isset($photocontract)&&isset($_GET['start'])&&isset($_GET['end'])){
+        
+        
+        if($model->isNewRecord){
+            $arr = $user_photo->getAllPhotofree($_GET['start'], $_GET['end']);
+        }else {
+            $arr = $user_photo->getAllPhotofreeupdate($_GET['start'], $_GET['end'],$model->id_contract);
+        }
           echo $form->field($photocontract, 'id_user')->dropDownList(
-                        ArrayHelper::map($user_photo->getAllPhotofree($_GET['start'], $_GET['end']),'id','username'),
+                        ArrayHelper::map($arr,'id','username'),
                                 [/*'prompt'=>'Select Dress',*/
 //                                   'multiple'=>true,
                                     'size'=>'auto',

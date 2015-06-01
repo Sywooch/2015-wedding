@@ -9,6 +9,8 @@ use Yii;
  *
  * @property integer $id_dress
  * @property integer $id_contract
+ * @property string $start_time
+ * @property string $end_time
  *
  * @property Contract $idContract
  * @property Dress $idDress
@@ -30,7 +32,8 @@ class Dresscontract extends \yii\db\ActiveRecord
     {
         return [
             [['id_dress', 'id_contract'], 'required'],
-            [['id_dress', 'id_contract'], 'integer']
+            [['id_dress', 'id_contract'], 'integer'],
+            [['start_time', 'end_time'], 'string','max'=>100]
         ];
     }
 

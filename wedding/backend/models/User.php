@@ -153,18 +153,22 @@ class User extends ActiveRecord implements CartPositionInterface
     }
     
     
-    public function getallphoto(){
-        $photo = \Yii::$app->db->createCommand('SELECT * FROM user where type_user = 2 and status != 0')->queryAll();
-        if(isset($photo)&&$photo!=NULL){
-            return $photo;
-        }else {return NULL;}
-    }
+    public function getUserfressupdate($start,$end,$id_contract){
+        $contract = Yii::$app->db->createCommand("SELECT id_contract FROM contract WHERE ((start_time BETWEEN '".$start."' AND '".$end."')OR(end_time BETWEEN '".$start."' AND '".$end."')OR('".$start ."'<= start_time AND '".$end."' >=end_time  ) ) ")->queryAll();
+        
+        foreach ($contract as $key => $value) {
+            if($id_contract==$value['id_contract']){
+                unset($contract[$key]);
+            }
+        }
+        
+        if($contract){
+        
+            return $contract;
+        
+        }
+        return NULL;
     
-    public function getallmakeup(){
-        $makeups = \Yii::$app->db->createCommand('SELECT * FROM user where type_user = 3 and status != 0')->queryAll();
-        if(isset($makeups)&&$makeups!=NULL){
-            return $makeups;
-        }else {return NULL;}
     }
 
     
@@ -177,12 +181,43 @@ class User extends ActiveRecord implements CartPositionInterface
             foreach ($contract as $value) {
                 $arr_staff[] = Yii::$app->db->createCommand('select id_user from photocontract where id_contract = '.$value['id_contract'] )->queryOne();
             }
-           //var_dump($arr_staff);
+
             $allphoto = Yii::$app->db->createCommand('select id from user where type_user = 2')->queryAll();
+
             
-//            echo '<pre>';
-//            print_r($arr_staff);
-//            echo '</pre>';
+            foreach ($arr_staff as $key=> $value) {
+               $phototask[] =  $arr_staff[$key]['id_user'] ;
+            }
+            foreach ($allphoto as $value) {
+                $arr_allphoto[] = $value['id'];
+            }
+           
+            
+            $phototask = array_diff($arr_allphoto,$phototask);
+           return $phototask;
+        }else {
+            $allphoto = Yii::$app->db->createCommand('select id from user where type_user = 2')->queryAll();
+            foreach ($allphoto as $value) {
+                $arr_allphoto[] = $value['id'];
+            }
+            return $arr_allphoto;
+        }
+        
+    }
+    
+    
+    
+    public function getPhotofreeupdate($start,$end,$id_contract){
+        
+        $contract = $this->getUserfressupdate($start, $end,$id_contract);
+        
+        if($contract!=NULL){
+            foreach ($contract as $value) {
+                $arr_staff[] = Yii::$app->db->createCommand('select id_user from photocontract where id_contract = '.$value['id_contract'] )->queryOne();
+            }
+
+            $allphoto = Yii::$app->db->createCommand('select id from user where type_user = 2')->queryAll();
+
             
             foreach ($arr_staff as $key=> $value) {
                $phototask[] =  $arr_staff[$key]['id_user'] ;
@@ -220,23 +255,38 @@ class User extends ActiveRecord implements CartPositionInterface
 
         return $arr_userphoto;
     }
+    
+    
+    public function getAllPhotofreeupdate($start, $end,$id_contract){
+        $arr = $this->getPhotofreeupdate($start, $end,$id_contract);
+        
+        if($arr){
+            foreach ($arr as $userphoto) {
+               // echo $userphoto;
+                $arr_userphoto[] = Yii::$app->db->createCommand("SELECT id,username from user where id = '".$userphoto."'")->queryOne();
+            }
+        }  else {
+            $arr_userphoto = [];
+           
+        }
+
+        return $arr_userphoto;
+    }
 
 
     public function getMakeupfree($start,$end){
         
         $contract = $this->getUserfress($start, $end);
         
-        if($contract!=NULL){
+        
+        
+        if($contract!=NULL){            
             foreach ($contract as $value) {
                 $arr_staff[] = Yii::$app->db->createCommand('select id_user from makeupcontract where id_contract = '.$value['id_contract'] )->queryOne();
             }
-           //var_dump($arr_staff);
+
             $allmakeup = Yii::$app->db->createCommand('select id from user where type_user = 3')->queryAll();
-            
-//            echo '<pre>';
-//            print_r($arr_staff);
-//            echo '</pre>';
-            
+   
             foreach ($arr_staff as $key=> $value) {
                $makeuptask[] =  $arr_staff[$key]['id_user'] ;
             }
@@ -262,7 +312,6 @@ class User extends ActiveRecord implements CartPositionInterface
         
         if($arr){
             foreach ($arr as $userphoto) {
-               // echo $userphoto;
                 $arr_userphoto[] = Yii::$app->db->createCommand("SELECT id,username from user where id = '".$userphoto."'")->queryOne();
             }
         }  else {
@@ -273,50 +322,9 @@ class User extends ActiveRecord implements CartPositionInterface
         return $arr_userphoto;
     }
     
-    public function getName($id_user) {
-        $result = Yii::$app->db->createCommand("SELECT fullname,fullname2 from user where id = '".$id_user."'")->queryOne();
-        
-        var_dump($result);
-        
-    }
+
     
-//    public function getTimeByPhoto($month,$id_user){
-//        $result = Yii::$app->db->createCommand("SELECT id_contract From")->queryAll();
-//        return $result;
-//    }
-//    public function getContractinmonth($month_year){
-//        $year = intval(date('Y',  strtotime($month_year)));
-//        $monthyear = intval(date('m',  strtotime($month_year)));
-//        if($monthyear<=0 || $monthyear >12)return NULL;
-//        switch ($monthyear){
-//            case 1:
-//            case 3:
-//            case 5:
-//            case 7:
-//            case 8:
-//            case 10:
-//            case 12:     $date = 31;                break;
-//            case 4:
-//            case 6:
-//            case 9:
-//            case 11: $date = 30;                break;
-//            default :
-//                if(($year%4==0 && $year%100!=0)||$year%400==0){
-//                    $date = 29;
-//                }else $date = 28;
-//                break;
-//        }
-//        
-//        $endmonth = $year.'-'.$monthyear.'-'.$date;
-//        $startmonth = $year.'-'.$monthyear.'-'.'01';
-//        $result = Yii::$app->db->createCommand("SELECT count(*) FROM contract WHERE start_time >='".$startmonth."' AND start_time<='".$endmonth."'")->queryOne();
-//      //  echo date("Y",strtotime($month_year));exit;
-////      echo '<pre>';
-////      print_r($result['count(*)']);
-////      echo '</pre>';exit;
-////        echo  $result;
-//        return $result['count(*)'];
-//    }
+
     
     public function getdate($month,$year){
         switch ($month){
@@ -363,12 +371,7 @@ class User extends ActiveRecord implements CartPositionInterface
             $startmonth = $year.'-'.$i.'-'.'01';
             $contracts[] = Yii::$app->db->createCommand("SELECT id_contract FROM contract WHERE start_time >='".$startmonth."' AND start_time<='".$endmonth."'")->queryAll();
         }
-       // var_dump($contracts);
-//        echo '<pre>';
-//        print_r($contracts);
-//        echo '</pre>';
-//        
-//        exit;
+
         foreach ($contracts as $month => $contract) {
             foreach ($contract as $value) {
                 $allcontract[] = $value['id_contract'];
@@ -382,5 +385,19 @@ class User extends ActiveRecord implements CartPositionInterface
         echo '</pre>';
         
         exit;
+    }
+    
+        public function getallphoto(){
+        $photo = \Yii::$app->db->createCommand('SELECT * FROM user where type_user = 2 and status != 0')->queryAll();
+        if(isset($photo)&&$photo!=NULL){
+            return $photo;
+        }else {return NULL;}
+    }
+    
+    public function getallmakeup(){
+        $makeups = \Yii::$app->db->createCommand('SELECT * FROM user where type_user = 3 and status != 0')->queryAll();
+        if(isset($makeups)&&$makeups!=NULL){
+            return $makeups;
+        }else {return NULL;}
     }
 }

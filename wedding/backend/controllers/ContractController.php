@@ -83,13 +83,19 @@ class ContractController extends Controller
     
     public function actionGetendtime($timeadd,$start,$id_local){
        // $model = $this->findModel($id_local);
+        $model = new Contract();
         $query = new Query();
         $tb = $query->select(['timework'])->from('localtion')->where(['id_local'=>$id_local])->one();
 
         $time_add = $tb['timework'] + $timeadd;
         $date1 = str_replace('-', '/', $start);
         $end = date('Y-m-d',strtotime($date1 ."+".$time_add. " days"));
-        return $this->redirect('index.php?r=contract/create&&start='.$start.'&&end='.$end.'&&id_local='.$id_local);
+        if(!$model->isNewRecord){
+            return $this->redirect('index.php?r=contract/update&&id='.$model->id_contract.'&&start='.$start.'&&end='.$end.'&&id_local='.$id_local.'&&timeadd='.$timeadd);
+        }else{
+            return $this->redirect('index.php?r=contract/create&&start='.$start.'&&end='.$end.'&&id_local='.$id_local.'&&timeadd='.$timeadd);
+        }
+        
         
     }
 
@@ -107,7 +113,7 @@ class ContractController extends Controller
        
        if(isset($session['username'])&&$session['type_user']==0){
         
-           $model = new Contract();
+            $model = new Contract();
             $dress = new Dress();
             $dresscontract = new Dresscontract();
             $photocontract = new Photocontract();
@@ -117,8 +123,18 @@ class ContractController extends Controller
             if ($model->load(Yii::$app->request->post())) {
 
                 // get all multi img
-
-
+             //   if(isset($_GET['start'])&&isset($_GET['end'])&&isset($_GET['id_local'])&&isset($_GET['timeadd'])){
+                    $this->findModelLocaltion($_GET['id_local']);
+                    $model->end_time = $_GET['end'];
+                    $model->start_time = $_GET['start'];
+                    $model->id_local = $_GET['id_local'];
+                    $model->timeadd = $_GET['timeadd'];
+            //    }
+                
+                $query = new Query();
+                $tb = $query->select(['timework'])->from('localtion')->where(['id_local'=>$model->id_local])->one();
+//
+                $time_add = $tb['timework'] + $model->timeadd;
                 // get data form create contract
                 //get info dress contract
                 $dresscontract->load(Yii::$app->request->post());
@@ -133,14 +149,11 @@ class ContractController extends Controller
                 $bigimg->load(Yii::$app->request->post());
 
                 // create end time photo
-                $query = new Query();
-                $tb = $query->select(['timework'])->from('localtion')->where(['id_local'=>$model->id_local])->one();
-
-                $time_add = $tb['timework'] + $model->timeadd;
-
-
-                $date1 = str_replace('-', '/', $model->start_time);
-                $model->end_time = date('Y-m-d',strtotime($date1 ."+".$time_add. " days"));
+                
+//
+//
+//                $date1 = str_replace('-', '/', $model->start_time);
+               // $model->end_time = date('Y-m-d',strtotime($date1 ."+".$time_add. " days"));
                 //end create phôt
     //            echo '<pre>';
     //            print_r($photocontract->id_user);
@@ -158,17 +171,34 @@ class ContractController extends Controller
                     $rent_dress = 0;
                     // add dress contract
                     foreach ($dresscontract->id_dress as $dress) {
-
-                        Yii::$app->db->createCommand("INSERT INTO dresscontract (id_dress,id_contract) VALUES ('".$dress."','".$model->id_contract."')")->execute();
-
+                        
+                        $dresscon = new Dresscontract();
+                        Yii::$app->db->createCommand("INSERT INTO dresscontract (id_dress,id_contract,start_time,end_time) VALUES ('".$dress."','".$model->id_contract."','".$model->start_time."','".$model->end_time."')")->execute();
+//                        $dresscon->id_contract = $model->id_contract;
+//                        $dresscon->id_dress = $dress;
+//                        $dresscon->start_time = $model->start_time;
+//                        $dresscon->end_time = $model->end_time;
+//                        
+//                        var_dump($dresscon->save());exit;
+                        
+                        
                         $infodress = Dress::findOne($dress);
                         $rent_dress += intval($infodress->rate_hire)*intval($time_add);
 
                     }
                     //add photo to contract
-                    Yii::$app->db->createCommand("INSERT INTO photocontract (id_user,id_contract) VALUES ('".$photocontract->id_user."','".$model->id_contract."')")->execute();
+                    
+                    Yii::$app->db->createCommand("INSERT INTO photocontract (id_user,id_contract,start_time,end_time) VALUES ('".$photocontract->id_user."','".$model->id_contract."','".$model->start_time."','".$model->end_time."')")->execute();
+                    
+//                    $photocontract->id_contract = $model->id_contract;
+//                    $photocontract->end_time= $model->end_time;
+//                    $photocontract->start_time = $model->start_time;
+                    
+                    
+                   // $photocontract->save();
+                    
                     // add makeup to contract
-                    Yii::$app->db->createCommand("INSERT INTO makeupcontract (id_user,id_contract) VALUES ('".$makeupcontract->id_user."','".$model->id_contract."')")->execute();        
+                    Yii::$app->db->createCommand("INSERT INTO makeupcontract (id_user,id_contract,start_time,end_time) VALUES ('".$makeupcontract->id_user."','".$model->id_contract."','".$model->start_time."','".$model->end_time."')")->execute();        
 
 
                     // wage of photo
@@ -202,13 +232,18 @@ class ContractController extends Controller
                     }
 
 
-
+                     return $this->redirect(['view', 'id' => $model->id_contract]);
+                }else{
+                    echo '<pre>';
+                    
+                    print_r($model);
+                    echo '</pre>';
                 }
 
 
 
 
-                return $this->redirect(['view', 'id' => $model->id_contract]);
+               
             } 
             else {
 
@@ -364,6 +399,15 @@ class ContractController extends Controller
     protected function findModel($id)
     {
         if (($model = Contract::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+    
+    protected function findModelLocaltion($id)
+    {
+        if (($model = Localtion::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -143,16 +143,14 @@ class Dress extends ActiveRecord implements CartPositionInterface
                 $imgs[] = $alldress[$key]['id_dress'] ;
             
             }
-            
-            $dress = array_diff($imgs,$dress);
-            
-            
-            foreach ($dress as $dre) {
-                $dress_free[]  = Yii::$app->db->createCommand("select id_dress, name_dress from dress where id_dress = '".$dre."'")->queryOne();
+            if(isset($imgs)&&isset($dress)){
+                $dress = array_diff($imgs,$dress);
+
+
+                foreach ($dress as $dre) {
+                    $dress_free[]  = Yii::$app->db->createCommand("select id_dress, name_dress from dress where id_dress = '".$dre."'")->queryOne();
+                }
             }
-//            echo '<pre>';
-//            print_r($dress_free);
-//            echo '</pre>';
             if(isset($dress_free)){
                 return $dress_free;
             }else return NULL;

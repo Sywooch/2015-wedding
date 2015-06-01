@@ -271,6 +271,20 @@ class UserController extends Controller
         print_r($model->getMakeupfree($start, $end));
         echo '</pre>';
     }
+    
+    public function actionAa($start, $end,$id_contract){
+        $model = new User();
+        
+        echo '<pre>';
+        print_r($model->getPhotofreeupdate($start, $end,$id_contract));
+        echo '</pre>';
+        
+        
+        echo '<pre>';
+        print_r($model->getUserfressupdate($start, $end,$id_contract));
+        echo '</pre>';
+        
+    }
 
     
     /**

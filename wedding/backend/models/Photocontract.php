@@ -9,7 +9,10 @@ use Yii;
  *
  * @property integer $id_user
  * @property integer $id_contract
- *
+ * @property string $start_time
+ * @property string $end_time
+ * 
+ * 
  * @property User $idUser
  * @property Contract $idContract
  */
@@ -30,7 +33,8 @@ class Photocontract extends \yii\db\ActiveRecord
     {
         return [
             [['id_user', 'id_contract'], 'required'],
-            [['id_user', 'id_contract'], 'integer']
+            [['id_user', 'id_contract'], 'integer'],
+            [['start_time', 'end_time'], 'string','max'=>100]
         ];
     }
 
