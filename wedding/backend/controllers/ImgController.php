@@ -150,7 +150,10 @@ class ImgController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        if(isset($_GET['typedelete'])&&$_GET['typedelete']=='myalbum')
+        {
+            return $this->redirect(['album/myalbum']);
+        }
         return $this->redirect(['index']);
     }
 

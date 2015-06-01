@@ -60,7 +60,7 @@ AppAsset::register($this);
                                 <li class=""><a href="" title="Trang chủ">Trang chủ</a></li>
                                 <li class="haveSub"><a href="" title="Giới thiệu">Album cưới</a>
                                     <ul>
-                                         <li class=""><a href="" title="">Album Của Tôi</a></li>
+                                         <li class=""><a href="<?php echo Url::base().'/index.php?r=album/myalbum' ?>" title="">Album Của Tôi</a></li>
                                          <li class=""><a href="" title="">Tất Cả Album</a></li>
                                         
                                     </ul>

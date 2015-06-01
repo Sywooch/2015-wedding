@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "bigimg".
  *
  * @property integer $id_contract
- * @property integer $id_img
+ * @property string $url
  * @property string $size
  *
  * @property Contract $idContract
@@ -32,8 +32,9 @@ class Bigimg extends \yii\db\ActiveRecord
     {
         return [
             [['id_contract', 'size'], 'required'],
-            [['id_contract', 'id_img'], 'integer'],
-            [['size'], 'string', 'max' => 20]
+            [['id_contract'], 'integer'],
+            [['size'], 'string', 'max' => 20],
+            [['url'], 'string', 'max' => 250]
         ];
     }
 
@@ -44,7 +45,7 @@ class Bigimg extends \yii\db\ActiveRecord
     {
         return [
             'id_contract' => 'Id Contract',
-            'id_img' => 'Id Img',
+            'url' => 'Url',
             'size' => 'Size',
         ];
     }

@@ -90,10 +90,12 @@ class ContractController extends Controller
         $time_add = $tb['timework'] + $timeadd;
         $date1 = str_replace('-', '/', $start);
         $end = date('Y-m-d',strtotime($date1 ."+".$time_add. " days"));
-        if(!$model->isNewRecord){
-            return $this->redirect('index.php?r=contract/update&&id='.$model->id_contract.'&&start='.$start.'&&end='.$end.'&&id_local='.$id_local.'&&timeadd='.$timeadd);
-        }else{
+        if($model->isNewRecord){
             return $this->redirect('index.php?r=contract/create&&start='.$start.'&&end='.$end.'&&id_local='.$id_local.'&&timeadd='.$timeadd);
+       
+        }else{
+            
+            return $this->redirect('index.php?r=contract/update&&id='.$model->id_contract.'&&start='.$start.'&&end='.$end.'&&id_local='.$id_local.'&&timeadd='.$timeadd);
         }
         
         
@@ -174,13 +176,7 @@ class ContractController extends Controller
                         
                         $dresscon = new Dresscontract();
                         Yii::$app->db->createCommand("INSERT INTO dresscontract (id_dress,id_contract,start_time,end_time) VALUES ('".$dress."','".$model->id_contract."','".$model->start_time."','".$model->end_time."')")->execute();
-//                        $dresscon->id_contract = $model->id_contract;
-//                        $dresscon->id_dress = $dress;
-//                        $dresscon->start_time = $model->start_time;
-//                        $dresscon->end_time = $model->end_time;
-//                        
-//                        var_dump($dresscon->save());exit;
-                        
+
                         
                         $infodress = Dress::findOne($dress);
                         $rent_dress += intval($infodress->rate_hire)*intval($time_add);
@@ -190,12 +186,7 @@ class ContractController extends Controller
                     
                     Yii::$app->db->createCommand("INSERT INTO photocontract (id_user,id_contract,start_time,end_time) VALUES ('".$photocontract->id_user."','".$model->id_contract."','".$model->start_time."','".$model->end_time."')")->execute();
                     
-//                    $photocontract->id_contract = $model->id_contract;
-//                    $photocontract->end_time= $model->end_time;
-//                    $photocontract->start_time = $model->start_time;
-                    
-                    
-                   // $photocontract->save();
+
                     
                     // add makeup to contract
                     Yii::$app->db->createCommand("INSERT INTO makeupcontract (id_user,id_contract,start_time,end_time) VALUES ('".$makeupcontract->id_user."','".$model->id_contract."','".$model->start_time."','".$model->end_time."')")->execute();        

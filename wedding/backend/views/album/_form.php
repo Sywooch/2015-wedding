@@ -48,7 +48,13 @@ use dosamigos\datepicker\DatePicker;
                         ArrayHelper::map(StatusAlbum::find()->all(), 'status_album', 'name_status'),
                             ['prompt'=>'Select Status',]
                             ) ?>
-
+    
+    <?php if(isset($bigimg) ){ 
+             ?>
+        <?= $form->field($bigimg, 'url')->fileInput(['maxlength' => 250]) ?>
+        <?= $form->field($bigimg, 'size')->textInput(['maxlength' => 20]) ?>
+    <?php } ?>
+ 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
