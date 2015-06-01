@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 29, 2015 at 09:45 AM
+-- Generation Time: Jun 01, 2015 at 03:21 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -38,18 +38,16 @@ CREATE TABLE IF NOT EXISTS `album` (
   PRIMARY KEY (`id_album`),
   KEY `id_customer` (`id_contract`),
   KEY `id_contract` (`id_contract`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci AUTO_INCREMENT=27 ;
 
 --
 -- Dumping data for table `album`
 --
 
 INSERT INTO `album` (`id_album`, `id_contract`, `url_psd`, `numpage`, `time_complete`, `url_folder`, `rate`, `status`) VALUES
-(13, 17, '', 40, NULL, NULL, NULL, 3),
-(14, 18, '', 30, NULL, '', NULL, 4),
-(15, 19, '', 15, NULL, '', NULL, 4),
-(16, 20, NULL, 35, NULL, NULL, NULL, 0),
-(17, 21, NULL, 35, NULL, NULL, NULL, 0);
+(24, 29, NULL, 45, NULL, NULL, NULL, 0),
+(25, 30, NULL, 35, NULL, NULL, NULL, 0),
+(26, 31, NULL, 25, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -89,11 +87,9 @@ CREATE TABLE IF NOT EXISTS `bigimg` (
 --
 
 INSERT INTO `bigimg` (`id_contract`, `id_img`, `size`) VALUES
-(17, NULL, '60x90'),
-(18, NULL, '60x90'),
-(19, NULL, '50x75'),
-(20, NULL, '60x90'),
-(21, NULL, '60x90');
+(29, NULL, '60x90'),
+(30, NULL, '70x110'),
+(31, NULL, '60x90');
 
 -- --------------------------------------------------------
 
@@ -125,18 +121,16 @@ CREATE TABLE IF NOT EXISTS `contract` (
   KEY `id_user_2` (`id_user`),
   KEY `id_contract_3` (`id_contract`),
   KEY `id_local` (`id_local`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=32 ;
 
 --
 -- Dumping data for table `contract`
 --
 
 INSERT INTO `contract` (`id_contract`, `id_user`, `id_local`, `start_time`, `end_time`, `create_day`, `total`, `payment1`, `payment2`, `payment3`, `timephoto`, `timeadd`, `timecomplete`, `have_album`, `total_time`, `status`) VALUES
-(17, 11, 'L1429634734', '2015-05-23', '2015-05-26', '2015-05-06 11:46:05', 368937413, '2015-05-23', NULL, NULL, NULL, 0, NULL, 0, 3, 1),
-(18, 13, 'L1429634734', '2015-05-10', '2015-05-13', '2015-05-06 22:37:34', 38970788, '2015-05-23', NULL, NULL, NULL, 0, NULL, 0, 3, 1),
-(19, 5, 'L1429606564', '2015-05-23', '2015-05-28', '2015-05-13 00:50:04', 16750945, '2015-05-23', NULL, NULL, NULL, 0, NULL, 0, 5, 1),
-(20, 7, 'L1429634759', '2015-05-04', '2015-05-05', '2015-05-13 00:58:58', 5950400, '2015-05-04', NULL, NULL, NULL, 0, NULL, 0, 1, 1),
-(21, 11, 'L1429606564', '2015-06-10', '2015-06-15', '2015-05-13 01:00:51', 17950945, '2015-06-10', NULL, NULL, NULL, 0, NULL, 0, 5, 1);
+(29, 5, 'L1429606564', '2015-06-04', '2015-06-11', '2015-06-01 08:12:17', 24451323, '2015-06-04', NULL, NULL, NULL, 2, NULL, 0, 7, 1),
+(30, 13, 'L1429606564', '2015-06-04', '2015-06-11', '2015-06-01 08:14:13', 865786205, '2015-06-04', '2015-06-10', NULL, NULL, 2, NULL, 0, 7, 1),
+(31, 7, 'L1429606564', '2015-06-04', '2015-06-10', '2015-06-01 08:17:48', 81991276, '2015-06-06', NULL, NULL, NULL, 1, NULL, 0, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -182,6 +176,8 @@ INSERT INTO `dress` (`id_dress`, `name_dress`, `avatar`, `type_dress`, `info_dre
 CREATE TABLE IF NOT EXISTS `dresscontract` (
   `id_dress` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `id_contract` int(11) NOT NULL,
+  `start_time` date NOT NULL,
+  `end_time` date NOT NULL,
   KEY `id_dress` (`id_dress`),
   KEY `id_contract` (`id_contract`),
   KEY `id_dress_2` (`id_dress`),
@@ -192,20 +188,16 @@ CREATE TABLE IF NOT EXISTS `dresscontract` (
 -- Dumping data for table `dresscontract`
 --
 
-INSERT INTO `dresscontract` (`id_dress`, `id_contract`) VALUES
-('D1429633073', 17),
-('D1429634405', 17),
-('D1429634456', 18),
-('D1429634584', 18),
-('D1429595409', 19),
-('D1429605821', 19),
-('D1429607851', 19),
-('D1429595409', 20),
-('D1429605821', 20),
-('D1429607851', 20),
-('D1429595409', 21),
-('D1429605821', 21),
-('D1429607851', 21);
+INSERT INTO `dresscontract` (`id_dress`, `id_contract`, `start_time`, `end_time`) VALUES
+('D1429595409', 29, '2015-06-04', '2015-06-11'),
+('D1429605821', 29, '2015-06-04', '2015-06-11'),
+('D1429607851', 29, '2015-06-04', '2015-06-11'),
+('D1429632433', 30, '2015-06-04', '2015-06-11'),
+('D1429633073', 30, '2015-06-04', '2015-06-11'),
+('D1429634405', 30, '2015-06-04', '2015-06-11'),
+('D1429634456', 31, '2015-06-04', '2015-06-10'),
+('D1429634584', 31, '2015-06-04', '2015-06-10'),
+('D1431522087', 31, '2015-06-04', '2015-06-10');
 
 -- --------------------------------------------------------
 
@@ -443,64 +435,6 @@ CREATE TABLE IF NOT EXISTS `imgalbum` (
   KEY `id_img` (`id_img`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Dumping data for table `imgalbum`
---
-
-INSERT INTO `imgalbum` (`id_album`, `id_img`) VALUES
-(13, 288),
-(13, 289),
-(13, 290),
-(13, 291),
-(13, 292),
-(13, 293),
-(13, 294),
-(13, 295),
-(13, 296),
-(13, 297),
-(13, 298),
-(13, 299),
-(13, 300),
-(13, 301),
-(13, 302),
-(13, 303),
-(13, 305),
-(13, 306),
-(13, 307),
-(13, 308),
-(13, 309),
-(13, 310),
-(13, 311),
-(13, 312),
-(14, 313),
-(14, 314),
-(14, 315),
-(14, 316),
-(14, 317),
-(14, 318),
-(14, 319),
-(14, 320),
-(14, 321),
-(14, 322),
-(14, 323),
-(14, 324),
-(14, 325),
-(14, 326),
-(14, 327),
-(14, 328),
-(15, 329),
-(15, 330),
-(15, 331),
-(15, 332),
-(15, 333),
-(15, 334),
-(15, 335),
-(15, 336),
-(15, 337),
-(15, 338),
-(15, 339),
-(15, 340);
-
 -- --------------------------------------------------------
 
 --
@@ -733,6 +667,8 @@ INSERT INTO `localtion` (`id_local`, `name_local`, `info_local`, `rate`, `avatar
 CREATE TABLE IF NOT EXISTS `makeupcontract` (
   `id_user` int(11) NOT NULL,
   `id_contract` int(11) NOT NULL,
+  `start_time` date NOT NULL,
+  `end_time` date NOT NULL,
   KEY `id_user` (`id_user`,`id_contract`),
   KEY `id_contract` (`id_contract`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -741,12 +677,10 @@ CREATE TABLE IF NOT EXISTS `makeupcontract` (
 -- Dumping data for table `makeupcontract`
 --
 
-INSERT INTO `makeupcontract` (`id_user`, `id_contract`) VALUES
-(16, 18),
-(16, 19),
-(16, 20),
-(16, 21),
-(20, 17);
+INSERT INTO `makeupcontract` (`id_user`, `id_contract`, `start_time`, `end_time`) VALUES
+(16, 29, '2015-06-04', '2015-06-11'),
+(20, 30, '2015-06-04', '2015-06-11'),
+(32, 31, '2015-06-04', '2015-06-10');
 
 -- --------------------------------------------------------
 
@@ -793,6 +727,8 @@ CREATE TABLE IF NOT EXISTS `notify` (
 CREATE TABLE IF NOT EXISTS `photocontract` (
   `id_user` int(11) NOT NULL,
   `id_contract` int(11) NOT NULL,
+  `start_time` date NOT NULL,
+  `end_time` date NOT NULL,
   KEY `id_user` (`id_user`),
   KEY `id_contract` (`id_contract`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -801,12 +737,10 @@ CREATE TABLE IF NOT EXISTS `photocontract` (
 -- Dumping data for table `photocontract`
 --
 
-INSERT INTO `photocontract` (`id_user`, `id_contract`) VALUES
-(17, 17),
-(17, 18),
-(10, 19),
-(18, 20),
-(10, 21);
+INSERT INTO `photocontract` (`id_user`, `id_contract`, `start_time`, `end_time`) VALUES
+(10, 29, '2015-06-04', '2015-06-11'),
+(14, 30, '2015-06-04', '2015-06-11'),
+(18, 31, '2015-06-04', '2015-06-10');
 
 -- --------------------------------------------------------
 
@@ -985,7 +919,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=34 ;
 
 --
 -- Dumping data for table `user`
@@ -999,9 +933,9 @@ INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_res
 (8, 'zetnhantest', 'qx2prxjPEZ9LBL_HK4j1QUQ64fyU8IA8', '$2y$13$0uohBHCYvCFa.j/1otrDe.wOcVwtdOiW0yRx5NMczUQtzV51CCJDi', NULL, 0, NULL, 100, '', NULL, '', NULL, 'admin1@gmail.com', NULL, '', '', 'uploads/avatar/avatar.jpg', 0, 10, 1428459597, 1428459597),
 (9, 'nhannguyencs101', 'szLkGOvsZlBcY41o6CEWKLko6ske3GZ8', '$2y$13$v56oTdIBwGt3yy/6HPcbeew18A0./9p0FRRaB3L1LqTg57cb2GauW', NULL, 0, NULL, 150, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.coms1', NULL, '', '', 'uploads/avatar/avatar.jpg', 0, 10, 1428462747, 1428462747),
 (10, 'zetnhan1234', 'hX5fbK2UazahwVxg7CJoT2WOV3NTGN0g', '$2y$13$r8jdfVDLm/cVYnMfGIcBROKcvUNTz37T0oT9U1W4EA7d81vmllboW', NULL, 2, NULL, 89, '', NULL, '', NULL, 'vannhan.nguyen0405@gmail.com1231', NULL, '', '', 'uploads/avatar/fam.jpg', 0, 10, 1428463965, 1428463965),
-(11, 'admin1@gmail.com', 'CFFWhRAjwjFv4OCdaF6jKsoL1v-kqDHd', '$2y$13$MCm1WMxGMS72xFLuazrpy.zC2oVzI3Onds1JdDiweJe65uwVnkSly', NULL, 1, NULL, 102, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com12312313', NULL, '', '268 Lý thường kiệt', 'uploads/avatar/avatar.jpg', 1, 10, 1428464258, 1428464258),
+(11, 'admin1@gmail.com', 'CFFWhRAjwjFv4OCdaF6jKsoL1v-kqDHd', '$2y$13$MCm1WMxGMS72xFLuazrpy.zC2oVzI3Onds1JdDiweJe65uwVnkSly', NULL, 1, NULL, 102, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com12312313', NULL, '', '268 Lý thường kiệt', 'uploads/avatar/avatar.jpg', 0, 10, 1428464258, 1428464258),
 (12, 'znhan', '3ZZ1CTIA58Rs3pzA7L-Kdstr3h5Hicku', '$2y$13$2kWi7hRL2raO4um2jfK91OWPkZKMce6swOx5ua/jxkkj8Zayua5sW', NULL, 1, NULL, 90, 'Nguyễn Văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com123123sd', NULL, 'Tao là customer', '268 Lý thường kiệt', 'uploads/avatar/avatar.jpg', 0, 10, 1428488501, 1428488501),
-(13, 'adminkeke', 'fU0lUEwuvp8wAjaQU4d9QZzX5PA6rf1A', '$2y$13$hGagIdidM/44HyyMbbhdDOosYTQtZGHqaIZGWI5lZ8XJM772Rj15i', NULL, 1, NULL, 125, 'Nguyễn văn Nhàn', NULL, '1', NULL, 'vannhan.nguyen0405@gmail.com1', NULL, '1', '1', 'uploads/avatar/avatar.jpg', 0, 10, 1428903072, 1428903072),
+(13, 'adminkeke', 'fU0lUEwuvp8wAjaQU4d9QZzX5PA6rf1A', '$2y$13$hGagIdidM/44HyyMbbhdDOosYTQtZGHqaIZGWI5lZ8XJM772Rj15i', NULL, 1, NULL, 125, 'Nguyễn văn Nhàn', NULL, '1', NULL, 'vannhan.nguyen0405@gmail.com1', NULL, '1', '1', 'uploads/avatar/avatar.jpg', 1, 10, 1428903072, 1428903072),
 (14, 'wtf', '-_Deuj3D57wNktce-lxWQqivlTuZ8nue', '$2y$13$zFMLAyyYBxU2nQ30ZbvAo.22kxjC7p7RcDmfKtsTfMka9w5g0ytiG', NULL, 2, NULL, 94, '1', NULL, '1', NULL, 'vannhan.nguyen0405@gmail.com11231', NULL, '12', '12', 'uploads/avatar/avatar.jpg', 0, 10, 1428903113, 1428903113),
 (15, 'nguyenvannhan', 'mKn70uztNfrblknx3fEnTtmgV2vbbD2y', '$2y$13$I9ec3n6XEX9c1ia5MS68ge9y8NMqj8fUzzi4m9avmL.9IFFY20Hyu', NULL, 1, NULL, 175, 'Nguyễn Văn Nhàn', NULL, '0938194492', NULL, '51002201@hcmut.edu.vn', NULL, 'hello', '268 Lý thường kiệt', 'uploads/avatar/avatar.jpg', 0, 10, 1428992062, 1428992062),
 (16, 'hoho', 'IRDYCBz0kp57Ht0SMu-2hDvXRV8Y-vQC', '$2y$13$lvtF5kb2ySjBQ/gdxtT04OZJrd/LRKWIzlJxoeLGPYvyMr1lNl5Jq', NULL, 3, NULL, 100, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com1212', NULL, '1', '268 Lý thường kiệt', 'uploads/avatar/avatar.jpg', 0, 10, 1429684226, 1429684226),
@@ -1016,7 +950,10 @@ INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_res
 (27, 'admin', 'IEdZYvMnXUelV5bGTSfKtesZXfpE-qtT', '$2y$13$rmQog1huU5uhY8imtRJSiu47KMBWvsNIvDt4jy3UxKNDn/hHhbmNe', NULL, 0, NULL, NULL, 'Nguyen Van Nhan', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com123123', NULL, 'I am Admin, Admin', 'Tổ 10, KV8, P. Ngô Mây, TP. Quy Nhơn, tỉnh Bình Định', 'uploads/avatar/avatar.jpg', 0, 10, 1431584162, 1431584162),
 (28, 'customer', '5mzebdn-9NDXrYIXw0q70_9GJ7oAl3Kz', '$2y$13$WwgjVJUFxTkCjeaXAutuz.8OQFKirgcViNy0RZXkCAC1AqacPqgge', NULL, 1, NULL, NULL, 'Nhan Nguyen', NULL, '0938194492', NULL, 'hoho@gmail.com', NULL, 'I''m customer', 'Tổ 10, KV8, P. Ngô Mây, TP. Quy Nhơn, tỉnh Bình Định', 'uploads/avatar/avatar.jpg', 0, 10, 1431589231, 1431589231),
 (29, 'nhannguyen12345', '6NjkShXGIbEs9Fo4ZPDJaC9OHtT8nkVK', '$2y$13$w7w3cy.ar3zr3vNCjNC7i.QOG87KmDCSIU.ZV7fxjRYNSBcqXto42', NULL, 2, 1, 150000, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com431', NULL, 'ád', 'Tổ 10, KV8, P. Ngô Mây, TP. Quy Nhơn, tỉnh Bình Định', 'uploads/1432139569978938733958.jpg', 0, 10, 1432139572, 1432139572),
-(30, 'khachhang', 'Z79uTWbLCj6366cqfdw8tiDHLq5vrzsK', '$2y$13$E9j5kmFiCOWJKvnxIK0R1uNgvNu78jtyRASY.xf3uQ4RZbnfE4J02', NULL, 1, NULL, NULL, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, '51002201@hcmut.edu.vn21', NULL, 'asdds', '268 Lý thường kiệt', 'uploads/1432141659678846891467.jpg', 0, 10, 1432141660, 1432141660);
+(30, 'khachhang', 'Z79uTWbLCj6366cqfdw8tiDHLq5vrzsK', '$2y$13$E9j5kmFiCOWJKvnxIK0R1uNgvNu78jtyRASY.xf3uQ4RZbnfE4J02', NULL, 1, NULL, NULL, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, '51002201@hcmut.edu.vn21', NULL, 'asdds', '268 Lý thường kiệt', 'uploads/1432141659678846891467.jpg', 0, 10, 1432141660, 1432141660),
+(31, 'customer1', 'R3selvZcLoV9e7Sr1fuvMgq6vgkd8WNi', '$2y$13$3v0Kv1fU54jz7gtNRxm8BeVkvla61FmPrBuxJKi8.Rbe3en0dNJOm', NULL, 1, NULL, NULL, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com32', NULL, '32', '268 Lý thường kiệt', 'uploads/avatar/avatar.jpg', 0, 10, 1433092218, 1433092218),
+(32, 'makeup1', 'OiykbsNbr83vXKFx146XA4UX49qJ3BzK', '$2y$13$BqTOxQPQe4oiMLJ4cox9zu3T2QAg5Vg9W49QYyaiojWtorAOwrYcq', NULL, 3, 1, 150000, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com098765432', NULL, '1', '268 Lý thường kiệt', 'uploads/1433121418348062371555.jpg', 0, 10, 1433121419, 1433121419),
+(33, 'makeup2', 'XcDaMptOyc6d5P9PNWj0YJ0Vy2SFDQcN', '$2y$13$7W/JXGGSapoULNSCa30yHeGQugW25cOwiYoyLQzaDObhRlpIcsIZ2', NULL, 3, NULL, 2000000, 'Nguyễn văn Nhàn', NULL, '0938194492', NULL, 'vannhan.nguyen0405@gmail.com5432', NULL, '1', '268 Lý thường kiệt', 'uploads/avatar/avatar.jpg', 0, 10, 1433121517, 1433121517);
 
 --
 -- Constraints for dumped tables
