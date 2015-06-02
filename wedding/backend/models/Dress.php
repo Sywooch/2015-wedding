@@ -161,5 +161,23 @@ class Dress extends ActiveRecord implements CartPositionInterface
         }
     }
     
+    
+    public function getmydress($id_user){
+        
+        
+        $contract = Contract::find()->where(['id_user'=>$id_user])->one();
+        if(isset($contract))
+        $arrdress = Dresscontract::find()->where(['id_contract'=>$contract->id_contract])->all();
+        
+        
+        if(isset($arrdress))
+        foreach ($arrdress as $dress) {
+            $arr[] = Dress::find()->where(['id_dress'=>$dress->id_dress])->one();
+        }
+        
+        if(isset($arr))return $arr; else return NULL;
+        
+        
+    }
    
 }

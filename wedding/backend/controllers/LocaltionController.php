@@ -217,6 +217,34 @@ class LocaltionController extends Controller
         //$model->find()->all();
         return $this->render('viewalllocaltion',$test);
     }
+    
+    
+    //
+    
+    public function actionAmb(){
+        $local = new Localtion();
+        $local->getAmb('L1429606564');
+    }
+    
+    
+    // Find local off user 
+    
+    public function actionMylocal(){
+        $local = new Localtion();
+        
+        $session = Yii::$app->session;
+        
+        if(isset($session['id_user'])&&$session['type_user']==1){
+        $infolocal = $local->getmylocal($session['id_user']);
+        
+        
+        
+        
+        $sender['imgs'] = $infolocal;
+        $sender['title'] = 'My Localtion';
+        return $this->render('mylocal',$sender);
+        }
+    }
 
     /**
      * Finds the Localtion model based on its primary key value.

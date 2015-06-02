@@ -15,12 +15,13 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div id="albumView">
     
-    <div class="row">    
+     
 <?php 
 
 foreach ($albumimg as $img) {
 ?>
-        <div class="" style="width: 50%"><a title=''><img src='<?php echo $img['url']; ?>' alt='<?php  ?>'></a></div>
+     <div class="row">  
+        <div class="" ><a title=''><img style="width: 50%" src='<?php  echo $img['url']; ?>' alt='<?php  ?>'></a></div>
         <div class="box"><?= Html::a('Delete', Url::base().'/index.php?r=img/delete&&id='.$img['id_img'].'&&typedelete=myalbum', [
             'class' => 'btn btn-danger',
             'data' => [
@@ -29,9 +30,14 @@ foreach ($albumimg as $img) {
             ],
         ]) ?></div>
    
-
+         </div>
 <?php }?>
+   
+    
+    <div class="row">
+        <?= Html::a('View AlBum', Url::base().'/index.php?r=album/myalbum', ['class' => 'btn btn-success']) ?>
     </div>
+    
 </div>  
 <div class="clr"></div>
 <!--srcrip and css-->

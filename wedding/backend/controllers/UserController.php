@@ -380,6 +380,10 @@ class UserController extends Controller
         
         $contracts = $model->getContractYear($year);
         
+        echo '<pre>';
+        print_r($contracts);
+        echo '</pre>';
+        
         $sender['title'] = 'Thống Kê';
         $sender['contracts'] = $contracts;
         
@@ -390,8 +394,14 @@ class UserController extends Controller
         $user = new User();
         $user->arrContractinYear($year);
     }
+    
+    public function actionAaa(){
+        $user = new User();
+        $user->getmakeupinyear(2015);
+        
+    }
 
-    /**
+        /**
      * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id

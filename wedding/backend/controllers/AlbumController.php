@@ -179,7 +179,7 @@ class AlbumController extends Controller
     public function actionMyalbum(){
         
         $session = Yii::$app->session;
-        if(isset($session['username'])&&isset($session['id_user'])){
+        if(isset($session['username'])&&isset($session['id_user'])&&$session['type_user']==1){
             $contract = \backend\models\Contract::find()->where(['id_user'=>$session['id_user']])->one();
             if(isset($contract)){
                 $album = Album::find()->where(['id_contract'=>$contract->id_contract])->one();
@@ -217,13 +217,24 @@ class AlbumController extends Controller
     //        echo '<pre>';
     //        print_r($sender);
     //        echo '</pre>';
-
-            return $this->render('albumview',
+            if(!isset($_GET['edit'])){
+                return $this->render('myalbum',
                     [
                         'albumimg'=>$sender,
                         'id_album'=>$album->id_album,
                     ]);
+            }else{
+                return $this->render('albumview',
+                    [
+                        'albumimg'=>$sender,
+                        'id_album'=>$album->id_album,
+                    ]);
+            }
+            
         
+        }else
+        {
+            return $this->redirect(['index']);
         }
         
     }
@@ -235,11 +246,11 @@ class AlbumController extends Controller
         }
         
         if(isset($bigimg)){
-            
+            echo '<pre>';
+            print_r($bigimg);
+            echo '</pre>';
         }
-        echo '<pre>';
-        print_r($bigimg);
-        echo '</pre>';
+        
         
     }
 

@@ -255,12 +255,36 @@ class DressController extends Controller
                 }
         }else return $this->goHome ();
      }   
-    /**
+     
+     /*My dress*/
+     
+     public function actionMydress(){
+         
+         $session = Yii::$app->session;
+         
+         if(isset($session['id_user'])&&$session['type_user']==1){
+              $dress = new Dress();
+            $arr = $dress->getmydress(5);
+
+            $sender['imgs'] = $arr;
+            $sender['title'] = 'My Dress';
+            return $this->render('mydress',$sender);
+             
+         }
+        
+         
+         
+     }
+
+          /**
      * Updates an existing Dress model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
+     
+     
+     
     public function actionUpdate($id)
     {
         $session = Yii::$app->session;

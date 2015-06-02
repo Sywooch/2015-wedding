@@ -25,6 +25,11 @@ foreach ($albumimg as $img) {
 <?php }?>
     
 </div>  
+
+
+<div class="row">
+        <?= Html::a('Edit AlBum', Url::base().'/index.php?r=album/myalbum&&edit', ['class' => 'btn btn-success']) ?>
+    </div>
 <div class="clr"></div>
 <!--srcrip and css-->
 <?php

@@ -400,4 +400,55 @@ class User extends ActiveRecord implements CartPositionInterface
             return $makeups;
         }else {return NULL;}
     }
+    
+    
+    public function getphotoinmonth($month,$year){
+        
+        $month = intval($month);
+        $year = intval($year);
+        $date = $this->getdate($month, $year);
+        
+        $start = '2015-'.$month.'-01';
+        $end = '2015-'.$month.'-'.$date;
+        $result = Yii::$app->db->createCommand("SELECT count(*),id_user FROM photocontract WHERE start_time >='".$start."' AND start_time<='".$end."' GROUP BY id_user")->queryAll();
+        echo '<pre>';
+        print_r($result);
+        echo '</pre>';
+    }
+    
+    public function getmakeupinmonth($month,$year){
+        
+        $month = intval($month);
+        $year = intval($year);
+        $date = $this->getdate($month, $year);
+        
+        $start = $year.'-'.$month.'-01';
+        $end = $year.'-'.$month.'-'.$date;
+        $result = Yii::$app->db->createCommand("SELECT id_user FROM makeupcontract WHERE start_time >='".$start."' AND start_time<='".$end."'")->queryAll();
+        echo '<pre>';
+        print_r($result);
+        echo '</pre>';
+    }
+    
+    
+    public function getphotoinyear($year) {
+        $year = intval($year);
+        $start = $year.'-01-01';
+        $end = $year.'-12-31';
+        $result = Yii::$app->db->createCommand("SELECT count(*),id_user FROM photocontract WHERE start_time >='".$start."' AND start_time<='".$end."' GROUP BY id_user")->queryAll();
+        echo '<pre>';
+        print_r($result);
+        echo '</pre>';
+    }
+    
+    public function getmakeupinyear($year) {
+        $year = intval($year);
+        $start = $year.'-01-01';
+        $end = $year.'-12-31';
+        $result = Yii::$app->db->createCommand("SELECT count(*),id_user FROM makeupcontract WHERE start_time >='".$start."' AND start_time<='".$end."' GROUP BY id_user")->queryAll();
+        echo '<pre>';
+        print_r($result);
+        echo '</pre>';
+    }
+    
 }

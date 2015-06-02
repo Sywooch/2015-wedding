@@ -66,19 +66,32 @@ class AmbienceController extends Controller
 
         if ($model->load(Yii::$app->request->post()) ) {
             
+            $model->id_local = $_GET['id'];
+            
+//            $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
+            $model->avatar = UploadedFile::getInstance($model, 'avatar');
+            
+            if(isset($model->avatar))
+            {
             $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
             $model->avatar = UploadedFile::getInstance($model, 'avatar');
-            //var_dump($model->avatar);
-            $model->avatar->saveAs( 'uploads/'.$imgname.'.'.$model->avatar->extension );
+            $model->avatar->saveAs('uploads/amb/'.$imgname.'.'.$model->avatar->extension );
+
+                    //save in db
+
+            $model->avatar = 'uploads/amb/'.$imgname.'.'. $model->avatar->extension;
+            }else $model->avatar='';    
+    
+            $hehe = Yii::$app->db->createCommand("INSERT INTO ambience (id_local,name_amb,info_amb,avatar) VALUES ('".$_GET['id']."','".$model->name_amb
+                    ."','".$model->info_amb."','".$model->avatar."')");
+
             
-            //save in db
             
-            $model->avatar = 'uploads/'.$imgname.'.'. $model->avatar->extension;
-            
-            $model->id_local = $_GET['id'];
-            $model->save();
-           // return $this->redirect(['view', 'id' => $model->id_local_amb]);
-            return LocaltionController::redirect(['localtion/view', 'id' => $model->id_local]);
+            if($hehe->execute())
+            {
+                return LocaltionController::redirect(['localtion/view', 'id' => $model->id_local]);
+            }
+           
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,

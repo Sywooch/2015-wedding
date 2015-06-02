@@ -11,8 +11,7 @@ $this->title =$title;
 ?>
 <div class = "dress-index">
     <div id ="album">
-        
-    <?php if($imgs!=NULL){ ?>
+    <?php if($imgs!=NULL) { ?>
     <?php foreach ($imgs as $img) {?>
         <li class='oneSer oneAlbum ' >
 	        <a href='<?php echo 'index.php?r=localtion/viewimg&&id='.$img['id_local'] ?>' class='thumb' style='background-image:url(<?php echo $img['avatar'] ?>);'>

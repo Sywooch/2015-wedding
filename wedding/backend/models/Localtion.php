@@ -95,4 +95,19 @@ class Localtion extends ActiveRecord implements CartPositionInterface
         //echo $result['name_local'];
         return $result['name_local'];
     }
+    
+    public function getAmb($id_local){
+        $arr = Ambience::find()->where(['id_local'=>$id_local])->all();
+        
+        echo '<pre>';
+        print_r($arr);
+        echo '</pre>';
+    }
+    
+    public function getmylocal($id_user){
+        $mycontract = Contract::find()->where(['id_user'=>$id_user])->one();
+        if(isset($mycontract))
+        $mylocal = Localtion::find()->where(['id_local'=>$mycontract->id_local])->all();
+        if(isset($mylocal))return $mylocal;else return NULL;
+    }
 }

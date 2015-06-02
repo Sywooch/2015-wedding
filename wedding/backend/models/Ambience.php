@@ -32,7 +32,7 @@ class Ambience extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_local', 'name_amb', 'info_amb', 'status'], 'required'],
+            [['id_local', 'name_amb', 'info_amb'], 'required'],
             [['id_local', 'status'], 'integer'],
             [['info_amb'], 'string'],
             [['name_amb'], 'string', 'max' => 200],
