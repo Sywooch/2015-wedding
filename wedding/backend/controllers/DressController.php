@@ -135,44 +135,7 @@ class DressController extends Controller
      * @return mixed
      */
     
-    
 
-
-    
-
-
-    public function actionAddtocart($id)
-    {
-        $cart = new ShoppingCart();
-
-        $model = Dress::findOne($id);
-        if ($model) {
-            $cart->put($model, 1);
-         //   return $this->redirect(['index']);
-        }
-        
-        $count = $cart->getCount();
-       // echo $count;
-        //$cart->removeAll();
-        //throw new NotFoundHttpException();
-        return $this->redirect('index.php?r=dress/alldress');
-    }
-    
-    public function actionListtocart(){
-        $cart = new ShoppingCart();
-        //echo $cart->getCount();
-        $items = $cart->positions;
-//        echo '<pre>';
-//        print_r($items);
-//        echo '</pre>';
-        foreach ($items as $item) {
-           
-            echo $item->getCost().'<br>';
-            echo $item->getId().'<br>';
-            echo $item->getPrice().'<br>';
-        }
-       // $cart
-    }
 
     
     // view all image of dress
@@ -202,7 +165,19 @@ class DressController extends Controller
     }
     
     
-    // get all dress
+    public function actionEditimgdress($id){
+        
+        $this->findModel($id);
+        $dress = new Dress();
+        $arrurl = $dress->getimgdress($id);
+        $sender['imgdress'] = $arrurl;
+        $sender['id_dress'] = $id;
+        return $this->render('dressview',$sender);
+        
+        
+    }
+
+        // get all dress
     public function actionAlldress(){
         $query = new Query();
         $rows = $query->select(['id_dress','avatar','name_dress'])->from('dress')->where(['status'=>1])->all();

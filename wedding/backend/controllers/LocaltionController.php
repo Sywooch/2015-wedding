@@ -58,42 +58,8 @@ class LocaltionController extends Controller
     }
     
     
-    
-     public function actionAddtocart($id)
-    {
-        $cart = new ShoppingCart();
 
-        $model = Localtion::findOne($id);
-        if ($model) {
-            $cart->put($model, 1);
-            //return $this->redirect(['index']);
-        }
-        //var_dump($cart->getCost());
-       // var_dump($model);
-        $count = $cart->getCount();
-        echo $count;
-        //$cart->removeAll();
-        //throw new NotFoundHttpException();
-    }
     
-    public function actionListtocart(){
-        $cart = new ShoppingCart();
-      //  echo $cart->getCount();
-        $items = $cart->positions;
-//        echo '<pre>';
-//        print_r($items);
-//        echo '</pre>';
-        $i=0;
-        foreach ($items as $item) {
-            //echo $item->getPrice().'<br>';
-            echo $item->getCost().'<br>';
-          //  $i++;
-        }
-        //echo $i;
-        
-        //$cart->removeAll();
-       // $cart
-    }
     
     // get all dress free date_start to end_date
     
@@ -245,8 +211,17 @@ class LocaltionController extends Controller
         return $this->render('mylocal',$sender);
         }
     }
+    
+    public function actionEditimglocal($id){
+        $this->findModel($id);
+        $local = new Localtion();
+        $arrimg = $local->getimglocal($id);
+        $sender['imglocals'] = $arrimg;
+        $sender['id'] = $id;
+        return $this->render('localview',$sender);
+    }
 
-    /**
+        /**
      * Finds the Localtion model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id

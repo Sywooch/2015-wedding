@@ -370,12 +370,18 @@ class ContractController extends Controller
     //info contract of customer
     public function actionMycontract(){
         $contract = new Contract();
-        $info = $contract->getMycontract(5);
+        $session = Yii::$app->session;
         
-        $sender['model']= $info;
-       
         
-        return  $this->render('mycontract',$sender);
+        if(isset($session['id_user'])&&$session['type_user']==1){
+        
+            $info = $contract->getMycontract($session['id_user']);
+
+            $sender['model']= $info;
+
+
+            return  $this->render('mycontract',$sender);
+        }
         
     }
 

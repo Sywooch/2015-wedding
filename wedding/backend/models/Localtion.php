@@ -110,4 +110,22 @@ class Localtion extends ActiveRecord implements CartPositionInterface
         $mylocal = Localtion::find()->where(['id_local'=>$mycontract->id_local])->all();
         if(isset($mylocal))return $mylocal;else return NULL;
     }
+    
+    
+    
+    public function getimglocal($id_local){
+        $arridimg = Imglocal::find()->where(['id_local'=>$id_local])->all();
+        
+        
+
+        if(isset($arridimg)){
+            foreach ($arridimg as $idimg) {
+                $imgs[]= Img::find()->where(['id_img'=>$idimg->id_img])->one();
+            }
+        }
+        
+
+        
+        if(isset($imgs))return $imgs;else return NULL;
+    }
 }

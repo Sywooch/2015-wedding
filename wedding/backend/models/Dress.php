@@ -179,5 +179,24 @@ class Dress extends ActiveRecord implements CartPositionInterface
         
         
     }
+    public function getimgdress($id_dress){
+        $arridimg = Imgdress::find()->where(['id_dress'=>$id_dress])->all();
+        
+        
+//        echo '<pre>';
+//        print_r($arridimg[0]);
+//        echo '</pre>';exit;
+        if(isset($arridimg)){
+            foreach ($arridimg as $idimg) {
+                $imgs[]= Img::find()->where(['id_img'=>$idimg->id_img])->one();
+            }
+        }
+        
+//        echo '<pre>';
+//        print_r($imgs);
+//        echo '</pre>';exit;
+        
+        if(isset($imgs))return $imgs;else return NULL;
+    }
    
 }

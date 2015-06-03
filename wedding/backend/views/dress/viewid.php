@@ -24,7 +24,7 @@ foreach ($imgs as $img) {
 </div>  
 <div class="clr"></div>
 <!--srcrip and css-->
-<?=  Html::a('Add To Cart', 'index.php?r=dress/addtocart&&id='.$_GET['id'],['class'=>'btn btn-success']) ?><?php
+<?= Html::a('Edit', Url::base().'/index.php?r=dress/editimgdress&&id='.$_GET['id'], ['class' => 'btn btn-success']) ?><?php
    $this->registerJsFile(Url::base().'/js/img.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
    $this->registerJsFile(Url::base().'/js/js/jquery-1.8.3.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
    $this->registerJsFile(Url::base().'/js/js/galleria.folio.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
