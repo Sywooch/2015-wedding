@@ -253,38 +253,9 @@ class UserController extends Controller
         } else        return    $this->goHome ();
     }
     
-    // get all all photo free from start to end
-    public function actionGetallphotofree($start,$end){
-        $model = new User();
-        //$model->getAllPhotofree($start, $end);
-        echo '<pre>';
-        print_r($model->getAllPhotofree($start, $end));
-        echo '</pre>';
-    }
-
-    // get all makeup free from start to end
-    
-    public function actionGetallmakeupfree($start, $end){
-        $model = new User();
-        
-        echo '<pre>';
-        print_r($model->getMakeupfree($start, $end));
-        echo '</pre>';
-    }
-    
-    public function actionAa($start, $end,$id_contract){
-        $model = new User();
-        
-        echo '<pre>';
-        print_r($model->getPhotofreeupdate($start, $end,$id_contract));
-        echo '</pre>';
-        
-        
-        echo '<pre>';
-        print_r($model->getUserfressupdate($start, $end,$id_contract));
-        echo '</pre>';
-        
-    }
+ 
+   
+   
 
     
     /**
@@ -400,8 +371,26 @@ class UserController extends Controller
         $user->getmakeupinyear(2015);
         
     }
+    
+    
+    //
+    
+    public function actionMystaff(){
+        $user = new User();
+        $session = Yii::$app->session;
+        
+        if(isset($session['id_user'])&&$session['type_user']==1){
+        
+        
+        $sender['title'] = 'My Staff';
+        $sender['photos'] =$user->getmystaff($session['id_user']);
+        
+        
+        return $this->render('staff',$sender);
+        }
+    }
 
-        /**
+    /**
      * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id

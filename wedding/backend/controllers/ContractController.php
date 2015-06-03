@@ -366,6 +366,21 @@ class ContractController extends Controller
             }
         }
     }
+    
+    //info contract of customer
+    public function actionMycontract(){
+        $contract = new Contract();
+        $info = $contract->getMycontract(5);
+        
+        $sender['model']= $info;
+       
+        
+        return  $this->render('mycontract',$sender);
+        
+    }
+
+    
+
 
     /**
      * Deletes an existing Contract model.

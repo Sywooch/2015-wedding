@@ -451,4 +451,21 @@ class User extends ActiveRecord implements CartPositionInterface
         echo '</pre>';
     }
     
+    public function getmystaff($id_user){
+        $contract = Contract::find()->where(['id_user'=>$id_user])->one();
+        if(isset($contract)){
+            $staff[] = Photocontract::find()->where(['id_contract'=>$contract->id_contract])->one();
+            $staff[] = Makeupcontract::find()->where(['id_contract'=>$contract->id_contract])->one();
+        }
+        
+        if(isset($staff)){
+            foreach ($staff as $value) {
+                $staffs[] = User::find()->where(['id'=>$value->id_user])->one();
+            }
+        }
+        if(isset($staff))return $staffs;
+        
+        return NULL;
+    }
+    
 }

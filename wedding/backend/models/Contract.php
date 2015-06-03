@@ -183,5 +183,13 @@ class Contract extends \yii\db\ActiveRecord
         return $allcontract;else
         return NULL;
     }
+    
+    
+    
+    public function getMycontract($id_user){
+        $contract = Contract::find()->where(['id_user'=>$id_user])->one();
+        if(isset($contract)) return $contract;
+        return NULL;
+    }
    
 }
