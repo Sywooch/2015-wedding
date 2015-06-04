@@ -59,4 +59,23 @@ $(function(){
     });   
 });
 
+
+$("#loginform-username").change(function(){
+    var a =document.getElementById('loginform-username').value;
+    var b = {value:a};
+    $.ajax({
+        url : 'index.php?r=site/login',
+        data :  b ,
+        dataType : 'html',
+        type : 'POST',
+ 
+ 
+        success : function(data) {
+            //if(data.status ==1)alert('asdsad');
+            console.log("success!!");
+           alert(sdata) ;
+        }
+});
+
+});
 				

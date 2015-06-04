@@ -20,7 +20,7 @@ $this->title =$title;
 	            <ul class='mask'>
 	                <!--<h2><a href='chup-anh-cuoi-lau-dai-tajmasago-khaisilk-sab-c1.html'>Chụp ảnh cưới lâu đài Tajmasago Khaisilk</a></h2>-->
 	                <p><a href='<?php echo 'index.php?r=dress/viewimg&&id='.$img['id_dress'] ?>'  title='Ngoại Cảnh Phú Mỹ Hưng'><?php echo $img['name_dress'] ?></a></p>
-                        <p><?=  Html::a('Add To Cart', 'index.php?r=dress/addtocart&&id='.$img['id_dress'],['class'=>'btn btn-success addcart']) ?></p>
+                       
                     </ul>
 	        <h1><a href='<?php echo 'index.php?r=dress/viewimg&&id='.$img['id_dress'] ?>' title=''><?php echo $img['name_dress'] ?></a></h1>
                 

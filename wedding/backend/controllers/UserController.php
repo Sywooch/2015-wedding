@@ -63,19 +63,7 @@ class UserController extends Controller
         ]);
     }
     
-    // get timework user
-    public function  actionTimework(){
-        $model = new Contract();
-        //$test = $model->getContractInMonth(1);
-        //var_dump(Yii::$app->user);
-        echo '<pre>';
-        print_r(Yii::$app->user);
-        echo '</pre>';
-        
-        //var_dump($test);
-    }
-    // view task yourself
-    // 
+  
     
     public function actionTask($id_user){
         
@@ -351,20 +339,13 @@ class UserController extends Controller
         
         $contracts = $model->getContractYear($year);
         
-        echo '<pre>';
-        print_r($contracts);
-        echo '</pre>';
-        
         $sender['title'] = 'Thống Kê';
         $sender['contracts'] = $contracts;
         
         return $this->render('contractyear',$sender);
     }
     
-    public function actionTest($year){
-        $user = new User();
-        $user->arrContractinYear($year);
-    }
+   
     
     public function actionAaa(){
         $user = new User();

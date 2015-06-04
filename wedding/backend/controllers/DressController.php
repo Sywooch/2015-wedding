@@ -68,13 +68,7 @@ class DressController extends Controller
         
     }
     
-//    public function actionTest($start,$end){
-//        $model = new Dress();
-//        $arr = $model->getAllDressFree($start, $end);
-//        echo '<pre>';
-//        print_r($arr);
-//        echo '</pre>';
-//    }
+
     // get all dress don't have task from start to end
     public function actionGetalldressfree($start, $end){
         $model = new Dress();
@@ -167,13 +161,17 @@ class DressController extends Controller
     
     public function actionEditimgdress($id){
         
+        $session = Yii::$app->session;
+        
+        if(isset($session['username'])&&$session['type_user']==0){
+        
         $this->findModel($id);
         $dress = new Dress();
         $arrurl = $dress->getimgdress($id);
         $sender['imgdress'] = $arrurl;
         $sender['id_dress'] = $id;
         return $this->render('dressview',$sender);
-        
+        }return $this->goBack();
         
     }
 
@@ -238,14 +236,18 @@ class DressController extends Controller
          $session = Yii::$app->session;
          
          if(isset($session['id_user'])&&$session['type_user']==1){
-              $dress = new Dress();
-            $arr = $dress->getmydress(5);
+            $dress = new Dress();
+            
+            $id_user = $session['id_user'];
+            
+            $arr = $dress->getmydress($id_user);
 
             $sender['imgs'] = $arr;
             $sender['title'] = 'My Dress';
             return $this->render('mydress',$sender);
              
          }
+         return $this->goBack();
         
          
          
@@ -265,7 +267,7 @@ class DressController extends Controller
         $session = Yii::$app->session;
         
         
-        if(isset($session)&&$session['type_user']==0){
+        if(isset($session['id_user'])&&$session['type_user']==0){
             $model = $this->findModel($id);
             $url_avatar = $model->avatar;
             if ($model->load(Yii::$app->request->post())) {
@@ -289,7 +291,8 @@ class DressController extends Controller
                     'model' => $model,
                 ]);
             }
-        }else return $this->goHome ();
+        }
+        return $this->goHome ();
     }
 
     /**
@@ -320,10 +323,5 @@ class DressController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-//    public function actionTest(){
-//        $session = Yii::$app->session;
-//        echo $session['username'].'<br>';
-//        echo $session['id_user'].'<br>';
-//        echo $session['type_user'];
-//    }
+
 }

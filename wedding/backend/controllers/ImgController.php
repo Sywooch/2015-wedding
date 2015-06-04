@@ -38,13 +38,18 @@ class ImgController extends Controller
      */
     public function actionIndex()
     {
+        $session = Yii::$app->session;
+        
+        if(isset($session['username'])&&$session['type_user']==0){
         $searchModel = new ImgSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
+        ]);}
+        
+        return $this->goHome();
     }
 
     /**

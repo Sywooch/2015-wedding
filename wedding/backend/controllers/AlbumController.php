@@ -38,13 +38,19 @@ class AlbumController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new AlbumSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $session = Yii::$app->session;
+        
+        if(isset($session['username'])&&$session['type_user']==0){
+        
+            $searchModel = new AlbumSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+        return $this->redirect(['allalbum']);
     }
 
     /**
@@ -66,20 +72,28 @@ class AlbumController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Album();
+        
+        $session = Yii::$app->session;
+        
+        if(isset($session['username'])&&$session['type_user']==0){
+        
+            $model = new Album();
 
-        if ($model->load(Yii::$app->request->post())) {
-            
-            
-            
-            $model->save();
-            Yii::$app->db->createCommand('update contract set have_album = 1 where id_contract = '.$model->id_contract)->execute();
-            return $this->redirect(['view', 'id' => $model->id_album]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            if ($model->load(Yii::$app->request->post())) {
+
+
+
+                $model->save();
+                Yii::$app->db->createCommand('update contract set have_album = 1 where id_contract = '.$model->id_contract)->execute();
+                return $this->redirect(['view', 'id' => $model->id_album]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        
         }
+        return $this->goBack();
     }
     //
     
@@ -108,71 +122,77 @@ class AlbumController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-       // $contract = \backend\models\Contract::findOne($model->id_contract);
-        $bigimg = Bigimg::find()->where(['id_contract'=>$model->id_contract])->one();
+        $session = Yii::$app->session;
         
-        if ($model->load(Yii::$app->request->post()) && $bigimg->load(Yii::$app->request->post()) ) {
-            $url = $bigimg->url;
-            
-            
-            $img = new UploadForm();
-            $img->file = UploadedFile::getInstances($model,'url_folder');
-            $dirpath = 'uploads/album/'.$id;
-           // var_dump(!is_dir($dirpath));
-             if(!is_dir($dirpath)) {
-                mkdir($dirpath,0777,true);     
-             }
-            
-             if($img->file!=NULL){
-                   foreach ($img->file as $file) {
-                        $image = new Img();
-                        $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
+        if(isset($session['username'])&&$session['type_user']==0){
+        
+            $model = $this->findModel($id);
+            $bigimg = Bigimg::find()->where(['id_contract'=>$model->id_contract])->one();
+
+            if ($model->load(Yii::$app->request->post()) && $bigimg->load(Yii::$app->request->post()) ) {
+                $url = $bigimg->url;
 
 
-                        $file->saveAs($dirpath.'/'.$imgname.'.'.$file->extension);
+                $img = new UploadForm();
+                $img->file = UploadedFile::getInstances($model,'url_folder');
+                $dirpath = 'uploads/album/'.$id;
+               // var_dump(!is_dir($dirpath));
+                 if(!is_dir($dirpath)) {
+                    mkdir($dirpath,0777,true);     
+                 }
 
-                        $image->url = $dirpath.'/'.$imgname.'.'.$file->extension;
+                 if($img->file!=NULL){
+                       foreach ($img->file as $file) {
+                            $image = new Img();
+                            $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
 
-                        $image->save();
-                         
-                        $imgalbum = new Imgalbum();
-                        $imgalbum->id_album = $id;
-                        $imgalbum->id_img = $image->id_img;
-                        $imgalbum->save();
-                       
 
-                    }
-            }
-            $model->url_folder = '';
-            
-            //$imgbig = new UploadForm();     
-            $bigimg->url = UploadedFile::getInstance($bigimg,'url');
-            $dirpathimg = 'uploads/album/'.$id.'/bigimg';
-            
-            
-            if($bigimg->url!=NULL){
-                if(!is_dir($dirpathimg)) {
-                     mkdir($dirpathimg,0777,true);     
+                            $file->saveAs($dirpath.'/'.$imgname.'.'.$file->extension);
+
+                            $image->url = $dirpath.'/'.$imgname.'.'.$file->extension;
+
+                            $image->save();
+
+                            $imgalbum = new Imgalbum();
+                            $imgalbum->id_album = $id;
+                            $imgalbum->id_img = $image->id_img;
+                            $imgalbum->save();
+
+
+                        }
                 }
-                $imgname = time().rand(0, 10000).rand(0, 10000);
-                $bigimg->url->saveAs($dirpathimg.'/'.$imgname.'.'.$bigimg->url->extension);
-                $bigimg->url = $dirpathimg.'/'.$imgname.'.'.$bigimg->url->extension;
-            }else $bigimg->url = $url;
-            
-            
-            
-            if($model->save()){
-                
-                Yii::$app->db->createCommand("UPDATE bigimg set url = '".$bigimg->url."' where id_contract = '".$model->id_contract."'")->execute();
-            return $this->redirect(['view', 'id' => $model->id_album]);
+                $model->url_folder = '';
+
+                //$imgbig = new UploadForm();     
+                $bigimg->url = UploadedFile::getInstance($bigimg,'url');
+                $dirpathimg = 'uploads/album/'.$id.'/bigimg';
+
+
+                if($bigimg->url!=NULL){
+                    if(!is_dir($dirpathimg)) {
+                         mkdir($dirpathimg,0777,true);     
+                    }
+                    $imgname = time().rand(0, 10000).rand(0, 10000);
+                    $bigimg->url->saveAs($dirpathimg.'/'.$imgname.'.'.$bigimg->url->extension);
+                    $bigimg->url = $dirpathimg.'/'.$imgname.'.'.$bigimg->url->extension;
+                }else $bigimg->url = $url;
+
+
+
+                if($model->save()){
+
+                    Yii::$app->db->createCommand("UPDATE bigimg set url = '".$bigimg->url."' where id_contract = '".$model->id_contract."'")->execute();
+                return $this->redirect(['view', 'id' => $model->id_album]);
+                }
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                    'bigimg'=>  $bigimg,
+                ]);
             }
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-                'bigimg'=>  $bigimg,
-            ]);
         }
+        
+        return $this->goBack();
     }
     
     

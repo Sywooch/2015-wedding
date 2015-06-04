@@ -8,6 +8,7 @@ use yii\helpers\Url;
  * and open the template in the editor.
  */
 $this->title =$title;
+
 ?>
 <div class = "dress-index">
     

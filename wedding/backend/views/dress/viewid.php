@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\BootstrapAsset;
-
+$session = Yii::$app->session;
 $this->title = $title;
 $this->params['breadcrumbs'][] = ['label' => 'Dresses', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -24,7 +24,13 @@ foreach ($imgs as $img) {
 </div>  
 <div class="clr"></div>
 <!--srcrip and css-->
-<?= Html::a('Edit', Url::base().'/index.php?r=dress/editimgdress&&id='.$_GET['id'], ['class' => 'btn btn-success']) ?><?php
+
+<?php if(isset($session['id_user'])&&$session['type_user']==0) {?>
+
+
+<?= Html::a('Edit', Url::base().'/index.php?r=dress/editimgdress&&id='.$_GET['id'], ['class' => 'btn btn-success']) ?>
+    
+<?php }
    $this->registerJsFile(Url::base().'/js/img.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
    $this->registerJsFile(Url::base().'/js/js/jquery-1.8.3.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
    $this->registerJsFile(Url::base().'/js/js/galleria.folio.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);

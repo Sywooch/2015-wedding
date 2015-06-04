@@ -123,6 +123,13 @@ class SiteController extends Controller
     
     public function actionLogin()
     {
+        
+//        if(isset($_POST['value'])){
+//           //$_POST['value'] =+456789;
+//            $a=[1,2,3,4,5];
+//            //echo $a;
+//           echo $_POST['value'];exit;
+//        }
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -146,6 +153,8 @@ class SiteController extends Controller
     }
     public function actionSignup()
     {
+        $session = Yii::$app->session;
+        if(isset($session['username'])&&$session['type_user']==0){
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             
@@ -177,6 +186,7 @@ class SiteController extends Controller
         return $this->render('signup', [
             'model' => $model,
         ]);
+        }else return $this->goHome();
     }
 
     public function actionLogout()
