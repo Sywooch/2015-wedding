@@ -113,6 +113,9 @@ class AlbumController extends Controller
         $album = new Album();
         $album->getImgOfAlbum($id);
     }
+    
+   
+
 
     /**
      * Updates an existing Album model.
@@ -242,12 +245,83 @@ class AlbumController extends Controller
                     [
                         'albumimg'=>$sender,
                         'id_album'=>$album->id_album,
+                        'title'=>'My Album',
                     ]);
             }else{
                 return $this->render('albumview',
                     [
                         'albumimg'=>$sender,
                         'id_album'=>$album->id_album,
+                        'title'=>'My Album',
+                    ]);
+            }
+            
+        
+        }else
+        {
+            return $this->redirect(['index']);
+        }
+        
+    }
+    
+    
+    
+    public function actionAlbumview($id){
+        
+       
+        
+        $session = Yii::$app->session;
+        if(isset($session['username'])&&$session['type_user']==0){
+             $this->findModel($id);
+            
+                //$album = Album::find()->where(['id_album'=>$id])->one();
+
+                //$bigimg = Bigimg::find()->where(['id_contract'=>$contract->id_contract])->one();
+               
+                    $imgalbum = Imgalbum::find()->where(['id_album'=>$id])->all();
+                
+                if(isset($imgalbum)){
+                    foreach ($imgalbum as $key => $img) {
+                        $albumimg[$key]= $img->id_img;
+                       // $hehe[$key][]= $img->id_album;
+                    }
+                }    
+            
+
+            if(isset($albumimg)){
+                foreach ($albumimg as $img){
+                    $allimg[] = Img::findOne($img);
+                }
+
+            }
+            if(isset($allimg)){
+                foreach ($allimg as $key=> $img) {
+                    $sender[$key]['url']= $img->url;
+                    $sender[$key]['id_img']= $img->id_img;
+
+                }
+            }  else {
+                $sender[0]['url']= null;
+                $sender[0]['id_img']= null;
+            }
+            
+
+    //        echo '<pre>';
+    //        print_r($sender);
+    //        echo '</pre>';
+            if(!isset($_GET['edit'])){
+                return $this->render('myalbum',
+                    [
+                        'albumimg'=>$sender,
+                        'id_album'=>$id,
+                        'title'=>$id,
+                    ]);
+            }else{
+                return $this->render('albumview',
+                    [
+                        'albumimg'=>$sender,
+                        'id_album'=>$id,
+                        'title'=>$id,
                     ]);
             }
             

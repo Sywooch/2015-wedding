@@ -9,8 +9,10 @@ use yii\bootstrap\BootstrapAsset;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\AlbumSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+$session = Yii::$app->session;
 
-$this->title = 'My Album';
+
+$this->title = $title;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div id="albumView">
@@ -26,10 +28,11 @@ foreach ($albumimg as $img) {
     
 </div>  
 
-
+<?php if(isset($session['username'])&&$session['type_user']==0) { ?>
 <div class="row">
-        <?= Html::a('Edit AlBum', Url::base().'/index.php?r=album/myalbum&&edit', ['class' => 'btn btn-success']) ?>
-    </div>
+        <?= Html::a('Edit AlBum', Url::base().'/index.php?r=album/albumview&id='.$id_album.'&&edit', ['class' => 'btn btn-success']) ?>
+</div>
+<?php } ?>
 <div class="clr"></div>
 <!--srcrip and css-->
 <?php

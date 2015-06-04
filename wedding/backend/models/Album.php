@@ -65,20 +65,20 @@ class Album extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Contract::className(), ['id_contract' => 'id_contract']);
     }
-    public function getAllalbum(){
-        $result = Yii::$app->db->createCommand('SELECT id_album FROM album where status = 4')->queryAll();
-//        echo '<pre>';
-//        print_r($result);
-//        echo '</pre>';
-        
-        foreach ($result as $value) {
-            $allalbum[] = $value['id_album'];
-        }
-        if(isset($allalbum)){
-            return $allalbum;
-        }
-        else return NULL;
-    }
+//    public function getAllalbum(){
+//        $result = Yii::$app->db->createCommand('SELECT id_album FROM album where status = 4')->queryAll();
+////        echo '<pre>';
+////        print_r($result);
+////        echo '</pre>';
+//        
+//        foreach ($result as $value) {
+//            $allalbum[] = $value['id_album'];
+//        }
+//        if(isset($allalbum)){
+//            return $allalbum;
+//        }
+//        else return NULL;
+//    }
     
     
     
@@ -100,4 +100,10 @@ class Album extends \yii\db\ActiveRecord
         
         return $arr;
     }
+    
+    public function getAllAlbum(){
+        $album = $this->find()->all();
+        if(isset($album)) return $album;else return NULL;
+    }
+    
 }

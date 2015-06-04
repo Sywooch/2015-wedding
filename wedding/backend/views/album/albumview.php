@@ -10,7 +10,7 @@ use yii\bootstrap\BootstrapAsset;
 /* @var $searchModel backend\models\AlbumSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'My Album';
+$this->title = $title;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div id="albumView">
@@ -35,7 +35,7 @@ foreach ($albumimg as $img) {
    
     
     <div class="row">
-        <?= Html::a('View AlBum', Url::base().'/index.php?r=album/myalbum', ['class' => 'btn btn-success']) ?>
+        <?= Html::a('View AlBum', Url::base().'/index.php?r=album/albumview&id='.$id_album, ['class' => 'btn btn-success']) ?>
     </div>
     
 </div>  
