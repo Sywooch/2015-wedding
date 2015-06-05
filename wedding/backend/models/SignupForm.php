@@ -46,19 +46,34 @@ class SignupForm extends Model
             
             ['email', 'email'],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['password', 'required'],
+            ['password', 'string', 'min' => 6],
+            
             [['type_user','fullname','tell','info_user','address'],'required'],
             [['type_user','range_user','rate_user','have_contract'],'integer'],
             [['email','avatar','fullname','fullname2','address'],'string','max'=>255],
-            [['tell','tell2'],'string','max'=>12],
-            
-            
-            
+            [['tell','tell2'],'string','max'=>12],    
         ];
-        
-        
-
     }
 
+    
+//    public function rules()
+//    {
+//        return [
+//            ['username', 'filter', 'filter' => 'trim'],
+//            ['username', 'required'],
+//            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
+//            ['username', 'string', 'min' => 2, 'max' => 255],
+//
+//            ['email', 'filter', 'filter' => 'trim'],
+//            ['email', 'required'],
+//            ['email', 'email'],
+//            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+//
+//            ['password', 'required'],
+//            ['password', 'string', 'min' => 6],
+//        ];
+//    }
     /**
      * Signs user up.
      *
@@ -70,6 +85,8 @@ class SignupForm extends Model
             $user = new User();
             $user->username = $this->username;
             $user->email = $this->email;
+            $user->setPassword($this->password);
+            $user->generateAuthKey();
             $user->type_user = $this->type_user;
             $user->fullname = $this->fullname;
             $user->tell = $this->tell;
@@ -84,8 +101,7 @@ class SignupForm extends Model
             
             $user->avatar = $this->avatar;
             
-            $user->setPassword($this->password);
-            $user->generateAuthKey();
+            
             if ($user->save()) {
                 return $user;
             }
