@@ -9,12 +9,12 @@ use yii\filters\VerbFilter;
 use backend\models\PasswordResetRequestForm;
 use backend\models\ResetPasswordForm;
 use backend\models\SignupForm;
-use backend\models\ContactForm;
-use yii\web\Session;
+
+
 use backend\models\User;
 //use backend\models\UploadForm;
 use yii\web\UploadedFile;
-use yii\web\Cookie;
+
 
 /**
  * Site controller
@@ -27,20 +27,7 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-//            'access' => [
-//                'class' => AccessControl::className(),
-//                'rules' => [
-//                    [
-//                        'actions' => ['login', 'error'],
-//                        'allow' => true,
-//                    ],
-//                    [
-//                        'actions' => ['logout', 'index'],
-//                        'allow' => true,
-//                        'roles' => ['@'],
-//                    ],
-//                ],
-//            ],
+
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -87,49 +74,12 @@ class SiteController extends Controller
         //return $this->render('about');
     }
     
-//    public function actionLogin()
-//    {
-//        if (!\Yii::$app->user->isGuest) {
-//            return $this->goHome();
-//        }
-//
-//        $model = new LoginForm();
-//        $user = new User();
-//        
-//        if ($model->load(Yii::$app->request->post()) &&$model->login()) {
-//            
-//            
-//            
-//            
-//          
-//                var_dump($model);
-//           
-//                $session = Yii::$app->session;
-//               // var_dump($user->getInfobyUsername($model->username));
-//               $session['username'] = $model->username;
-//                $session['id_user'] = $user->getInfobyUsername($model->username)->id;
-//                $session['type_user'] = $user->getInfobyUsername($model->username)->type_user;
-//                
-//            
-//                return $this->goBack();
-//            
-//            
-//        } else {
-//            return $this->render('login', [
-//                'model' => $model,
-//            ]);
-//        }
-//    }
+
     
     public function actionLogin()
     {
         
-        if(isset($_POST['value'])){
-           //$_POST['value'] =+456789;
-            $a=[1,2,3,4,5];
-            //echo $a;
-           echo json_encode($a);exit;
-        }
+        
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -169,16 +119,8 @@ class SiteController extends Controller
                     $model->avatar = 'uploads/'.$imgname.'.'. $model->avatar->extension;
                 }else {$model->avatar = 'uploads/avatar/avatar.jpg';}
             
-            if ($user = $model->signup()) {
-//                if (Yii::$app->getUser()->login($user)) {
-//                    $session = Yii::$app->session;
-//                    $session['username']=$user->username;
-//                    $session['id_user'] = $user->id;
-//                    $session['type_user'] = $user->type_user;
-////                  echo $session['id_user'];
-////                    echo  $session['type_user'];
-//                     return $this->goHome();
-//                }
+            if ($model->signup()) {
+
                 return $this->goHome();
             }
         }
@@ -186,16 +128,14 @@ class SiteController extends Controller
         return $this->render('signup', [
             'model' => $model,
         ]);
-        }else return $this->goHome();
+        }
+        return $this->goHome();
     }
 
     public function actionLogout()
     {
         Yii::$app->user->logout();
-        $cookies = Yii::$app->response->cookies;
-        if(isset($cookies['username'])){
-            unset($cookies['username']);
-        }
+        
 //        session_destroy ();
         return $this->goHome();
     }

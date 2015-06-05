@@ -302,7 +302,9 @@ class User extends ActiveRecord implements CartPositionInterface
             foreach ($allmakeup as $value) {
                 $arr_allmakeup[] = $value['id'];
             }
+            if(isset($arr_allmakeup))
             return $arr_allmakeup;
+            return NULL;
         }
         
     }
@@ -349,7 +351,7 @@ class User extends ActiveRecord implements CartPositionInterface
     }
 
     public function getContractYear($year){
-        $year = intval($year);
+       // $year = intval($year);
         for($i=1;$i<13;$i++){
             $date = $this->getdate($i, $year);
             $endmonth = $year.'-'.$i.'-'.$date;

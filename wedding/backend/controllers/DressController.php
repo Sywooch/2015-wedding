@@ -57,16 +57,7 @@ class DressController extends Controller
         }else return $this->goHome ();
     }
     
-    //test model get dress free
-    public function actionGetdress(){
-        $model = new Dress();
-        //$re = $model->getDressfree('2015-04-28','2015-04-16');
-   
-        echo '<pre>';
-        print_r($re);
-        echo '</pre>';
-        
-    }
+ 
     
 
     // get all dress don't have task from start to end
@@ -165,12 +156,12 @@ class DressController extends Controller
         
         if(isset($session['username'])&&$session['type_user']==0){
         
-        $this->findModel($id);
-        $dress = new Dress();
-        $arrurl = $dress->getimgdress($id);
-        $sender['imgdress'] = $arrurl;
-        $sender['id_dress'] = $id;
-        return $this->render('dressview',$sender);
+            $this->findModel($id);
+            $dress = new Dress();
+            $arrurl = $dress->getimgdress($id);
+            $sender['imgdress'] = $arrurl;
+            $sender['id_dress'] = $id;
+            return $this->render('dressview',$sender);
         }return $this->goBack();
         
     }

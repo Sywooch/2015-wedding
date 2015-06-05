@@ -5,18 +5,22 @@ use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
 $session = Yii::$app->session;
 $this->title = $title;
-$this->params['breadcrumbs'][] = ['label' => 'Dresses', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Localtion', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $i =0;
 ?>
 <div id = "albumView">
-<?php foreach ($imgs as $img) {
+    <?php if(isset($imgs)){ ?>
+    <?php foreach ($imgs as $img) {
     ?>
 
-    <img src="<?php echo $img['url']; ?>" alt="Smiley face" width="100%">
+        <img src="<?php echo $img['url']; ?>" alt="Smiley face" width="100%">
     
-<?php } ?>
+    <?php } } else {?>
+        
+        
+    <?php } ?>   
     </div>
 
 <?php if(isset($session['username'])&&$session['type_user']==0) {?>

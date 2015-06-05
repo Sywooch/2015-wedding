@@ -35,7 +35,7 @@ foreach ($imgdress as $img) {
    
     
     <div class="row">
-        <?= Html::a('Edit', Url::base().'/index.php?r=dress/editimgdress&&id_dress='.$_GET['id'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('View', Url::base().'/index.php?r=dress/viewimg&&id='.$_GET['id'], ['class' => 'btn btn-success']) ?>
     </div>
     
 </div>  

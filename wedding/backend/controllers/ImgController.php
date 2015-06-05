@@ -160,7 +160,7 @@ class ImgController extends Controller
             if($_GET['typedelete']=='myalbum')
             return $this->redirect(['album/myalbum']);
             if($_GET['typedelete']=='editdress')
-                return $this->redirect(['dress/viewimg','id'=>$_GET['id_dress']]);
+                return $this->redirect(['dress/editimgdress','id'=>$_GET['id_dress']]);
             if($_GET['typedelete']=='editlocal')
                 return $this->redirect(['localtion/viewimg','id'=>$_GET['id_local']]);
         }

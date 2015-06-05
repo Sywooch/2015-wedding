@@ -96,7 +96,7 @@ class LocaltionController extends Controller
         
         $session = Yii::$app->session;
         
-        if(isset($session['usernamr'])&&$session['type_user']==0){
+        if(isset($session['username'])&&$session['type_user']==0){
         
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -126,12 +126,13 @@ class LocaltionController extends Controller
                 $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
                 $model->avatar = UploadedFile::getInstance($model, 'avatar');
                 //var_dump($model->avatar);
+                if($model->avatar!=NULL){
                 $model->avatar->saveAs( 'uploads/'.$imgname.'.'.$model->avatar->extension );
 
                 //save in db
 
                 $model->avatar = 'uploads/'.$imgname.'.'. $model->avatar->extension;
-
+                }else $model->avatar = '';   
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id_local]);
             } else {
@@ -254,6 +255,7 @@ class LocaltionController extends Controller
             $arrimg = $local->getimglocal($id);
             $sender['imglocals'] = $arrimg;
             $sender['id'] = $id;
+            $sender['title'] = $this->findModel($id)->name_local;
             return $this->render('localview',$sender);
         }
         return $this->redirect(['view','id'=>$id]);

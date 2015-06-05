@@ -10,14 +10,14 @@ use yii\bootstrap\BootstrapAsset;
 /* @var $searchModel backend\models\AlbumSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'My Album';
+$this->title = $title;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div id="albumView">
     
      
 <?php 
-
+if(isset($imglocal)){
 foreach ($imglocals as $img) {
 ?>
      <div class="row">  
@@ -31,9 +31,10 @@ foreach ($imglocals as $img) {
         ]) ?></div>
    
          </div>
-<?php }?>
-   
-    
+<?php }
+} else {?>
+    <p>Không có hình ảnh</p>
+<?php } ?>
     <div class="row">
         <?= Html::a('View Img Local', Url::base().'/index.php?r=localtion/viewid&&id='.$id, ['class' => 'btn btn-success']) ?>
     </div>

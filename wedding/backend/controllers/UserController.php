@@ -38,17 +38,18 @@ class UserController extends Controller
     {
         $session = Yii::$app->session;
         if(isset($session['username'])&&$session['type_user']==0){
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
-        
+            $searchModel = new UserSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            
-        ]);
-        }else return $this->goBack ();
+
+
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+
+            ]);
+        }
+        return $this->goBack ();
     }
     
     // get all customer
@@ -193,7 +194,7 @@ class UserController extends Controller
     //get all photo
     public function actionGetallphoto(){
         
-        $session = \Yii::$app->session;
+        $session = Yii::$app->session;
         if(isset($session['username'])&&$session['type_user']==0){
         
             $searchModel = new UserSearch();
@@ -205,11 +206,12 @@ class UserController extends Controller
                 //'model'=>$model,
             ]);
         
-        } else  return $this->goHome ();
+        } 
+        return $this->goHome ();
     }
     // get all makeup
     public function actionGetallmakeup() {
-         $session = \Yii::$app->session;
+         $session = Yii::$app->session;
         if(isset($session['username'])&&$session['type_user']==0){
         
             $searchModel = new UserSearch();
@@ -221,7 +223,8 @@ class UserController extends Controller
                 //'model'=>$model,
             ]);
         
-        } else     return $this->goHome ();
+        } 
+        return $this->goHome ();
     }
     
     // get all assistant
@@ -238,7 +241,8 @@ class UserController extends Controller
                 //'model'=>$model,
             ]);
         
-        } else        return    $this->goHome ();
+        }
+        return    $this->goHome ();
     }
     
  
@@ -260,7 +264,8 @@ class UserController extends Controller
         ]);
         
         }
-        else        return    $this->goHome ();
+       
+        return $this->goHome ();
     }
 
     /**
@@ -330,7 +335,8 @@ class UserController extends Controller
                      ]);
                 
             }
-        }else return $this->goHome ();
+        }
+        return $this->goHome ();
     }
     
     public function actionContract(){
