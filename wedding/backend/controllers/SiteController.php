@@ -124,12 +124,12 @@ class SiteController extends Controller
     public function actionLogin()
     {
         
-//        if(isset($_POST['value'])){
-//           //$_POST['value'] =+456789;
-//            $a=[1,2,3,4,5];
-//            //echo $a;
-//           echo $_POST['value'];exit;
-//        }
+        if(isset($_POST['value'])){
+           //$_POST['value'] =+456789;
+            $a=[1,2,3,4,5];
+            //echo $a;
+           echo json_encode($a);exit;
+        }
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }

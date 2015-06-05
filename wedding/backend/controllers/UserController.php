@@ -333,14 +333,24 @@ class UserController extends Controller
         }else return $this->goHome ();
     }
     
-    public function actionContract($year){
+    public function actionContract(){
         $model = new User();
         
+        if(isset($_POST['year'])){
+           
+            $a=$model->getContractYear($_POST['year']);
+            $b = [$a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12]];
+            $c = [[1,$a[1]],[2,$a[2]],[3,$a[3]],[4,$a[4]],[5,$a[5]],[6,$a[6]],[7,$a[7]],[8,$a[8]],[9,$a[9]],[10,$a[10]],[11,$a[11]],[12,$a[12]]];
+           echo json_encode($c);exit;
+        }
         
-        $contracts = $model->getContractYear($year);
-        
+
+      // $contracts = $model->getContractYear(2015);
+     //  var_dump($contracts);   
+       
         $sender['title'] = 'Thống Kê';
-        $sender['contracts'] = $contracts;
+        
+       // $sender['contracts'] = $contracts;
         
         return $this->render('contractyear',$sender);
     }

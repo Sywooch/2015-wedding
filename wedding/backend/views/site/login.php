@@ -27,3 +27,4 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<script type="text/javascript">document.onload = hhhh(<?php echo 2015?>);</script>

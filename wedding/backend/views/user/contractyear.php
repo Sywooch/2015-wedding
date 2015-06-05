@@ -29,33 +29,33 @@ $this->registerCssFile(Url::base().'/css/plot/examples.css', ['depends' => [Boot
    
     <?php 
     
-    foreach ($contracts as $contract) {
-        $test[] = intval($contract);
-    }
+//    foreach ($contracts as $contract) {
+//        $test[] = intval($contract);
+//    }
     //var_dump($test);
     
-    $data = [ ["Tháng 1", $test[0]], ["Tháng 2", $test[1]], ["Tháng 3", $test[2]], ["Tháng 4", $test[3]], ["Tháng 5", $test[4]], ["Tháng 6", $test[5]] ,["Tháng 7", $test[6]],["Tháng 8", $test[7]] ,["Tháng 9", $test[8]],["Tháng 10", $test[9]],["Tháng 11", $test[10]],["Tháng 12", $test[11]]];
+    //$data = [ [1, $test[0]], [2, $test[1]], [3,$test[2]], [4,$test[3]], [5, $test[4]], [6,$test[5]] ,[7,$test[6]],[8,$test[7]] ,[9,$test[8]],[10, $test[9]],[11,$test[10]],[12,$test[11]]];
     
     //$test ='1';
     ?>
     <div class="demo-container">
+        <label>
+            <select id = "year-contract">
+                <option value="2014">2014</option>
+                <option value="2015" selected="true">2015</option>
+                <option value="2016">2016</option>
+                <option value="2017">2017</option>
+            </select>
+        </label>
          <div class="breadcrumb"><?= Html::encode($this->title) ?></div>
          <div id="placeholder" class="demo-placeholder" ></div>
     </div>
     <div class="demo-container">
         
-        <label>
-            <select>
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="opel">Opel</option>
-                <option value="audi">Audi</option>
-            </select>
-        </label>
+        
          <div class="breadcrumb"><?= Html::encode($this->title) ?></div>
          <div id="placeholder1" class="demo-placeholder" ></div>
     </div>
 </div>
 
-<script type="text/javascript">document.onload = chartcontract(<?php echo json_encode($data); ?>,<?php echo json_encode('#placeholder'); ?>);</script>
-<script type="text/javascript">document.onload = chartcontract(<?php echo json_encode($data); ?>,<?php echo json_encode('#placeholder1'); ?>);</script>
+
