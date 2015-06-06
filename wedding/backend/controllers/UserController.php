@@ -342,6 +342,10 @@ class UserController extends Controller
     public function actionContract(){
         $model = new User();
         
+        
+        
+        
+        
         if(isset($_POST['year'])){
            
             $a=$model->getContractYear($_POST['year']);
@@ -349,7 +353,6 @@ class UserController extends Controller
             $c = [[1,$a[1]],[2,$a[2]],[3,$a[3]],[4,$a[4]],[5,$a[5]],[6,$a[6]],[7,$a[7]],[8,$a[8]],[9,$a[9]],[10,$a[10]],[11,$a[11]],[12,$a[12]]];
            echo json_encode($c);exit;
         }
-        
 
       // $contracts = $model->getContractYear(2015);
      //  var_dump($contracts);   
@@ -361,12 +364,36 @@ class UserController extends Controller
         return $this->render('contractyear',$sender);
     }
     
-   
     
+    public function actionHehe(){
+//        $user = new User();
+        if(isset($_POST['year'])){
+            $user = new User();
+            $users = $user->getphotoinyear($_POST['year']);
+            $a= [['1',2],['2',5],['3',7]];
+            echo json_encode($users);
+        }
+//        $users = $user->getphotoinyear(2015);
+//        $a= [['1',2],['2',5],['3',7]];
+//        echo '<pre>';
+//        print_r($users);
+//        echo '</pre>';
+//        echo '<pre>';
+//        print_r($a);
+//        echo '</pre>';
+    }
+
+    
+
     public function actionAaa(){
         $user = new User();
-        $user->getmakeupinyear(2015);
+        $sender['contracts_start']=$user->getContractstart(date('Y-m-d'));
+        $sender['contracts_payment1']=$user->getContractpayment1(date('Y-m-d'));
         
+        $sender['contracts_payment2']=$user->getContractpayment2(date('Y-m-d'));
+        
+        $sender['contracts_payment3']=$user->getContractpayment3(date('Y-m-d'));
+        return $this->render('notify',$sender);
     }
     
     

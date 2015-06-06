@@ -309,6 +309,8 @@ class User extends ActiveRecord implements CartPositionInterface
         
     }
     
+    
+    
     public function getAllMakeupfree($start, $end){
         $arr = $this->getMakeupfree($start, $end);
         
@@ -437,10 +439,19 @@ class User extends ActiveRecord implements CartPositionInterface
         $year = intval($year);
         $start = $year.'-01-01';
         $end = $year.'-12-31';
-        $result = Yii::$app->db->createCommand("SELECT count(*),id_user FROM photocontract WHERE start_time >='".$start."' AND start_time<='".$end."' GROUP BY id_user")->queryAll();
-        echo '<pre>';
-        print_r($result);
-        echo '</pre>';
+        $result = Yii::$app->db->createCommand("SELECT count(*),id_user FROM photocontract WHERE start_time >='".$start."' AND start_time<='".$end."' GROUP BY id_user LIMIT 10")->queryAll();
+//        echo '<pre>';
+//        print_r($result);
+//        echo '</pre>';
+        
+        
+        foreach ($result as $key=>$value) {
+            
+            $info = User::find()->where(['id'=>$value['id_user']])->one();
+            
+            $res[] = [$key,$value['count(*)']];
+        }
+        return $res;
     }
     
     public function getmakeupinyear($year) {
@@ -469,5 +480,81 @@ class User extends ActiveRecord implements CartPositionInterface
         
         return NULL;
     }
+    
+    
+    public function getContractstart($time){
+        $nexttime =  date('Y-m-d',strtotime($time ."+ 1 days"));
+        $nexttwotime =  date('Y-m-d',strtotime($time ."+ 2 days"));
+        $nextthreeday =  date('Y-m-d',strtotime($time ."+ 3 days"));
+        
+        $start[$time] = Contract::find()->select('id_contract,id_user')->where(['start_time'=>$time])->all();
+        $start[$nexttime] = Contract::find()->select('id_contract,id_user')->where(['start_time'=>$nexttime])->all();
+        $start[$nexttwotime] = Contract::find()->select('id_contract,id_user')->where(['start_time'=>$nexttwotime])->all();
+        $start[$nextthreeday] = Contract::find()->select('id_contract,id_user')->where(['start_time'=>$nextthreeday])->all();
+        
+       
+        
+        
+//        echo '<pre>';
+//        print_r($start);
+//        echo '</pre>';
+        return $start;
+    }
+    
+    public function getContractpayment1($time){
+        $nexttime =  date('Y-m-d',strtotime($time ."+ 1 days"));
+        $nexttwotime =  date('Y-m-d',strtotime($time ."+ 2 days"));
+        
+       
+        
+        $payment1[$time] = Contract::find()->select('id_contract,id_user')->where(['payment1'=>$time])->all();
+        $payment1[$nexttime] = Contract::find()->select('id_contract,id_user')->where(['payment1'=>$nexttime])->all();
+        $payment1[$nexttwotime] = Contract::find()->select('id_contract,id_user')->where(['payment1'=>$nexttwotime])->all();
+        
+      
+        
+        return $payment1;
+
+    }
+    
+    
+    public function getContractpayment2($time){
+        $nexttime =  date('Y-m-d',strtotime($time ."+ 1 days"));
+        $nexttwotime =  date('Y-m-d',strtotime($time ."+ 2 days"));
+        
+       
+        
+        $payment2[$time] = Contract::find()->select('id_contract,id_user')->where(['payment2'=>$time])->all();
+        $payment2[$nexttime] = Contract::find()->select('id_contract,id_user')->where(['payment2'=>$nexttime])->all();
+        $payment2[$nexttwotime] = Contract::find()->select('id_contract,id_user')->where(['payment2'=>$nexttwotime])->all();
+        
+        return $payment2;
+        
+        echo '<pre>';
+        print_r($payment2);
+        echo '</pre>';
+
+    }
+    
+    
+    public function getContractpayment3($time){
+        $nexttime =  date('Y-m-d',strtotime($time ."+ 1 days"));
+        $nexttwotime =  date('Y-m-d',strtotime($time ."+ 2 days"));
+        
+        
+        $payment3[$time] = Contract::find()->select('id_contract,id_user')->where(['payment3'=>$time])->all();
+        $payment3[$nexttime] = Contract::find()->select('id_contract,id_user')->where(['payment3'=>$nexttime])->all();
+        $payment3[$nexttwotime] = Contract::find()->select('id_contract,id_user')->where(['payment3'=>$nexttwotime])->all();
+        
+       
+        return $payment3;
+        echo '<pre>';
+        print_r($payment3);
+        echo '</pre>';
+
+    }
+    
+   
+    
     
 }

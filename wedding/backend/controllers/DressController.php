@@ -298,6 +298,18 @@ class DressController extends Controller
 
         return $this->redirect(['index']);
     }
+    public function actionTest($start,$end){
+        $dress = new Dress();
+        $a=$dress->getAllDressFree($start, $end);
+        
+        echo '<pre>';
+        print_r($a);
+        echo '</pre>';
+        
+        
+    }
+
+    
 
     /**
      * Finds the Dress model based on its primary key value.

@@ -107,7 +107,7 @@ $opt = [15,20,25,30,35,40,45,50];
             $dress = ArrayHelper::map($var->getAllDressFree($_GET['start'], $_GET['end']),'id_dress','name_dress');}else $dress=[];
           echo $form->field($dresscontract, 'id_dress[]')->dropDownList(
                         $dress,
-                                [/*'prompt'=>'Select Dress',*/
+                                [//'prompt'=>'Select Dress',
                                    'multiple'=>true,
                                     'size'=>'auto',
                                     
@@ -119,7 +119,7 @@ $opt = [15,20,25,30,35,40,45,50];
     <?php if(isset($photocontract)&&isset($_GET['start'])&&isset($_GET['end'])){
         
         
-        if($model->isNewRecord){
+        if(!$model->isNewRecord){
             $arr = $user_photo->getAllPhotofree($_GET['start'], $_GET['end']);
         }else {
             $arr = $user_photo->getAllPhotofreeupdate($_GET['start'], $_GET['end'],$model->id_contract);
