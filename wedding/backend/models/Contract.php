@@ -21,6 +21,7 @@ use Yii;
  * @property integer $timeadd
  * @property string $timecomplete
  * @property integer $status
+ * @property integer $num_bigimg
  * @property integer $have_album
  * @property double $total_time
  * @property Localtion $idLocal
@@ -46,8 +47,8 @@ class Contract extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_user', 'id_local', 'start_time', 'payment1', 'timeadd'], 'required'],
-            [['id_user', 'total', 'timeadd', 'status','have_album'], 'integer'],
+            [['id_user', 'id_local', 'start_time', 'payment1', 'timeadd','num_bigimg'], 'required'],
+            [['id_user', 'total', 'timeadd', 'status','have_album','num_bigimg'], 'integer'],
             [['id_local'],'string'],[['total_time'],'double'],
             [['start_time', 'end_time', 'create_day', 'payment1', 'payment2', 'payment3', 'timephoto', 'timecomplete'], 'safe']
         ];
@@ -71,6 +72,7 @@ class Contract extends \yii\db\ActiveRecord
             'payment3' => 'Payment3',
             'timephoto' => 'Timephoto',
             'timeadd' => 'Timeadd',
+            'num_bigimg'=>'Number Big Img',
             'timecomplete' => 'Timecomplete',
             'status' => 'Status',
             'fullname'=>  Yii::t('app', 'Fullname'),

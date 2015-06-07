@@ -152,14 +152,7 @@ class ContractController extends Controller
 
                 // create end time photo
                 
-//
-//
-//                $date1 = str_replace('-', '/', $model->start_time);
-               // $model->end_time = date('Y-m-d',strtotime($date1 ."+".$time_add. " days"));
-                //end create phôt
-    //            echo '<pre>';
-    //            print_r($photocontract->id_user);
-    //            echo '</pre>';
+
 
                 //time work of contract
                 $model->total_time = $time_add;
@@ -208,11 +201,11 @@ class ContractController extends Controller
                     if($album->save()){
                              $rate_album = Ratealbum::findOne($album->numpage)->rate;
 
-
-
+                            
+                             
                             $bigimg->id_contract = $model->id_contract;
 
-                            $rate_bigimg = \backend\models\Sizebigimg::findOne($bigimg->size)->rate;
+                            $rate_bigimg = \backend\models\Sizebigimg::findOne($bigimg->size)->rate * $model->num_bigimg;
 
 
 
