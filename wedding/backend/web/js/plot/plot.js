@@ -105,7 +105,7 @@ function thongkephoto(year){
  
  
         success : function(data) {
-                alert(data);
+               // alert(data);
                 var set = {
                                label: "top photo",
                                 data: data,

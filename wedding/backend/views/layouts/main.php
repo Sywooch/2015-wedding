@@ -58,8 +58,11 @@ AppAsset::register($this);
                         <?php if($session['type_user']==1){ ?>
                             <ul id="menu">
                                
-                                <li class=""><a href="<?php echo Url::base().'/index.php?r=album/myalbum' ?>" title="">Album cưới</a>
-                                    
+                                <li class="haveSub"><a href="" title="">Thông Tin Ảnh Cưới</a>
+                                    <ul>
+                                        <li><a href="<?php echo Url::base().'/index.php?r=album/myalbum' ?>">Album cưới</a></li>
+                                        <li><a href="<?php echo Url::base().'/index.php?r=album/mybigimg' ?>">Ảnh lễ cưới</a></li>
+                                    </ul>
                                 </li>
                                 <li class=" "><a href="<?php echo Url::base().'/index.php?r=user/mystaff' ?>">Nhân Viên </a><span></span>
                                     

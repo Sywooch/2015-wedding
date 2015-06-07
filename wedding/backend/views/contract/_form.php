@@ -114,7 +114,9 @@ $opt = [15,20,25,30,35,40,45,50];
                                 ]
                             );
          
-     } ?>
+     }else if(isset($dresscontract)) {
+        // echo $form->field($dresscontract, 'id_dress[]')->textInput();
+     }?>
     
     <?php if(isset($photocontract)&&isset($_GET['start'])&&isset($_GET['end'])){
         
@@ -164,16 +166,16 @@ $opt = [15,20,25,30,35,40,45,50];
               ]
         ]);?>
         
-        <h2>Big Photo Wedding</h2>
         
-       <?= $form->field($model, 'num_bigimg')->textInput() ?>
         
         <?= $form->field($bigimg, 'size')->dropDownList(
                     ArrayHelper::map(Sizebigimg::find()->all(), 'size', 'size') 
                         ) ?>
         
     <?php }?>    
+        <h2>Big Photo Wedding</h2>
         
+       <?= $form->field($model, 'num_bigimg')->textInput() ?>
         
         
     </div>

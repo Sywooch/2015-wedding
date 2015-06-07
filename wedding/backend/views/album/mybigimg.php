@@ -16,12 +16,18 @@ $this->title = $title;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<?php if(isset($mess)){ ?>
 
-<p>Trạng Thái Album : <?php echo $status; ?></p>
+<p> <?php echo $mess; ?></p>
+
+<?php } ?>
+
+
+<?php if(isset($bigimg)) {?>
 <div id="albumView">
     
 <?php 
-foreach ($albumimg as $img) {
+foreach ($bigimg as $img) {
 ?>
     
     <a title=''><img src='<?php echo $img['url']; ?>' alt='<?php  ?>'>
@@ -31,7 +37,7 @@ foreach ($albumimg as $img) {
 <?php }?>
     
 </div>  
-
+<?php } ?>
 <?php if(isset($session['username'])&&$session['type_user']==0) { ?>
 <div class="row">
         <?= Html::a('Edit AlBum', Url::base().'/index.php?r=album/albumview&id='.$id_album.'&&edit', ['class' => 'btn btn-success']) ?>

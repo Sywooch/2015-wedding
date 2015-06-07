@@ -100,6 +100,9 @@ class ContractController extends Controller
         
         
     }
+    
+    
+   
 
     /**
      * Creates a new Contract model.
@@ -107,10 +110,7 @@ class ContractController extends Controller
      * @return mixed
      */
     public function actionCreate()
-    {
-        
-        $modelsBigImg = [new Bigimg];
-        
+    { 
        $session = Yii::$app->session;
        
        if(isset($session['username'])&&$session['type_user']==0){
@@ -246,77 +246,16 @@ class ContractController extends Controller
            return $this->goHome();
        }
     }
-    public function actionViewcontractref($id)
-    {
-        $model = new Contract();
-        $contract = ContractController::findModel($id);
+    
+    
+    public function actionTest($id){
+        $test = Dresscontract::find()->where(['id_contract'=>$id])->all();
+        echo '<pre>';
+        print_r($test);
+        echo '</pre>';
+    }
 
-        $array = $model->getDressfree($contract->start_time, $contract->end_time);
-        
-        foreach ($array as $value) {
-            if($value['id_contract']!=$id){
-                $arr_iddress[] = Yii::$app->db->createCommand('select id_dress from dresscontract where id_contract = '.$value['id_contract'])->queryAll();
-                $arr_idstaff[] = Yii::$app->db->createCommand('select id_user from staffcontract where id_type = 2 AND id_contract = '.$value['id_contract'])->queryAll();
-            }
-        }
-        $dress;
-        
-        // dress have task
-        for ($i=0;$i<count($arr_iddress);$i++){
-            foreach ($arr_iddress[$i] as $value) {
-               $dress[]= $value['id_dress']; 
-            }
-        }
-        
-        // user staff have staff
-        for ($i=0;$i<count($arr_idstaff);$i++){
-            foreach ($arr_idstaff[$i] as $value) {
-               $staff[]= $value['id_dress']; 
-            }
-        }
-        
-        
-        
-        //all dress 
-        $alldress = Yii::$app->db->createCommand('select id_dress from dress')->queryAll();
-        
-        // all staff have type = 2
-        
-        $allstaff = Yii::$app->db->createCommand('select id_user from user where type_user = 2')->queryAll();
-        
-        
-        // get dress don't have task
-        $dressfree;
-        
-        
-        foreach ($alldress as $val) {
-            $dressfree[] = $val['id_dress'];
-        }
-        $dressfree = array_diff($dressfree, $dress);
-       // get staff dont't have task and id_type =2
-        $stafffree;
-        foreach ($allstaff as $val) {
-            $stafffree[] = $val['id_dress'];
-        }
-        $stafffree = array_diff($stafffree, $staff);
-        
-        echo '<pre>';
-        print_r($alldress);
-        echo'</pre>';
-        
-        echo '<pre>';
-        print_r($dressfree);
-        echo'</pre>';
-    }
-    
-    public function actionTest(){
-        //echo time();
-       // var_dump(User::find());
-       $test = new Localtion();
-       $test->getName('L1429634734');
-    }
-    
-    /**
+        /**
      * Updates an existing Contract model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -325,11 +264,18 @@ class ContractController extends Controller
     public function actionUpdate($id)
     {   
         $session = Yii::$app->session;
+        $model = new Contract();
+        $dress = new Dress();
+        //$dresscontract = new Dresscontract();
+        $photocontract = new Photocontract();
+        $makeupcontract = new Makeupcontract();
+        $bigimg = new Bigimg();
+        $album = new Album();
         
         if(isset($session['username'])&&$session['type_user']==0){
         
             $model = $this->findModel($id);
-
+            $dresscontract =  Dresscontract::find()->where(['id_contract'=>$id])->all();
             if ($model->load(Yii::$app->request->post())) {
 
 
@@ -355,6 +301,7 @@ class ContractController extends Controller
 
                 return $this->render('update', [
                     'model' => $model,
+                    'dresscontract'=>$dresscontract,
                 ]);
             }
         }

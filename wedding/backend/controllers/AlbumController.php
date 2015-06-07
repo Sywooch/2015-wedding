@@ -245,6 +245,7 @@ class AlbumController extends Controller
                         'albumimg'=>$sender,
                         'id_album'=>$album->id_album,
                         'title'=>'My Album',
+                        'status' =>\backend\models\StatusAlbum::find()->where(['status_album'=>$album->status])->one()->name_status,
                     ]);
             }else{
                 return $this->render('albumview',
@@ -342,9 +343,28 @@ class AlbumController extends Controller
             echo '<pre>';
             print_r($bigimg);
             echo '</pre>';
+        }    
+    }
+    
+    public function actionMybigimg(){
+        $session = Yii::$app->session;
+        if(isset($session['username'])&&isset($session['id_user'])&&$session['type_user']==1){
+             $contract = \backend\models\Contract::find()->where(['id_user'=>$session['id_user']])->one();
+             if(isset($contract)){
+                 $bigimg = Bigimg::find()->where(['id_contract'=>$contract->id_contract])->all();
+             }else {
+                 $mess = 'Chưa có hình ảnh';
+             }
+             
+             if(isset($bigimg)){
+                 $sender['bigimg'] = $bigimg;
+             }
+             if(isset($mess)) $sender['mess'] = $mess;
+             
+             $sender['title'] = 'My Big Photo';
+             
+             return $this->render('mybigimg',$sender);
         }
-        
-        
     }
 
     
