@@ -370,17 +370,10 @@ class UserController extends Controller
         if(isset($_POST['year'])){
             $user = new User();
             $users = $user->getphotoinyear($_POST['year']);
-            $a= [['1',2],['2',5],['3',7]];
+          //  $a= [['1',2],['2',5],['3',7]];
             echo json_encode($users);
         }
-//        $users = $user->getphotoinyear(2015);
-//        $a= [['1',2],['2',5],['3',7]];
-//        echo '<pre>';
-//        print_r($users);
-//        echo '</pre>';
-//        echo '<pre>';
-//        print_r($a);
-//        echo '</pre>';
+
     }
 
     

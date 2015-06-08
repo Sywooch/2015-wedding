@@ -49,7 +49,9 @@ class AlbumController extends Controller
                 'dataProvider' => $dataProvider,
             ]);
         }
-        return $this->redirect(['allalbum']);
+        else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 
     /**
@@ -59,9 +61,14 @@ class AlbumController extends Controller
      */
     public function actionView($id)
     {
+        $session = Yii::$app->session;
+        if(isset($session['type_user'])&&$session['type_user']==0){
+        
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**
@@ -102,7 +109,10 @@ class AlbumController extends Controller
         $model['title'] = 'All Album';
         $model['']= '';
         
-        
+        echo '<pre>';
+        print_r($model['allalbum']);
+        echo '</pre>';
+        exit;
         
         return $this->render('allalbum',$model);
     }

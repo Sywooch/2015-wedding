@@ -114,8 +114,6 @@ $opt = [15,20,25,30,35,40,45,50];
                                 ]
                             );
          
-     }else if(isset($dresscontract)) {
-        // echo $form->field($dresscontract, 'id_dress[]')->textInput();
      }?>
     
     <?php if(isset($photocontract)&&isset($_GET['start'])&&isset($_GET['end'])){

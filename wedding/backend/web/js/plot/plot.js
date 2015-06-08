@@ -69,29 +69,31 @@ function thongkehopdong(year){
 }
 
 
-$(function(){
-    thongkehopdong(2015);
-    thongkephoto(2015);
 
-})
 $("#year-contract").change(function(){
     
     var e = document.getElementById("year-contract");
     var strUser = e.options[e.selectedIndex].value;
     //alert(strUser);
     thongkehopdong(strUser);
+    //thongkephoto(strUser);
 
-})
-
-
+});
 $("#year-photo").change(function(){
     
-    var e = document.getElementById("year-photo");
-    var strUser = e.options[e.selectedIndex].value;
-    //alert(strUser);
+    
+   // alert(12312);
+    
+   //
+    var ee = document.getElementById("year-photo");
+//    alert(e);
+    var strUser = ee.options[ee.selectedIndex].value;
+   // alert(strUser);
     thongkephoto(strUser);
 
-})
+});
+
+
 
 function thongkephoto(year){
     
@@ -105,10 +107,22 @@ function thongkephoto(year){
  
  
         success : function(data) {
-               // alert(data);
+              //  alert(data);
+                var ticks = [];
+                
+                for(var i = 0; i < data.length; i++){
+                    ticks.push([i,data[i][0]]);
+                     
+                }
+                var dataset = [];
+               for(var j = 0; j < data.length;j++){
+                    dataset.push([j,data[j][1]]);
+                     
+                }
+
                 var set = {
                                label: "top photo",
-                                data: data,
+                                data: dataset,
                                 bars: {
                                     show: true,
                                     fillColor: { colors: [{ opacity: 0.5 }, { opacity: 1 }] },
@@ -129,9 +143,9 @@ function thongkephoto(year){
                                      }
                              },
                              xaxis: {
-                                    ticks: [[0, "Tháng 1"], [1,"Tháng 2"], [2,"Tháng 3"]],
+                                  
                                     
-                                       
+                                    ticks:ticks,
                                     
                                     axisLabel: "Tháng",
                                     axisLabelUseCanvas: true,
@@ -166,3 +180,10 @@ function thongkephoto(year){
      });
 }
 
+
+
+$(function(){
+    thongkehopdong(2015);
+    thongkephoto(2015);
+
+});

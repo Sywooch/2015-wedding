@@ -7,6 +7,7 @@ use yz\shoppingcart\CartPositionInterface;
 use yz\shoppingcart\CartPositionProviderInterface;
 use yz\shoppingcart\CartPositionTrait;
 use yii\db\ActiveRecord; 
+use backend\models\Notify;
 
 /**
  * This is the model class for table "user".
@@ -449,7 +450,7 @@ class User extends ActiveRecord implements CartPositionInterface
             
             $info = User::find()->where(['id'=>$value['id_user']])->one();
             
-            $res[] = [$key,$value['count(*)']];
+            $res[] = [$info->username,$value['count(*)']];
         }
         return $res;
     }
@@ -492,7 +493,12 @@ class User extends ActiveRecord implements CartPositionInterface
         $start[$nexttwotime] = Contract::find()->select('id_contract,id_user')->where(['start_time'=>$nexttwotime])->all();
         $start[$nextthreeday] = Contract::find()->select('id_contract,id_user')->where(['start_time'=>$nextthreeday])->all();
         
-       
+        $notify[$time] = Notify::find()->where(['date_create'=>$time])->all();
+        $notify[$nexttime] = Notify::find()->where(['date_create'=>$nexttime])->all();
+        $notify[$nexttwotime] = Notify::find()->where(['date_create'=>$nexttwotime])->all();
+        $notify[$nextthreeday] = Notify::find()->where(['date_create'=>$nextthreeday])->all();
+        
+        
         
         
 //        echo '<pre>';

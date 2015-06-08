@@ -54,7 +54,28 @@ $(function(){
            var z = document.getElementById("contract-id_local").value;
             //window.location.href ='index.php?r=contract/create'+ '&&start='+x+'&&end='+x+'&&id_local='+z;
             
-             window.location.href ='index.php?r=contract/getendtime'+ '&&start='+x+'&&timeadd='+y+'&&id_local='+z;
+            var url = window.location.href.split("/");
+            
+            var check;
+            for(var i = 1; i <= url.length-1; i++){
+               if(url[i]=='index.php?r=contract')
+               {
+                   check = i;
+               }
+            }
+            
+            var test = url[check+1].split("&&");
+            var checkupdate = false
+            if(test[0]=='update'){
+                checkupdate = true;
+            }
+            
+            if(checkupdate){
+                window.location.href ='index.php?r=contract/getendtime'+ '&&start='+x+'&&timeadd='+y+'&&id_local='+z+"&&update&&"+test[1];
+            }
+            else window.location.href ='index.php?r=contract/getendtime'+ '&&start='+x+'&&timeadd='+y+'&&id_local='+z;
+            
+           //  
        }
     });   
 });

@@ -90,12 +90,12 @@ class ContractController extends Controller
         $time_add = $tb['timework'] + $timeadd;
         $date1 = str_replace('-', '/', $start);
         $end = date('Y-m-d',strtotime($date1 ."+".$time_add. " days"));
-        if($model->isNewRecord){
-            return $this->redirect('index.php?r=contract/create&&start='.$start.'&&end='.$end.'&&id_local='.$id_local.'&&timeadd='.$timeadd);
+        if(isset($_GET['update'])&&isset($_GET['id'])){
+            return  $this->redirect('index.php?r=contract/update&&id='.$_GET['id'].'&&start='.$start.'&&end='.$end.'&&id_local='.$id_local.'&&timeadd='.$timeadd);
        
         }else{
-            
-            return $this->redirect('index.php?r=contract/update&&id='.$model->id_contract.'&&start='.$start.'&&end='.$end.'&&id_local='.$id_local.'&&timeadd='.$timeadd);
+            return $this->redirect('index.php?r=contract/create&&start='.$start.'&&end='.$end.'&&id_local='.$id_local.'&&timeadd='.$timeadd);
+           
         }
         
         
@@ -275,7 +275,7 @@ class ContractController extends Controller
         if(isset($session['username'])&&$session['type_user']==0){
         
             $model = $this->findModel($id);
-            $dresscontract =  Dresscontract::find()->where(['id_contract'=>$id])->all();
+           // $dresscontract =  Dresscontract::find()->where(['id_contract'=>$id])->all();
             if ($model->load(Yii::$app->request->post())) {
 
 
@@ -301,7 +301,7 @@ class ContractController extends Controller
 
                 return $this->render('update', [
                     'model' => $model,
-                    'dresscontract'=>$dresscontract,
+                   // 'dresscontract'=>$dresscontract,
                 ]);
             }
         }

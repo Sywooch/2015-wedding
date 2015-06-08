@@ -15,8 +15,8 @@ $this->title =$title;
         
         
         <li class='oneSer oneAlbum ' >
-	        <a href='<?php echo 'index.php?r=dress/viewimg&&id='.$album ?>' class='thumb' style='background-image:url(<?php  ?>);'>
-		<img src='<?php echo $album ?>' /></a>
+	        <a href='<?php echo 'index.php?r=dress/viewimg&&id='.$album->id_album ?>' class='thumb' style='background-image:url(<?php  ?>);'>
+		<img src='<?php echo $album->avatar ?>' /></a>
 	            <ul class='mask'>
 	                <!--<h2><a href='chup-anh-cuoi-lau-dai-tajmasago-khaisilk-sab-c1.html'>Chụp ảnh cưới lâu đài Tajmasago Khaisilk</a></h2>-->
 	                <p><a href='<?php echo 'index.php?r=dress/viewimg&&id='.$album ?>'  title='Ngoại Cảnh Phú Mỹ Hưng'><?php echo $album ?></a></p>
