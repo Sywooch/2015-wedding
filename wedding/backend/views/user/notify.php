@@ -8,43 +8,113 @@ use backend\models\User;
 /* @var $model backend\models\Contract */
 
 $this->title = 'User';
-$this->params['breadcrumbs'][] = ['label' => 'User', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = ['label' => 'User', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usertask-view">
-    <div>Start time</div>
-    <?php foreach ($contracts_start as $key=>$date) { ?>
-    <p><?php echo $key ?></p>
-        <?php foreach ($date as $contract) {?>
-            <p> Nhắc Nhỡ Khách Hàng <?php echo User::find($contract['id_user'])->one()->fullname; ?> </p>
-        <?php } ?>
+<!--    <div class ="row">-->
+    <div>Nhắc nhỡ khách hàng đến studio trang điểm chụp ảnh vào ngày <?php echo date('Y-m-d',strtotime(date('Y-m-d')."+ 3 days")) ?></div>
+    <?php if(isset($contracts_start)) { ?>
+    <table class="table table-striped table-bordered detail-view">
+        <tr>
+            <td>Khách Hàng</td>
+            <td>Số điện thoại</td>
+            <td>Email</td>
+        </tr>
+     <?php foreach ($contracts_start as $customer) {?>
+        <tr>
+            <td><?php echo $customer['fullname'] ?></td>
+            <td><?php echo $customer['tell'] ?></td>
+            <td><?php  echo $customer['email'] ?></td>
+        </tr>
+     <?php }
+        ?>
     
+        
+    </table>
+    <?php } else {?>   
+        
+    <p>Không có hợp đồng vào ngày này</p>
+        
     <?php } ?>
-            
-    <div>Nhắc Nhở Thanh Toán Đợt 1</div>
-    <?php foreach ($contracts_payment1 as $key=>$date) { ?>
-    <p><?php echo $key ?></p>
-        <?php foreach ($date as $contract) {?>
-            <p> Nhắc Nhỡ Khách Hàng Thanh Toán Đợt 1<?php echo User::find($contract['id_user'])->one()->fullname; ?> </p>
-        <?php } ?>
+    <!--</div>-->
     
-    <?php } ?>   
-            
-    <div>Nhắc Nhở Thanh Toán Đợt 2</div>
-    <?php foreach ($contracts_payment2 as $key=>$date) { ?>
-    <p><?php echo $key ?></p>
-        <?php foreach ($date as $contract) {?>
-            <p> Nhắc Nhỡ Khách Hàng Thanh Toán Đợt 1<?php echo User::find($contract['id_user'])->one()->fullname; ?> </p>
-        <?php } ?>
     
-    <?php } ?>    
-    <div>Nhắc Nhở Thanh Toán Đợt 3</div>
-    <?php foreach ($contracts_payment3 as $key=>$date) { ?>
-    <p><?php echo $key ?></p>
-        <?php foreach ($date as $contract) {?>
-            <p> Nhắc Nhỡ Khách Hàng Thanh Toán Đợt 1<?php echo User::find($contract['id_user'])->one()->fullname; ?> </p>
-        <?php } ?>
     
-    <?php } ?>   
-
+    <div>Nhắc nhỡ khách hàng đến studio thanh toán đợt 1 vào ngày <?php echo date('Y-m-d',strtotime(date('Y-m-d')."+ 3 days")) ?></div>
+    <?php if(isset($contracts_payment1)) { ?>
+    <table class="table table-striped table-bordered detail-view">
+        <tr>
+            <td>Khách Hàng</td>
+            <td>Số điện thoại</td>
+            <td>Email</td>
+        </tr>
+     <?php foreach ($contracts_payment1 as $customer) {?>
+        <tr>
+            <td><?php echo $customer['fullname'] ?></td>
+            <td><?php echo $customer['tell'] ?></td>
+            <td><?php  echo $customer['email'] ?></td>
+        </tr>
+     <?php }
+        ?>
+    
+        
+    </table>
+    <?php } else {?>   
+        
+    <p>Không có khách hàng nào thanh toán đợt 1 <?php echo date('Y-m-d',strtotime(date('Y-m-d')."+ 3 days")) ?></p>
+        
+    <?php } ?>
+    
+    
+    <div>Nhắc nhỡ khách hàng đến studio thanh toán đợt 2 vào ngày <?php echo date('Y-m-d',strtotime(date('Y-m-d')."+ 3 days")) ?></div>
+    <?php if(isset($contracts_payment2)) { ?>
+    <table class="table table-striped table-bordered detail-view">
+        <tr>
+            <td>Khách Hàng</td>
+            <td>Số điện thoại</td>
+            <td>Email</td>
+        </tr>
+     <?php foreach ($contracts_payment2 as $customer) {?>
+        <tr>
+            <td><?php echo $customer['fullname'] ?></td>
+            <td><?php echo $customer['tell'] ?></td>
+            <td><?php  echo $customer['email'] ?></td>
+        </tr>
+     <?php }
+        ?>
+    
+        
+    </table>
+    <?php } else {?>   
+        
+    <p>Không có khách hàng nào thanh toán đợt 3 vào ngày <?php echo date('Y-m-d',strtotime(date('Y-m-d')."+ 3 days")) ?></p>
+        
+    <?php } ?>
+    
+    
+    div>Nhắc nhỡ khách hàng đến studio thanh toán đợt 4 vào ngày <?php echo date('Y-m-d',strtotime(date('Y-m-d')."+ 3 days")) ?></div>
+    <?php if(isset($contracts_payment3)) { ?>
+    <table class="table table-striped table-bordered detail-view">
+        <tr>
+            <td>Khách Hàng</td>
+            <td>Số điện thoại</td>
+            <td>Email</td>
+        </tr>
+     <?php foreach ($contracts_payment3 as $customer) {?>
+        <tr>
+            <td><?php echo $customer['fullname'] ?></td>
+            <td><?php echo $customer['tell'] ?></td>
+            <td><?php  echo $customer['email'] ?></td>
+        </tr>
+     <?php }
+        ?>
+    
+        
+    </table>
+    <?php } else {?>   
+        
+    <p>Không có khách hàng nào thanh toán đợt 2 vào ngày <?php echo date('Y-m-d',strtotime(date('Y-m-d')."+ 3 days")) ?></p>
+        
+    <?php } ?>
 </div>

@@ -10,7 +10,7 @@ use yii\bootstrap\BootstrapAsset;
 /* @var $searchModel backend\models\AlbumSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'My Album';
+$this->title = $title;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div id="albumView">

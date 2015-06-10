@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id_local], ['class' => 'btn btn-primary']) ?>
         
-        <?= Html::a('Update', ['update', 'id' => $model->id_local], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('View Img', ['viewimg', 'id' => $model->id_local], ['class' => 'btn btn-primary']) ?>
         
         <?= Html::button('Create Amb',['value'=> Url::to('index.php?r=ambience/create&&id='.$model->id_local),'class' => 'btn btn-primary','id'=>'createamb' ] ) ?>
         <?= Html::button('Create Img',['value'=> Url::to('index.php?r=img/create&&id='.$model->id_local.'&&type=local'),'class' => 'btn btn-primary','id'=>'create_img' ] ) ?>

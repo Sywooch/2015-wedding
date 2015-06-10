@@ -80,17 +80,11 @@ $("#year-contract").change(function(){
 
 });
 $("#year-photo").change(function(){
-    
-    
-   // alert(12312);
-    
-   //
     var ee = document.getElementById("year-photo");
-//    alert(e);
-    var strUser = ee.options[ee.selectedIndex].value;
-   // alert(strUser);
-    thongkephoto(strUser);
 
+    var strUser = ee.options[ee.selectedIndex].value;
+
+    thongkephoto(strUser);
 });
 
 
@@ -100,7 +94,7 @@ function thongkephoto(year){
     
     var b = {year:year};
      $.ajax({
-        url : 'index.php?r=user/hehe',
+        url : 'index.php?r=user/plotphoto',
         data :  b ,
         dataType : 'json',
         type : 'POST',
@@ -182,8 +176,203 @@ function thongkephoto(year){
 
 
 
+
+
+
+function thongkemakeup(year){
+    
+   // alert(year);
+    
+    var b = {year:year};
+     $.ajax({
+        url : 'index.php?r=user/plotmakeup',
+        data :  b ,
+        dataType : 'json',
+        type : 'POST',
+ 
+ 
+        success : function(data) {
+                //alert(data);
+                var ticks = [];
+                
+                for(var i = 0; i < data.length; i++){
+                    ticks.push([i,data[i][0]]);
+                     
+                }
+                var dataset = [];
+               for(var j = 0; j < data.length;j++){
+                    dataset.push([j,data[j][1]]);
+                     
+                }
+
+                var set = {
+                               label: "Top Makeup",
+                                data: dataset,
+                                bars: {
+                                    show: true,
+                                    fillColor: { colors: [{ opacity: 0.5 }, { opacity: 1 }] },
+                                    barWidth: 0.5,
+                                    align: "center",
+                                    lineWidth: 1,
+                                }
+                            };
+
+
+
+                     $.plot("#placeholder2", [ set], {
+                             series: {
+                                     bars: {
+                                             show: true,
+                                             barWidth: 0.6,
+                                             align: "center"
+                                     }
+                             },
+                             xaxis: {
+                                  
+                                    
+                                    ticks:ticks,
+                                    
+                                    axisLabel: "Tháng",
+                                    axisLabelUseCanvas: true,
+                                    axisLabelFontSizePixels: 12,
+                                    axisLabelFontFamily: 'Verdana, Arial',
+                                    axisLabelPadding: 3,
+                                    tickColor: "#5E5E5E",
+                                    color: "black"
+                             },
+                             grid: {
+                                    hoverable: true,
+                                    borderWidth: 2,
+                                    backgroundColor: { colors: ["#171717", "#4F4F4F"] }
+                             },
+                             legend: {
+                                    noColumns: 0,
+                                    labelBoxBorderColor: "#858585",
+                                    position: "ne"
+                                },
+                             yaxis: {
+                                    tickColor: "#5E5E5E",
+                                    color: "black",
+                                    tickDecimals: 0,
+                                   // axisLabel: "Tháng",
+                                    axisLabelUseCanvas: true,
+                                    axisLabelFontSizePixels: 12,
+                                    axisLabelFontFamily: 'Verdana, Arial',
+                                    axisLabelPadding: 10
+                                },  
+                     });
+             }
+     });
+}
+
+
+
+function thongkediadiem(year){
+    
+    //alert(year);
+    var b = {year:year};
+     $.ajax({
+        url : 'index.php?r=user/plotlocal',
+        data :  b ,
+        dataType : 'json',
+        type : 'POST',
+ 
+        
+        success : function(data) {
+              //  alert(data);
+                var ticks = [];
+                
+                for(var i = 0; i < data.length; i++){
+                    ticks.push([i,data[i][0]]);
+                     
+                }
+                var dataset = [];
+               for(var j = 0; j < data.length;j++){
+                    dataset.push([j,data[j][1]]);
+                     
+                }
+
+                var set = {
+                               label: "top localtion",
+                                data: dataset,
+                                bars: {
+                                    show: true,
+                                    fillColor: { colors: [{ opacity: 0.5 }, { opacity: 1 }] },
+                                    barWidth: 0.5,
+                                    align: "center",
+                                    lineWidth: 1,
+                                }
+                            };
+
+
+
+                     $.plot("#placeholder3", [ set], {
+                             series: {
+                                     bars: {
+                                             show: true,
+                                             barWidth: 0.6,
+                                             align: "center"
+                                     }
+                             },
+                             xaxis: {
+                                  
+                                    
+                                    ticks:ticks,
+                                    
+                                    axisLabel: "Tháng",
+                                    axisLabelUseCanvas: true,
+                                    axisLabelFontSizePixels: 12,
+                                    axisLabelFontFamily: 'Verdana, Arial',
+                                    axisLabelPadding: 3,
+                                    tickColor: "#5E5E5E",
+                                    color: "black"
+                             },
+                             grid: {
+                                    hoverable: true,
+                                    borderWidth: 2,
+                                    backgroundColor: { colors: ["#171717", "#4F4F4F"] }
+                             },
+                             legend: {
+                                    noColumns: 0,
+                                    labelBoxBorderColor: "#858585",
+                                    position: "ne"
+                                },
+                             yaxis: {
+                                    tickColor: "#5E5E5E",
+                                    color: "black",
+                                    tickDecimals: 0,
+                                   // axisLabel: "Tháng",
+                                    axisLabelUseCanvas: true,
+                                    axisLabelFontSizePixels: 12,
+                                    axisLabelFontFamily: 'Verdana, Arial',
+                                    axisLabelPadding: 10
+                                },  
+                     });
+             }
+     });
+}
+
+$("#year-makeup").change(function(){
+    var ee = document.getElementById("year-makeup");
+
+    var strUser = ee.options[ee.selectedIndex].value;
+
+    thongkemakeup(strUser);
+});
+
+
+$("#year-local").change(function(){
+    var ee = document.getElementById("year-local");
+
+    var strUser = ee.options[ee.selectedIndex].value;
+
+    thongkediadiem(strUser);
+});
+
 $(function(){
     thongkehopdong(2015);
     thongkephoto(2015);
+    thongkemakeup(2015);
+    thongkediadiem(2015);
 
 });

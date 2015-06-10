@@ -38,7 +38,7 @@ $this->registerCssFile(Url::base().'/css/plot/examples.css', ['depends' => [Boot
                 
             </select>
         </label>
-         <div class="breadcrumb"><?= Html::encode($this->title) ?></div>
+         <div class="breadcrumb"> Thống kê số lương hợp đồng trong năm</div>
          <div id="placeholder" class="demo-placeholder" ></div>
     </div>
     <div class="demo-container">
@@ -55,8 +55,47 @@ $this->registerCssFile(Url::base().'/css/plot/examples.css', ['depends' => [Boot
             </select>
         </label>
         
-         <div class="breadcrumb"><?= Html::encode($this->title) ?></div>
+         <div class="breadcrumb">Thống kê top thợ chụp ảnh trong năm</div>
          <div id="placeholder1" class="demo-placeholder" ></div>
+    </div>
+    
+    
+    <div class="demo-container">
+          <label>
+            <select id = "year-makeup">
+                <option value="<?php echo date('Y')-4 ?>"><?php echo date('Y')-4 ?></option>
+                <option value="<?php echo date('Y')-3 ?>"><?php echo date('Y')-3 ?></option>
+                <option value="<?php echo date('Y')-2 ?>"><?php echo date('Y')-2 ?></option>
+                <option value="<?php echo date('Y')-1 ?>"><?php echo date('Y')-1 ?></option>
+                <option value="<?php echo date('Y') ?>" selected><?php echo date('Y') ?></option>
+                <option value="<?php echo date('Y')+1 ?>"><?php echo date('Y')+1 ?></option>
+                <option value="<?php echo date('Y')+2 ?>"><?php echo date('Y')+2 ?></option>
+                
+            </select>
+        </label>
+        
+         <div class="breadcrumb">Thống kê top thợ trang điểm trong năm</div>
+         <div id="placeholder2" class="demo-placeholder" ></div>
+    </div>
+    
+    
+    
+    <div class="demo-container">
+          <label>
+            <select id = "year-local">
+                <option value="<?php echo date('Y')-4 ?>"><?php echo date('Y')-4 ?></option>
+                <option value="<?php echo date('Y')-3 ?>"><?php echo date('Y')-3 ?></option>
+                <option value="<?php echo date('Y')-2 ?>"><?php echo date('Y')-2 ?></option>
+                <option value="<?php echo date('Y')-1 ?>"><?php echo date('Y')-1 ?></option>
+                <option value="<?php echo date('Y') ?>" selected><?php echo date('Y') ?></option>
+                <option value="<?php echo date('Y')+1 ?>"><?php echo date('Y')+1 ?></option>
+                <option value="<?php echo date('Y')+2 ?>"><?php echo date('Y')+2 ?></option>
+                
+            </select>
+        </label>
+        
+         <div class="breadcrumb">Thống kê top địa điểm trong năm</div>
+         <div id="placeholder3" class="demo-placeholder" ></div>
     </div>
 </div>
 

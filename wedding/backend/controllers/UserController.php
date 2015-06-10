@@ -349,7 +349,6 @@ class UserController extends Controller
         if(isset($_POST['year'])){
            
             $a=$model->getContractYear($_POST['year']);
-            $b = [$a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12]];
             $c = [[1,$a[1]],[2,$a[2]],[3,$a[3]],[4,$a[4]],[5,$a[5]],[6,$a[6]],[7,$a[7]],[8,$a[8]],[9,$a[9]],[10,$a[10]],[11,$a[11]],[12,$a[12]]];
            echo json_encode($c);exit;
         }
@@ -365,7 +364,7 @@ class UserController extends Controller
     }
     
     
-    public function actionHehe(){
+    public function actionPlotphoto(){
 //        $user = new User();
         if(isset($_POST['year'])){
             $user = new User();
@@ -373,18 +372,49 @@ class UserController extends Controller
           //  $a= [['1',2],['2',5],['3',7]];
             echo json_encode($users);
         }
+        
 
     }
+    
+    public function actionPlotlocal(){        
+        if(isset($_POST['year'])){
+            $user = new User();
+            $users = $user->getlocaltioninyear($_POST['year']);
+            $a= [['1',2],['2',5],['3',7]];
+            echo json_encode($users);
+        }
+       
+    }
 
+
+    public function actionPlotmakeup() {
+        if(isset($_POST['year'])){
+            $user = new User();
+            $users = $user->getmakeupinyear($_POST['year']);
+          //  $a= [['1',2],['2',5],['3',7]];
+            echo json_encode($users);
+        }
+//        $user1 = new User();
+//        
+//        echo '<pre>';
+//        print_r($user1->getmakeupinyear(2015));
+//        echo '</pre>';
+    }
     
 
-    public function actionAaa(){
+    public function actionNotify(){
         $user = new User();
         $sender['contracts_start']=$user->getContractstart(date('Y-m-d'));
+        
+//        echo '<pre>';
+//        
+//        print_r($sender['contracts_start']);
+//        
+//        echo '</pre>';exit;
         $sender['contracts_payment1']=$user->getContractpayment1(date('Y-m-d'));
-        
+//        
         $sender['contracts_payment2']=$user->getContractpayment2(date('Y-m-d'));
-        
+//        
         $sender['contracts_payment3']=$user->getContractpayment3(date('Y-m-d'));
         return $this->render('notify',$sender);
     }

@@ -368,31 +368,8 @@ class User extends ActiveRecord implements CartPositionInterface
     }
     
     
-    public function arrContractinYear($year){
-        $year = intval($year);
-        for($i = 1; $i<=12 ;$i++){
-             $date = $this->getdate($i, $year);
-            $endmonth = $year.'-'.$i.'-'.$date;
-            $startmonth = $year.'-'.$i.'-'.'01';
-            $contracts[] = Yii::$app->db->createCommand("SELECT id_contract FROM contract WHERE start_time >='".$startmonth."' AND start_time<='".$endmonth."'")->queryAll();
-        }
-
-        foreach ($contracts as $month => $contract) {
-            foreach ($contract as $value) {
-                $allcontract[] = $value['id_contract'];
-            }
-        }
-        foreach ($allcontract as $contract) {
-            
-        }
-        echo '<pre>';
-        print_r($allcontract);
-        echo '</pre>';
-        
-        exit;
-    }
     
-        public function getallphoto(){
+    public function getallphoto(){
         $photo = \Yii::$app->db->createCommand('SELECT * FROM user where type_user = 2 and status != 0')->queryAll();
         if(isset($photo)&&$photo!=NULL){
             return $photo;
@@ -407,43 +384,14 @@ class User extends ActiveRecord implements CartPositionInterface
     }
     
     
-    public function getphotoinmonth($month,$year){
-        
-        $month = intval($month);
-        $year = intval($year);
-        $date = $this->getdate($month, $year);
-        
-        $start = '2015-'.$month.'-01';
-        $end = '2015-'.$month.'-'.$date;
-        $result = Yii::$app->db->createCommand("SELECT count(*),id_user FROM photocontract WHERE start_time >='".$start."' AND start_time<='".$end."' GROUP BY id_user")->queryAll();
-        echo '<pre>';
-        print_r($result);
-        echo '</pre>';
-    }
-    
-    public function getmakeupinmonth($month,$year){
-        
-        $month = intval($month);
-        $year = intval($year);
-        $date = $this->getdate($month, $year);
-        
-        $start = $year.'-'.$month.'-01';
-        $end = $year.'-'.$month.'-'.$date;
-        $result = Yii::$app->db->createCommand("SELECT id_user FROM makeupcontract WHERE start_time >='".$start."' AND start_time<='".$end."'")->queryAll();
-        echo '<pre>';
-        print_r($result);
-        echo '</pre>';
-    }
     
     
     public function getphotoinyear($year) {
         $year = intval($year);
         $start = $year.'-01-01';
         $end = $year.'-12-31';
-        $result = Yii::$app->db->createCommand("SELECT count(*),id_user FROM photocontract WHERE start_time >='".$start."' AND start_time<='".$end."' GROUP BY id_user LIMIT 10")->queryAll();
-//        echo '<pre>';
-//        print_r($result);
-//        echo '</pre>';
+        $result = Yii::$app->db->createCommand("SELECT count(*),id_user FROM photocontract WHERE start_time >='".$start."' AND start_time<='".$end."' GROUP BY id_user LIMIT 5")->queryAll();
+
         
         
         foreach ($result as $key=>$value) {
@@ -456,14 +404,36 @@ class User extends ActiveRecord implements CartPositionInterface
     }
     
     public function getmakeupinyear($year) {
-        $year = intval($year);
+//        $year = intval($year);
         $start = $year.'-01-01';
         $end = $year.'-12-31';
-        $result = Yii::$app->db->createCommand("SELECT count(*),id_user FROM makeupcontract WHERE start_time >='".$start."' AND start_time<='".$end."' GROUP BY id_user")->queryAll();
-        echo '<pre>';
-        print_r($result);
-        echo '</pre>';
+        $result = Yii::$app->db->createCommand("SELECT count(*),id_user FROM makeupcontract WHERE start_time >='".$start."' AND start_time<='".$end."' GROUP BY id_user LIMIT 5")->queryAll();
+        
+        foreach ($result as $key=>$value) {
+            
+            $info = User::find()->where(['id'=>$value['id_user']])->one();
+            
+            $res[] = [$info->username,$value['count(*)']];
+        }
+        return $res;
     }
+    
+    
+    public function getlocaltioninyear($year) {
+//        $year = intval($year);
+        $start = $year.'-01-01';
+        $end = $year.'-12-31';
+        $result = Yii::$app->db->createCommand("SELECT count(*),id_local FROM contract WHERE start_time >='".$start."' AND start_time<='".$end."' GROUP BY id_user LIMIT 5")->queryAll();
+         
+        foreach ($result as $key=>$value) {
+            
+            $info = Localtion::find()->where(['id_local'=>$value['id_local']])->one();
+            
+            $res[] = [$info->name_local,$value['count(*)']];
+        }
+        return $res;
+    }
+    
     
     public function getmystaff($id_user){
         $contract = Contract::find()->where(['id_user'=>$id_user])->one();
@@ -484,79 +454,93 @@ class User extends ActiveRecord implements CartPositionInterface
     
     
     public function getContractstart($time){
-        $nexttime =  date('Y-m-d',strtotime($time ."+ 1 days"));
-        $nexttwotime =  date('Y-m-d',strtotime($time ."+ 2 days"));
+        //$nexttime =  date('Y-m-d',strtotime($time ."+ 1 days"));
+       // $nexttwotime =  date('Y-m-d',strtotime($time ."+ 2 days"));
         $nextthreeday =  date('Y-m-d',strtotime($time ."+ 3 days"));
         
-        $start[$time] = Contract::find()->select('id_contract,id_user')->where(['start_time'=>$time])->all();
-        $start[$nexttime] = Contract::find()->select('id_contract,id_user')->where(['start_time'=>$nexttime])->all();
-        $start[$nexttwotime] = Contract::find()->select('id_contract,id_user')->where(['start_time'=>$nexttwotime])->all();
-        $start[$nextthreeday] = Contract::find()->select('id_contract,id_user')->where(['start_time'=>$nextthreeday])->all();
-        
-        $notify[$time] = Notify::find()->where(['date_create'=>$time])->all();
-        $notify[$nexttime] = Notify::find()->where(['date_create'=>$nexttime])->all();
-        $notify[$nexttwotime] = Notify::find()->where(['date_create'=>$nexttwotime])->all();
-        $notify[$nextthreeday] = Notify::find()->where(['date_create'=>$nextthreeday])->all();
+         $start = Contract::find()->select('id_user')->where(['start_time'=>$nextthreeday])->all();
+
         
         
-        
+        if(isset($start)){
+            foreach ($start as $key=>$contract){
+                $customer[]= User::find()->select('fullname,email,tell')->where(['id'=>$contract['id_user']])->one();
+            }
+        }else $customer[]=NULL;
         
 //        echo '<pre>';
-//        print_r($start);
+//        print_r($customer);
 //        echo '</pre>';
-        return $start;
+        return $customer;
     }
     
     public function getContractpayment1($time){
-        $nexttime =  date('Y-m-d',strtotime($time ."+ 1 days"));
-        $nexttwotime =  date('Y-m-d',strtotime($time ."+ 2 days"));
+       // $nexttime =  date('Y-m-d',strtotime($time ."+ 1 days"));
+        $nextthreeday =  date('Y-m-d',strtotime($time ."+ 3 days"));
         
        
         
-        $payment1[$time] = Contract::find()->select('id_contract,id_user')->where(['payment1'=>$time])->all();
-        $payment1[$nexttime] = Contract::find()->select('id_contract,id_user')->where(['payment1'=>$nexttime])->all();
-        $payment1[$nexttwotime] = Contract::find()->select('id_contract,id_user')->where(['payment1'=>$nexttwotime])->all();
-        
       
+        $payment1 = Contract::find()->select('id_user')->where(['payment1'=>$nextthreeday])->all();
         
-        return $payment1;
+        if(isset($payment1)){
+            foreach ($payment1 as $key=>$contract){
+                $customer[]= User::find()->select('fullname,email,tell')->where(['id'=>$contract['id_user']])->one();
+            }
+        }
+
+        if(isset($customer))
+        return $customer;
+        return NULL;
 
     }
     
     
     public function getContractpayment2($time){
-        $nexttime =  date('Y-m-d',strtotime($time ."+ 1 days"));
-        $nexttwotime =  date('Y-m-d',strtotime($time ."+ 2 days"));
+       // $nexttime =  date('Y-m-d',strtotime($time ."+ 1 days"));
+        $nextthreeday =  date('Y-m-d',strtotime($time ."+ 3 days"));
         
        
         
-        $payment2[$time] = Contract::find()->select('id_contract,id_user')->where(['payment2'=>$time])->all();
-        $payment2[$nexttime] = Contract::find()->select('id_contract,id_user')->where(['payment2'=>$nexttime])->all();
-        $payment2[$nexttwotime] = Contract::find()->select('id_contract,id_user')->where(['payment2'=>$nexttwotime])->all();
+      
+        $payment2 = Contract::find()->select('id_user')->where(['payment2'=>$nextthreeday])->all();
         
-        return $payment2;
+        if(isset($payment2)){
+            foreach ($payment2 as $contract){
+                $customer[]= User::find()->select('fullname,email,tell')->where(['id'=>$contract['id_user']])->one();
+            }
+        }
         
-        echo '<pre>';
-        print_r($payment2);
-        echo '</pre>';
+        //var_dump($customer);exit;
+        
+        
+        if(isset($customer))
+        return $customer;
+        return NULL;
 
     }
     
     
     public function getContractpayment3($time){
-        $nexttime =  date('Y-m-d',strtotime($time ."+ 1 days"));
-        $nexttwotime =  date('Y-m-d',strtotime($time ."+ 2 days"));
-        
-        
-        $payment3[$time] = Contract::find()->select('id_contract,id_user')->where(['payment3'=>$time])->all();
-        $payment3[$nexttime] = Contract::find()->select('id_contract,id_user')->where(['payment3'=>$nexttime])->all();
-        $payment3[$nexttwotime] = Contract::find()->select('id_contract,id_user')->where(['payment3'=>$nexttwotime])->all();
+        $nextthreeday =  date('Y-m-d',strtotime($time ."+ 3 days"));
         
        
-        return $payment3;
-        echo '<pre>';
-        print_r($payment3);
-        echo '</pre>';
+        
+      
+        $payment3 = Contract::find()->select('id_user')->where(['payment3'=>$nextthreeday])->all();
+        
+        if(isset($payment3)){
+            foreach ($payment3 as $contract){
+                $customer[]= User::find()->select('fullname,email,tell')->where(['id'=>$contract['id_user']])->one();
+            }
+        }
+        
+        //var_dump($customer);exit;
+        
+        
+        if(isset($customer))
+        return $customer;
+        return NULL;
 
     }
     

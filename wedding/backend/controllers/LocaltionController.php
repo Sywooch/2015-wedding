@@ -253,7 +253,10 @@ class LocaltionController extends Controller
             $this->findModel($id);
             $local = new Localtion();
             $arrimg = $local->getimglocal($id);
+            
+            
             $sender['imglocals'] = $arrimg;
+            //var_dump($sender);exit;
             $sender['id'] = $id;
             $sender['title'] = $this->findModel($id)->name_local;
             return $this->render('localview',$sender);

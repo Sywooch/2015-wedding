@@ -161,6 +161,7 @@ class DressController extends Controller
             $arrurl = $dress->getimgdress($id);
             $sender['imgdress'] = $arrurl;
             $sender['id_dress'] = $id;
+            $sender['title'] = $this->findModel($id)->name_dress;
             return $this->render('dressview',$sender);
         }return $this->goBack();
         

@@ -17,7 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
     
      
 <?php 
-if(isset($imglocal)){
+//var_dump($imglocals);
+if(isset($imglocals)){
 foreach ($imglocals as $img) {
 ?>
      <div class="row">  
@@ -36,7 +37,7 @@ foreach ($imglocals as $img) {
     <p>Không có hình ảnh</p>
 <?php } ?>
     <div class="row">
-        <?= Html::a('View Img Local', Url::base().'/index.php?r=localtion/viewid&&id='.$id, ['class' => 'btn btn-success']) ?>
+        <?= Html::a('View Img Local', Url::base().'/index.php?r=localtion/viewimg&&id='.$id, ['class' => 'btn btn-success']) ?>
     </div>
     
 </div>  
