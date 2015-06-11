@@ -1,14 +1,11 @@
 <?php
-
 namespace backend\models;
-
 use Yii;
 use yz\shoppingcart\CartPositionInterface;
 use yz\shoppingcart\CartPositionProviderInterface;
 use yz\shoppingcart\CartPositionTrait;
 use yii\db\ActiveRecord; 
 use backend\models\Notify;
-
 /**
  * This is the model class for table "user".
  *
@@ -49,7 +46,6 @@ class User extends ActiveRecord implements CartPositionInterface
     {
         return 'user';
     }
-
     /**
      * @inheritdoc
      */
@@ -65,7 +61,6 @@ class User extends ActiveRecord implements CartPositionInterface
             [['tell', 'tell2'], 'string', 'max' => 12]
         ];
     }
-
     /**
      * @inheritdoc
      */
@@ -95,12 +90,10 @@ class User extends ActiveRecord implements CartPositionInterface
             'updated_at' => 'Updated At',
         ];
     }
-
      public function getPrice()
     {
         return $this->rate_user;
     }
-
     public function getId()
     {
         return $this->id_user;
@@ -112,7 +105,6 @@ class User extends ActiveRecord implements CartPositionInterface
     {
         return $this->hasMany(Contract::className(), ['id_user' => 'id']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -120,7 +112,6 @@ class User extends ActiveRecord implements CartPositionInterface
     {
         return $this->hasMany(Staffcontract::className(), ['id_user' => 'id']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -171,9 +162,7 @@ class User extends ActiveRecord implements CartPositionInterface
         return NULL;
     
     }
-
     
-
     public function getPhotofree($start,$end){
         
         $contract = $this->getUserfress($start, $end);
@@ -182,9 +171,7 @@ class User extends ActiveRecord implements CartPositionInterface
             foreach ($contract as $value) {
                 $arr_staff[] = Yii::$app->db->createCommand('select id_user from photocontract where id_contract = '.$value['id_contract'] )->queryOne();
             }
-
             $allphoto = Yii::$app->db->createCommand('select id from user where type_user = 2')->queryAll();
-
             
             foreach ($arr_staff as $key=> $value) {
                $phototask[] =  $arr_staff[$key]['id_user'] ;
@@ -216,9 +203,7 @@ class User extends ActiveRecord implements CartPositionInterface
             foreach ($contract as $value) {
                 $arr_staff[] = Yii::$app->db->createCommand('select id_user from photocontract where id_contract = '.$value['id_contract'] )->queryOne();
             }
-
             $allphoto = Yii::$app->db->createCommand('select id from user where type_user = 2')->queryAll();
-
             
             foreach ($arr_staff as $key=> $value) {
                $phototask[] =  $arr_staff[$key]['id_user'] ;
@@ -253,7 +238,6 @@ class User extends ActiveRecord implements CartPositionInterface
             $arr_userphoto = [];
            
         }
-
         return $arr_userphoto;
     }
     
@@ -270,11 +254,8 @@ class User extends ActiveRecord implements CartPositionInterface
             $arr_userphoto = [];
            
         }
-
         return $arr_userphoto;
     }
-
-
     public function getMakeupfree($start,$end){
         
         $contract = $this->getUserfress($start, $end);
@@ -285,7 +266,6 @@ class User extends ActiveRecord implements CartPositionInterface
             foreach ($contract as $value) {
                 $arr_staff[] = Yii::$app->db->createCommand('select id_user from makeupcontract where id_contract = '.$value['id_contract'] )->queryOne();
             }
-
             $allmakeup = Yii::$app->db->createCommand('select id from user where type_user = 3')->queryAll();
    
             foreach ($arr_staff as $key=> $value) {
@@ -323,13 +303,10 @@ class User extends ActiveRecord implements CartPositionInterface
             $arr_userphoto = [];
            
         }
-
         return $arr_userphoto;
     }
     
-
     
-
     
     public function getdate($month,$year){
         switch ($month){
@@ -352,7 +329,6 @@ class User extends ActiveRecord implements CartPositionInterface
         }
         return $date;
     }
-
     public function getContractYear($year){
        // $year = intval($year);
         for($i=1;$i<13;$i++){
@@ -391,7 +367,6 @@ class User extends ActiveRecord implements CartPositionInterface
         $start = $year.'-01-01';
         $end = $year.'-12-31';
         $result = Yii::$app->db->createCommand("SELECT count(*),id_user FROM photocontract WHERE start_time >='".$start."' AND start_time<='".$end."' GROUP BY id_user LIMIT 5")->queryAll();
-
         
         
         foreach ($result as $key=>$value) {
@@ -459,7 +434,6 @@ class User extends ActiveRecord implements CartPositionInterface
         $nextthreeday =  date('Y-m-d',strtotime($time ."+ 3 days"));
         
          $start = Contract::find()->select('id_user')->where(['start_time'=>$nextthreeday])->all();
-
         
         
         if(isset($start)){
@@ -488,11 +462,9 @@ class User extends ActiveRecord implements CartPositionInterface
                 $customer[]= User::find()->select('fullname,email,tell')->where(['id'=>$contract['id_user']])->one();
             }
         }
-
         if(isset($customer))
         return $customer;
         return NULL;
-
     }
     
     
@@ -517,7 +489,6 @@ class User extends ActiveRecord implements CartPositionInterface
         if(isset($customer))
         return $customer;
         return NULL;
-
     }
     
     
@@ -541,7 +512,6 @@ class User extends ActiveRecord implements CartPositionInterface
         if(isset($customer))
         return $customer;
         return NULL;
-
     }
     
    

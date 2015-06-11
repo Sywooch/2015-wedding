@@ -81,7 +81,12 @@ $(function(){
 });
 
 
-
+//$(document).ready(function(event) {
+//    $('select').on('mouseenter','option',function(e) {
+//        alert('yeah');
+//        // this refers to the option so you can do this.value if you need..
+//    });
+//});
 
 
 //     

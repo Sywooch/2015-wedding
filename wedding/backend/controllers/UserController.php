@@ -64,6 +64,41 @@ class UserController extends Controller
         ]);
     }
     
+    public function actionGetallphoto(){
+        
+        $session = Yii::$app->session;
+        if(isset($session['username'])&&$session['type_user']==0){
+        
+            $searchModel = new UserSearch();
+            $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams,2);
+           // $model = User::getUserByType(3);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                //'model'=>$model,
+            ]);
+        
+        } 
+        return $this->goHome ();
+    }
+    // get all makeup
+    public function actionGetallmakeup() {
+         $session = Yii::$app->session;
+        if(isset($session['username'])&&$session['type_user']==0){
+        
+            $searchModel = new UserSearch();
+            $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams,3);
+           // $model = User::getUserByType(3);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                //'model'=>$model,
+            ]);
+        
+        } 
+        return $this->goHome ();
+    }
+    
   
     
     public function actionTask($id_user){
@@ -192,40 +227,7 @@ class UserController extends Controller
 
 
     //get all photo
-    public function actionGetallphoto(){
-        
-        $session = Yii::$app->session;
-        if(isset($session['username'])&&$session['type_user']==0){
-        
-            $searchModel = new UserSearch();
-            $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams,2);
-           // $model = User::getUserByType(3);
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-                //'model'=>$model,
-            ]);
-        
-        } 
-        return $this->goHome ();
-    }
-    // get all makeup
-    public function actionGetallmakeup() {
-         $session = Yii::$app->session;
-        if(isset($session['username'])&&$session['type_user']==0){
-        
-            $searchModel = new UserSearch();
-            $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams,3);
-           // $model = User::getUserByType(3);
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-                //'model'=>$model,
-            ]);
-        
-        } 
-        return $this->goHome ();
-    }
+    
     
     // get all assistant
     public function actionGetallassistant() {

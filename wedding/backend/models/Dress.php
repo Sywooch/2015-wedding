@@ -182,41 +182,18 @@ class Dress extends ActiveRecord implements CartPositionInterface
     public function getimgdress($id_dress){
         $arridimg = Imgdress::find()->where(['id_dress'=>$id_dress])->all();
         
-        
-//        echo '<pre>';
-//        print_r($arridimg[0]);
-//        echo '</pre>';exit;
+
         if(isset($arridimg)){
             foreach ($arridimg as $idimg) {
                 $imgs[]= Img::find()->where(['id_img'=>$idimg->id_img])->one();
             }
         }
-        
-//        echo '<pre>';
-//        print_r($imgs);
-//        echo '</pre>';exit;
+
         
         if(isset($imgs))return $imgs;else return NULL;
     }
     
     
-    public function getdress($start,$end){
-        //$result = Yii::$app->db->createCommand("select id_dress from dresscontract where(start_time between'". $start."' and '". $end."') or (end_time between'". $start."' and '". $end."')or (start_time =<'". $start."' and end_time >= '". $end."')")->queryAll();
-        $result = Yii::$app->db->createCommand("SELECT id_dress FROM dresscontract WHERE ((start_time BETWEEN '".$start."' AND '".$end."')OR(end_time BETWEEN '".$start."' AND '".$end."')OR('".$start ."'<= start_time AND '".$end."' >=end_time  ) ) GROUP BY id_dress")->queryAll();
-        $alldress = Yii::$app->db->createCommand("SELECT id_dress FROM dress")->queryAll();
-        
-        foreach ($result as $value) {
-            $re1[] = $value['id_dress'];
-        }
-        foreach ($alldress as $value) {
-            $re2[] = $value['id_dress'];
-        }
-        
-        $re = array_diff($re2, $re1);
-        
-        echo '<pre>';
-        print_r($re);
-        echo '</pre>';
-    }
+    
    
 }

@@ -108,10 +108,16 @@ class DressController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {
+    {   
+        $session = \Yii::$app->session;
+        
+        if(isset($session['type_user'])&&$session['type_user']==0){
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+        }else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 
     /**
@@ -124,7 +130,8 @@ class DressController extends Controller
 
     
     // view all image of dress
-    public function actionViewimg($id){
+    public function actionViewimg($id)
+    {
         
         //$model = new Imgdress();
         
