@@ -314,7 +314,8 @@ class AlbumController extends Controller
                 $sender[0]['url']= null;
                 $sender[0]['id_img']= null;
             }
-            
+              
+            $status = Album::find()->where(['id_album'=>$id])->one()->status;
 
     //        echo '<pre>';
     //        print_r($sender);
@@ -325,6 +326,7 @@ class AlbumController extends Controller
                         'albumimg'=>$sender,
                         'id_album'=>$id,
                         'title'=>$id,
+                        'status'=>  \backend\models\StatusAlbum::find()->where(['status_album'=>$status])->one()->name_status,
                     ]);
             }else{
                 return $this->render('albumview',

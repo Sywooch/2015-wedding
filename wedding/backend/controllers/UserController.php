@@ -358,11 +358,17 @@ class UserController extends Controller
       // $contracts = $model->getContractYear(2015);
      //  var_dump($contracts);   
        
+        
+        $session = \Yii::$app->session;
+        if(isset($session['type_user'])&&$session['type_user']==0){
         $sender['title'] = 'Thống Kê';
         
        // $sender['contracts'] = $contracts;
         
         return $this->render('contractyear',$sender);
+        
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
     
     
@@ -375,7 +381,7 @@ class UserController extends Controller
             echo json_encode($users);
         }
         
-
+//        throw new NotFoundHttpException('The requested page does not exist.');
     }
     
     public function actionPlotlocal(){        
@@ -385,7 +391,7 @@ class UserController extends Controller
             $a= [['1',2],['2',5],['3',7]];
             echo json_encode($users);
         }
-       
+//       throw new NotFoundHttpException('The requested page does not exist.');
     }
 
 
@@ -396,11 +402,7 @@ class UserController extends Controller
           //  $a= [['1',2],['2',5],['3',7]];
             echo json_encode($users);
         }
-//        $user1 = new User();
-//        
-//        echo '<pre>';
-//        print_r($user1->getmakeupinyear(2015));
-//        echo '</pre>';
+//        throw new NotFoundHttpException('The requested page does not exist.');
     }
     
 

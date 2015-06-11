@@ -440,12 +440,14 @@ class User extends ActiveRecord implements CartPositionInterface
             foreach ($start as $key=>$contract){
                 $customer[]= User::find()->select('fullname,email,tell')->where(['id'=>$contract['id_user']])->one();
             }
-        }else $customer[]=NULL;
+        }else $customer=NULL;
         
 //        echo '<pre>';
 //        print_r($customer);
 //        echo '</pre>';
+        if(isset($customer))
         return $customer;
+        return NULL;
     }
     
     public function getContractpayment1($time){

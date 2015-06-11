@@ -11,6 +11,9 @@ $this->title =$title;
 ?>
 <div class = "dress-index">
     
+    
+    <div id ="album">
+    <?php if(isset($imgs)&&$imgs!=NULL){ ?>
     <?php foreach ($imgs as $img) {?>
         
         
@@ -29,11 +32,11 @@ $this->title =$title;
     <?php
         
     } 
-    
+    }
     
     ?>
         
        
-        
+    </div>
 </div>
 

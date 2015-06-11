@@ -67,17 +67,19 @@ AppAsset::register($this);
                                 <li class=" "><a href="<?php echo Url::base().'/index.php?r=user/mystaff' ?>">Nhân Viên </a><span></span>
                                     
                                 </li>
-                                <li class="haveSub "><a href="">Dịch vụ cưới</a><span></span>
+                                <li class="haveSub "><a href="">Áo cưới</a><span></span>
                                     <ul>
-                                         <li><a href='' title='Chụp hình Cưới'>Chụp hình Cưới</a></li>
-                                         <li><a href='' title='Áo Cưới'>Áo Cưới</a></li>
-                                         <li><a href='' title='Trang điểm cô dâu'>Trang điểm cô dâu</a></li>
-                                         <li><a href='' title='Nhẫn Cưới'>Nhẫn Cưới</a></li>
-                                         <li><a href='' title='Hoa Cưới'>Hoa Cưới</a></li> 
+                                         <li><a href="<?php echo Url::base().'/index.php?r=dress/mydress' ?>" title=''>Áo cưới của tôi</a></li>
+                                         <li><a href='<?php echo Url::base().'/index.php?r=dress/alldress' ?>' title='Áo Cưới'>Tất cả áo cưới</a></li>
+                                         
                                     </ul>
                                 </li>
-                                <li><a href="<?php echo Url::base().'/index.php?r=localtion/mylocal' ?>" title="Album ảnh">Địa điểm</a><span></span>
-
+                                <li class="haveSub"><a href=""  title="">Địa điểm</a><span></span>
+                                    <ul>
+                                         <li><a href="<?php echo Url::base().'/index.php?r=localtion/mylocal' ?>" title=''>Địa điểm của tôi</a></li>
+                                         <li><a href='<?php echo Url::base().'/index.php?r=localtion/alllocal' ?>' title=''>Tất cả địa điểm</a></li>
+                                         
+                                    </ul>
                                 </li>
                                
                                 <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Liên lạc</a></li>
@@ -88,7 +90,7 @@ AppAsset::register($this);
                             </ul>
                         <?php } else if($session['type_user']== 0) { ?>
                             <ul id="menu">
-                                <li class=""><a href="" title="Trang chủ">Trang chủ</a></li>
+                                <li class=""><a href="<?php echo Url::base().'/index.php?r=album' ?>" title="Trang chủ">Album</a></li>
                                 
                                 <li class="haveSub "><a href="">Tài Khoản </a><span></span>
                                     <ul>
@@ -121,7 +123,7 @@ AppAsset::register($this);
                                         <li class=""><a href="<?php echo Url::base().'/index.php?r=contract/create' ?>" title="" class="place">Hợp Đồng Mới</a></li>
                                     </ul>
                                 </li>
-                                <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Liên lạc</a></li>
+                                <li class=""><a href="<?php echo Url::base().'/index.php?r=user/contract' ?>" title="Địa điểm chụp hình cưới" class="place">Thống Kê</a></li>
                                 <li class=""><a href="<?php echo Url::base().'/index.php?r=user/view&&id='.$session['id_user'] ?>" title="Khuyến mãi">Thông Tin Cá Nhân</a></li>
                                 <li class=""><a href="<?php echo Url::base().'/index.php?r=site/logout' ?>" data-method = "post" class="place">Đăng Xuất</a></li>
                             </ul>
@@ -168,15 +170,18 @@ AppAsset::register($this);
            </div><!--end logo_menu-->
        </div><!--end header-->        
         
-        
-      
-        
-        
-        
+       
+       
+       <div class="pagewrap">
+	<div id="pageNav">
+       
+    	<div class="clr"></div>
+    </div>
        
 
-        <div class="container">
             <div class="content">
+                
+                <?php if(!isset($session['type_user'])) {?>
                 <div id="colLeft">
                      <div class="leftBox">
                         <?= Breadcrumbs::widget([
@@ -185,11 +190,41 @@ AppAsset::register($this);
                         <?= $content ?>
                          <div class="clr"></div>
                     </div>
+                    
                 </div>
-            </div>
-        </div>
+                
+                <div id="colRight">
+                    <div class="rightBox menuRight">
+                        <div class="titleBox"><h1>DỊCH VỤ CƯỚI</h1><i></i></div>
+                        <ul>
+                           <li><a href='chup-hinh-cuoi-sdv.html' title='Chụp hình Cưới' >Chụp hình Cưới</a></li><li><a href='ao-cuoi-sdv.html' title='Áo Cưới' >Áo Cưới</a></li><li><a href='trang-diem-co-dau-sdv.html' title='Trang điểm cô dâu' >Trang điểm cô dâu</a></li><li><a href='nhan-cuoi-sdv.html' title='Nhẫn Cưới' >Nhẫn Cưới</a></li><li><a href='hoa-cuoi-sdv.html' title='Hoa Cưới' >Hoa Cưới</a></li>        </ul>
+                        <div class="clr"></div>
+                    </div><!--end rightBox-->
+            
+                </div><!--end colRight-->        
+                <div class="clr"></div>
+                <?php } else { ?>
+                    
+                <div id="colLeft" style="width:100%">
+                     <div class="leftBox">
+                        
+                        <?= $content ?>
+                         <div class="clr"></div>
+                    </div>
+                    
+                </div>
+                    
+                <?php } ?>
     </div>
-
+                
+                
+                
+                
+            </div>
+       
+    </div>
+       <div class="clr"></div>
+       </div>
     <div id="footer">
 	<div class="pagewrap">
     	<ul class="fooLink">

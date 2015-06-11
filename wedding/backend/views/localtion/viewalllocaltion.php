@@ -10,6 +10,10 @@ use yii\helpers\Url;
 $this->title =$title;
 ?>
 <div class = "dress-index">
+    
+   
+    
+    
     <div id ="album">
         
     <?php if($imgs!=NULL){ ?>

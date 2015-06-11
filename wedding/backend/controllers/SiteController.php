@@ -62,9 +62,17 @@ class SiteController extends Controller
             $session['type_user'] = $user->getInfobyUsername($session['username'])->type_user;
         }
         
-//        echo '<pre>';
-//        print_r($cookie);
-//        echo '</pre>';
+        
+        if(isset($session['type_user'])){
+            if($session['type_user']==0){
+              return $this->redirect('index.php?r=user/notify');
+            }else if($session['type_user']==1){
+                return $this->redirect('index.php?r=album/myalbum');
+            }else if($session['type_user']==2||$session['type_user']==3){
+                return $this->redirect('index.php?r=user/contract');
+            }
+        }
+        
         return $this->render('index');
     }
 
@@ -137,7 +145,7 @@ class SiteController extends Controller
         Yii::$app->user->logout();
         
 //        session_destroy ();
-        return $this->goHome();
+        return $this->redirect('index.php');
     }
 
 }
