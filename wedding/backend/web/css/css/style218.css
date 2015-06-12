@@ -1245,7 +1245,9 @@ img { border: none;}
 }
 #rightNews li:hover h1 a { color: #fff;}
 /*services*/
-#services, #album { padding-top: 20px;}
+#services, #album { 
+    /*padding-top: 20px;*/
+}
 #services .oneSer, #album .oneSer {
 	/*width: 30%;*/
 	margin: 0 5px 20px 20px;
@@ -1285,7 +1287,7 @@ img { border: none;}
 .otherList li:hover, .otherList li:hover a { color: #f20272; text-decoration: underline;}
 #tab1 { padding-bottom: 10px; position: relative;}
 /*albumView*/
-#albumView { min-height: 200px; padding-left: 20px;}
+#albumView { min-height: 200px; padding-left: 10px;}
 /*#news*/
 #news { padding-top: 20px;}
 #news .oneNews {

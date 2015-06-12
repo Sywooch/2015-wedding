@@ -30,7 +30,7 @@ AppAsset::register($this);
         <div id="header">
 
            <div id="logo_menu" class="pagewrap">
-               <a href="" class="logo" title=""><img src="images/logo.png" width="478" alt="Việt Khanh Bridal"></a>
+               <a href="" class="logo" title=""><img src="images/logo.png" width="478" alt=""></a>
                <div id="menuMain">
                    
                    <?php if(!isset($session['username'])){ ?>
@@ -196,10 +196,17 @@ AppAsset::register($this);
                     <div class="rightBox menuRight">
                         <div class="titleBox"><h1>DỊCH VỤ CƯỚI</h1><i></i></div>
                         <ul>
-                           <li><a href='chup-hinh-cuoi-sdv.html' title='Chụp hình Cưới' >Chụp hình Cưới</a></li><li><a href='ao-cuoi-sdv.html' title='Áo Cưới' >Áo Cưới</a></li><li><a href='trang-diem-co-dau-sdv.html' title='Trang điểm cô dâu' >Trang điểm cô dâu</a></li><li><a href='nhan-cuoi-sdv.html' title='Nhẫn Cưới' >Nhẫn Cưới</a></li><li><a href='hoa-cuoi-sdv.html' title='Hoa Cưới' >Hoa Cưới</a></li>        </ul>
+                           <li><a href='<?php echo Url::base().'/index.php?r=user/allphotograper' ?>'  >Thợ Chụp Ảnh</a></li>
+                           <li><a href='<?php echo Url::base().'/index.php?r=user/allmakeup' ?>' title='Áo Cưới' >Thợ Trang Điểm</a></li>
+                           <li><a href='<?php echo Url::base().'/index.php?r=dress/alldress' ?>' title='Trang điểm cô dâu' >Áo cưới</a></li>
+                           <li><a href='<?php echo Url::base().'/index.php?r=localtion/alllocal' ?>' title='Nhẫn Cưới' >Địa điểm</a></li>
+                           <li><a href='hoa-cuoi-sdv.html' title='Hoa Cưới' >Liên lạc</a></li>        
+                        </ul>
                         <div class="clr"></div>
                     </div><!--end rightBox-->
-            
+                    <div class="rightBox">
+                        <div class="fb-like" style="position: fixed" data-share="true"  data-show-faces="true"></div>    
+                    </div>
                 </div><!--end colRight-->        
                 <div class="clr"></div>
                 <?php } else { ?>
@@ -261,5 +268,25 @@ AppAsset::register($this);
 
     <?php $this->endBody() ?>
 </body>
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '387081961481281',
+      xfbml      : true,
+      version    : 'v2.3'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 </html>
 <?php $this->endPage() ?>
+
+

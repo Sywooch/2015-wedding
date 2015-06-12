@@ -2,8 +2,9 @@
 /* @var $this yii\web\View */
 
 $this->title = 'Trang Chu';
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-index">
+
 
    
   
@@ -60,4 +61,4 @@ $this->title = 'Trang Chu';
    
 </div>
    
-</div>
+

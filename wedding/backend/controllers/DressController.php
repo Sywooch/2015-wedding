@@ -177,7 +177,7 @@ class DressController extends Controller
         // get all dress
     public function actionAlldress(){
         $query = new Query();
-        $rows = $query->select(['id_dress','avatar','name_dress'])->from('dress')->where(['status'=>1])->all();
+        $rows = $query->select(['id_dress','avatar','name_dress','rate_hire'])->from('dress')->where(['status'=>1])->all();
         $imgs;
        // $i =0;
         foreach ($rows as $row) {
