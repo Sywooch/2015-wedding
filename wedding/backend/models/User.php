@@ -373,7 +373,7 @@ class User extends ActiveRecord implements CartPositionInterface
             
             $info = User::find()->where(['id'=>$value['id_user']])->one();
             
-            $res[] = [$info->username,$value['count(*)']];
+            $res[] = [$info->username,$value['count(*)'],$value['id_user'],$info->avatar];
         }
         return $res;
     }
@@ -388,7 +388,23 @@ class User extends ActiveRecord implements CartPositionInterface
             
             $info = User::find()->where(['id'=>$value['id_user']])->one();
             
-            $res[] = [$info->username,$value['count(*)']];
+            $res[] = [$info->username,$value['count(*)'],$value['id_user'],$info->avatar];
+        }
+        return $res;
+    }
+    
+    
+    public function getdressinyear($year) {
+//        $year = intval($year);
+        $start = $year.'-01-01';
+        $end = $year.'-12-31';
+        $result = Yii::$app->db->createCommand("SELECT count(*),id_dress FROM dresscontract WHERE start_time >='".$start."' AND start_time<='".$end."' GROUP BY id_dress LIMIT 5")->queryAll();
+        
+        foreach ($result as $key=>$value) {
+            
+            $info = Dress::find()->where(['id_dress'=>$value['id_dress']])->one();
+            
+            $res[] = [$info->name_dress,$value['count(*)'],$value['id_dress'],$info->avatar,$info->rate_hire];
         }
         return $res;
     }
@@ -404,7 +420,7 @@ class User extends ActiveRecord implements CartPositionInterface
             
             $info = Localtion::find()->where(['id_local'=>$value['id_local']])->one();
             
-            $res[] = [$info->name_local,$value['count(*)']];
+            $res[] = [$info->name_local,$value['count(*)'],$value['id_local'],$info->avatar,$info->rate,  $info->timework];
         }
         return $res;
     }
@@ -517,6 +533,29 @@ class User extends ActiveRecord implements CartPositionInterface
     }
     
    
+    public function getTaskOfphoto($month,$year,$id_user){
+        
+        $year=date('y');
+        $date = $this->getdate($month, $year);
+        $endmonth = $year.'-'.$month.'-'.$date;
+        $startmonth = $year.'-'.$month.'-'.'01';
+        
+        $con = Yii::$app->db->createCommand("SELECT * FROM photocontract WHERE start_time >='".$startmonth."' AND start_time<='".$endmonth."' AND id_user='".$id_user."'")->QueryAll();
+        
+        if(isset($con)) return $con;else return NULL;
+    }
     
+    
+    public function getTaskOfmakeup($month,$year,$id_user){
+        
+        $year=date('y');
+        $date = $this->getdate($month, $year);
+        $endmonth = $year.'-'.$month.'-'.$date;
+        $startmonth = $year.'-'.$month.'-'.'01';
+        
+        $con = Yii::$app->db->createCommand("SELECT * FROM makeupcontract WHERE start_time >='".$startmonth."' AND start_time<='".$endmonth."' AND id_user='".$id_user."'")->QueryAll();
+        
+        if(isset($con)) return $con;else return NULL;
+    }
     
 }

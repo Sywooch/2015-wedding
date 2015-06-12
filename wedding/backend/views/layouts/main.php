@@ -36,7 +36,7 @@ AppAsset::register($this);
                    <?php if(!isset($session['username'])){ ?>
                    <ul id="menu">
                        <li class=""><a href="<?php echo Url::base().'/index.php' ?>" title="Trang chủ">Trang chủ</a></li>
-                       <li class=""><a href="<?php echo Url::base().'/index.php?r=album' ?>" title="Giới thiệu">Album cưới</a></li>
+<!--                       <li class=""><a href="<?php echo Url::base().'/index.php?r=album' ?>" title="Giới thiệu">Album cưới</a></li>-->
                        <li class="haveSub "><a href="">Nhân Viên</a><span></span>
                            <ul>
                                 <li><a href='<?php echo Url::base().'/index.php?r=user/allphotograper' ?>' title='Chụp hình Cưới'>Thợ chụp ảnh</a></li>
@@ -174,9 +174,8 @@ AppAsset::register($this);
        
        <div class="pagewrap">
 	<div id="pageNav">
-       
-    	<div class="clr"></div>
-    </div>
+            <div class="clr"></div>
+        </div>
        
 
             <div class="content">

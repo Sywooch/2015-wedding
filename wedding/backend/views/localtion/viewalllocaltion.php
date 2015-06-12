@@ -28,7 +28,7 @@ $this->title =$title;
                         <p><a href='<?php echo 'index.php?r=localtion/viewimg&&id='.$img['id_local'] ?>'  title=''><?php echo $img['timework'].' Ngày' ?></a></p>
                         <!--<p><?=  Html::a('Add To Cart', 'index.php?r=localtion/addtocart&&id='.$img['id_local'],['class'=>'btn btn-success addcart']) ?></p>-->
                     </ul>
-	        <h1><a href='<?php echo 'index.php?r=dress/viewimg&&id='.$img['id_local'] ?>' title=''><?php echo $img['name_local'] ?></a></h1>
+	        <h1><a href='<?php echo 'index.php?r=dress/viewimg&&id='.$img['id_local'] ?>' title=''><?php echo $img['name_local'] ?>VND</a></h1>
                 
         </li>
     <?php

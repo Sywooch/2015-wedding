@@ -51,7 +51,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $cookie = Yii::$app->response->cookies;
+       // $cookie = Yii::$app->response->cookies;
         $session = Yii::$app->session;
         
         //if(isset($cookie['username'])&&!isset($session['username'])) {
@@ -69,11 +69,24 @@ class SiteController extends Controller
             }else if($session['type_user']==1){
                 return $this->redirect('index.php?r=album/myalbum');
             }else if($session['type_user']==2||$session['type_user']==3){
-                return $this->redirect('index.php?r=user/contract');
+                return $this->redirect('index.php?r=user/task&&id_user='.$session['id_user'].'&month='.  date('m'));
             }
         }
         
-        return $this->render('index');
+        $user = new User();
+        
+        $topdress =  $user->getdressinyear(date('y'));
+        $toplocal = $user->getlocaltioninyear(date('y'));
+        $topphoto = $user->getphotoinyear(date('y'));
+        $topmakeup = $user->getmakeupinyear(date('y'));
+        
+        
+        $sender['topdress'] = $topdress;
+        $sender['toplocal'] = $toplocal;
+        $sender['topphoto'] = $topphoto;
+        $sender['topmakeup'] = $topmakeup;
+        
+        return $this->render('index',$sender);
     }
 
     public function actionAbout()

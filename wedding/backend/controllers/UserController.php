@@ -207,12 +207,36 @@ class UserController extends Controller
         }
     }
     
+    
+    public function actionMytask(){
+        $session = Yii::$app->session;
+        $user = new User();
+        
+        if(isset($session['type_user'])){
+            if($session['type_user']==2)
+                $task = $user->getTaskOfphoto(6,2015,$session['id_user']);
+            else if($session['type_user']==3)
+                $task = $user->getTaskOfmakeup(6,2015,$session['id_user']);
+            else throw new NotFoundHttpException('The requested page does not exist.');
+            
+            $sender['taskofuser']= $task;
+            $sender['mess'] = "Không có nhiệm vụ trong tháng nay";
+            return $this->render('mytask',$sender);
+            
+        }
+      //  throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    
+
+
+
     public function actionAllphotograper(){
         $modeluser = new User();
-        
         return $this->render('staff',[
             'title'=>'Photograper',
             'photos'=>$modeluser->getallphoto(),
+            'type'=>2,
         ]);
     }
     
@@ -221,6 +245,7 @@ class UserController extends Controller
         return $this->render('staff',[
             'title'=>'Make up',
             'photos'=>$model->getallmakeup(),
+            'type'=>3,
         ]);
     }
 
@@ -391,6 +416,24 @@ class UserController extends Controller
             $a= [['1',2],['2',5],['3',7]];
             echo json_encode($users);
         }
+//       throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    
+    public function actionPlotdress(){        
+        if(isset($_POST['year'])){
+            $user = new User();
+            $users = $user->getdressinyear($_POST['year']);
+            $a= [['1',2],['2',5],['3',7]];
+            echo json_encode($users);
+        }
+        
+//        $user = new User();
+//        $users= $user->getdressinyear(2015);
+//        echo '<pre>';
+//        print_r($users);
+//        echo '</pre>';
+        
+        
 //       throw new NotFoundHttpException('The requested page does not exist.');
     }
 

@@ -97,6 +97,24 @@ $this->registerCssFile(Url::base().'/css/plot/examples.css', ['depends' => [Boot
          <div class="breadcrumb">Thống kê top địa điểm trong năm</div>
          <div id="placeholder3" class="demo-placeholder" ></div>
     </div>
+    
+    <div class="demo-container">
+          <label>
+            <select id = "year-dress">
+                <option value="<?php echo date('Y')-4 ?>"><?php echo date('Y')-4 ?></option>
+                <option value="<?php echo date('Y')-3 ?>"><?php echo date('Y')-3 ?></option>
+                <option value="<?php echo date('Y')-2 ?>"><?php echo date('Y')-2 ?></option>
+                <option value="<?php echo date('Y')-1 ?>"><?php echo date('Y')-1 ?></option>
+                <option value="<?php echo date('Y') ?>" selected><?php echo date('Y') ?></option>
+                <option value="<?php echo date('Y')+1 ?>"><?php echo date('Y')+1 ?></option>
+                <option value="<?php echo date('Y')+2 ?>"><?php echo date('Y')+2 ?></option>
+                
+            </select>
+        </label>
+        
+         <div class="breadcrumb">Thống kê top áo cưới trong năm</div>
+         <div id="placeholder4" class="demo-placeholder" ></div>
+    </div>
 </div>
 
 
