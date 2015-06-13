@@ -2349,6 +2349,14 @@ img { border: none;}
 }
 
 
+.localtion-index img{
+    width: 100px;
+}
+
+.dress-index img{
+    width: 100px;
+}
+
 
 select {
     padding:3px;

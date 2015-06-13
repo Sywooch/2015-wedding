@@ -6,6 +6,16 @@ $(function(){
     })
 });
 
+
+$(function(){
+    $('#editavatar').click(function(){
+        $('#modalavatar').modal('show')
+                .find('#modalContentavatar')
+                .load($(this).attr('value'));
+    })
+});
+
+
 $(function(){
     //alert('ádasdasd');
     $('#createamb').click(function(){

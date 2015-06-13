@@ -14,6 +14,7 @@ use yii\web\IdentityInterface;
  * @property string $username
  * @property string $password_hash
  * @property string $password_reset_token
+ * @property string $new_password
  * @property string $email
  * @property string $auth_key
  * @property integer $status
@@ -160,6 +161,11 @@ class User extends ActiveRecord implements IdentityInterface
     public function setPassword($password)
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+    }
+    
+    
+    public function updatePasswork($new_password){
+         $this->password_hash = Yii::$app->security->generatePasswordHash($new_password);
     }
 
     /**

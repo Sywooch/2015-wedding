@@ -23,7 +23,7 @@ use dosamigos\datepicker\DatePicker;
                             ['prompt'=>'Select Status',]
                             ) ?>
 
-    <?= $form->field($model, 'url_psd')->textInput(['maxlength' => 350]) ?>
+   
 
     <?= $form->field($model, 'numpage')->textInput() ?>
 

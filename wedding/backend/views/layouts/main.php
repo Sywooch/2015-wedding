@@ -213,7 +213,9 @@ AppAsset::register($this);
                     
                 <div id="colLeft" style="width:100%">
                      <div class="leftBox">
-                        
+                        <?= Breadcrumbs::widget([
+                            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                        ]) ?>
                         <?= $content ?>
                          <div class="clr"></div>
                     </div>

@@ -7,8 +7,8 @@ use backend\models\User;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Contract */
 
-$this->title = 'User';
-//$this->params['breadcrumbs'][] = ['label' => 'User', 'url' => ['index']];
+$this->title = 'Thông báo';
+$this->params['breadcrumbs'][] = ['label' => 'User', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usertask-view">
@@ -93,7 +93,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php } ?>
     
     
-    div>Nhắc nhỡ khách hàng đến studio thanh toán đợt 4 vào ngày <?php echo date('Y-m-d',strtotime(date('Y-m-d')."+ 3 days")) ?></div>
+    <div>Nhắc nhỡ khách hàng đến studio thanh toán đợt 4 vào ngày <?php echo date('Y-m-d',strtotime(date('Y-m-d')."+ 3 days")) ?></div>
     <?php if(isset($contracts_payment3)) { ?>
     <table class="table table-striped table-bordered detail-view">
         <tr>

@@ -294,6 +294,28 @@ class UserController extends Controller
        
         return $this->goHome ();
     }
+    
+    
+    public function actionEditavatar($id){
+        $model = $this->findModel($id);
+        $avar = $model->avatar;
+         if ($model->load(Yii::$app->request->post())){
+            $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
+            $model->avatar = UploadedFile::getInstance($model, 'avatar');
+            if($model->avatar!=NULL){
+                    $model->avatar->saveAs( 'uploads/avatar/'.$imgname.'.'.$model->avatar->extension );
+
+                    //save in db
+
+                    $model->avatar = 'uploads/avatar/'.$imgname.'.'. $model->avatar->extension;
+            }else $model->avatar= $avar;
+            
+            $test = \Yii::$app->db->createCommand("UPDATE user SET avatar = '".$model->avatar."' WHERE id='".$id."'")->execute();
+            return $this->redirect(['view','id'=>$id]);
+         }else {
+             return $this->renderAjax('editavatar',['model'=>$model]);
+         }
+    }
 
     /**
      * Creates a new User model.

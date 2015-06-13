@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\Url;
+use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\User */
@@ -12,12 +14,20 @@ $this->params['breadcrumbs'][] = $this->title;
 $session = Yii::$app->session;
 ?>
 <div class="user-view">
-
-<!--    <h1><?= Html::encode($this->title) ?></h1>-->
-
-   
-
-    <?= DetailView::widget([
+    <button id="editavatar" value = "<?php echo Url::base().'/index.php?r=user/editavatar&&id='.$model->id ?>"><img src="<?php echo $model->avatar ?>" alt="Smiley face" height="100" width="100"></button>
+    
+    <?php 
+        Modal::begin([
+            'header' => '<h4>Update avatar</h4>',
+            'id' => 'modalavatar',
+            'size'=>'modal-lg'
+                
+                ]);
+                echo "<div id ='modalContentavatar'></div> ";
+        Modal::end();
+    ?>        
+            
+        <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
@@ -25,7 +35,7 @@ $session = Yii::$app->session;
            // 'auth_key',
             //'password_hash',
            // 'password_reset_token',
-            'type_user',
+          //  'type_user',
             'range_user',
             'rate_user',
             'fullname',
@@ -36,12 +46,14 @@ $session = Yii::$app->session;
           //  'email2:email',
             'info_user:ntext',
             'address',
-           // 'avatar',
+//            'avatar',
             'status',
            // 'created_at',
            // 'updated_at',
         ],
     ]) ?>
+    
+    
     
      <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
