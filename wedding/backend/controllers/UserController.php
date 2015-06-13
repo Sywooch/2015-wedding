@@ -350,7 +350,8 @@ class UserController extends Controller
             $model = $this->findModel($id);
             $url_avar = $model->avatar;
             
-            if ($model->load(Yii::$app->request->post())) {
+            if ($model->load(Yii::$app->request->post()))
+                {
 //                echo '<pre>';
 //                var_dump($model->save());
 //                echo '</pre>';
