@@ -60,6 +60,22 @@ class SiteController extends Controller
             $session['username'] = Yii::$app->user->identity->username;
             $session['id_user'] = $user->getInfobyUsername($session['username'])->id;
             $session['type_user'] = $user->getInfobyUsername($session['username'])->type_user;
+            if($session['type_user']==0){
+                    $notify = new \backend\models\Notify();
+                    //$notify->test(date('Y-m-d'));
+                    for($i=0;$i<=7;$i++){
+                        $week[] = date('Y-m-d',strtotime(date('Y-m-d') ."+ ".$i." days"));
+                    }
+
+                    foreach ($week as $value) {
+                        if($notify->test($value)){
+                            $notify->getStarttime($value);
+                            $notify->getPayment1($value);
+                            $notify->getPayment2($value);
+                            $notify->getPayment3($value);
+                        }
+                    }
+                }
         }
         
         
@@ -115,6 +131,22 @@ class SiteController extends Controller
                 $session['username'] = $model->username;
                 $session['id_user'] = $user->getInfobyUsername($model->username)->id;
                 $session['type_user'] = $user->getInfobyUsername($model->username)->type_user;
+                if($session['type_user']==0){
+                    $notify = new \backend\models\Notify();
+                    //$notify->test(date('Y-m-d'));
+                    for($i=0;$i<=7;$i++){
+                        $week[] = date('Y-m-d',strtotime(date('Y-m-d') ."+ ".$i." days"));
+                    }
+
+                    foreach ($week as $value) {
+                        if($notify->test($value)){
+                            $notify->getStarttime($value);
+                            $notify->getPayment1($value);
+                            $notify->getPayment2($value);
+                            $notify->getPayment3($value);
+                        }
+                    }
+                }
             return $this->goBack();
         } else {
             return $this->render('login', [

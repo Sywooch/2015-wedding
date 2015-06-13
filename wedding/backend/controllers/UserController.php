@@ -12,6 +12,7 @@ use backend\models\Contract;
 use DateTime;
 use yii\web\UploadedFile;
 use backend\models\Localtion;
+use backend\models\Notify;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -449,15 +450,6 @@ class UserController extends Controller
             $a= [['1',2],['2',5],['3',7]];
             echo json_encode($users);
         }
-        
-//        $user = new User();
-//        $users= $user->getdressinyear(2015);
-//        echo '<pre>';
-//        print_r($users);
-//        echo '</pre>';
-        
-        
-//       throw new NotFoundHttpException('The requested page does not exist.');
     }
 
 
@@ -473,20 +465,24 @@ class UserController extends Controller
     
 
     public function actionNotify(){
-        $user = new User();
-        $sender['contracts_start']=$user->getContractstart(date('Y-m-d'));
+//        $user = new User();
+//        $sender['contracts_start']=$user->getContractstart(date('Y-m-d'));
+//        
+//
+//        $sender['contracts_payment1']=$user->getContractpayment1(date('Y-m-d'));
+////        
+//        $sender['contracts_payment2']=$user->getContractpayment2(date('Y-m-d'));
+////        
+//        $sender['contracts_payment3']=$user->getContractpayment3(date('Y-m-d'));
+//        return $this->render('notify',$sender);
         
+        $notify = Notify::find()->all();
 //        echo '<pre>';
-//        
-//        print_r($sender['contracts_start']);
-//        
-//        echo '</pre>';exit;
-        $sender['contracts_payment1']=$user->getContractpayment1(date('Y-m-d'));
-//        
-        $sender['contracts_payment2']=$user->getContractpayment2(date('Y-m-d'));
-//        
-        $sender['contracts_payment3']=$user->getContractpayment3(date('Y-m-d'));
-        return $this->render('notify',$sender);
+//        print_r($notify);
+//        echo '<pre>';
+        $sender['allnotify']= $notify;
+        return $this->render('allnotify',$sender);
+        
     }
     
     
