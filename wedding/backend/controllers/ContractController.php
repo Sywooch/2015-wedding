@@ -135,10 +135,7 @@ class ContractController extends Controller
                 
                 $query = new Query();
                 $tb = $query->select(['timework'])->from('localtion')->where(['id_local'=>$model->id_local])->one();
-//
                 $time_add = $tb['timework'] + $model->timeadd;
-                // get data form create contract
-                //get info dress contract
                 $dresscontract->load(Yii::$app->request->post());
                 // get id user photogaraper
                 $photocontract->load(Yii::$app->request->post());
@@ -150,21 +147,13 @@ class ContractController extends Controller
                 // load info imgbig
                 $bigimg->load(Yii::$app->request->post());
 
-                // create end time photo
-                
 
-
-                //time work of contract
                 $model->total_time = $time_add;
                 // save contract
                 if($model->save()){ 
-                    //$db = new Connection();
-                    //update customer have contract
                     Yii::$app->db->createCommand('UPDATE user SET have_contract=1 WHERE id ='.$model->id_user)->execute();
-                     //money rent dress
-                //
+
                     $rent_dress = 0;
-                    // add dress contract
                     foreach ($dresscontract->id_dress as $dress) {
                         
                         $dresscon = new Dresscontract();
@@ -203,14 +192,15 @@ class ContractController extends Controller
 
                             
                              
-                            $bigimg->id_contract = $model->id_contract;
+                            //$bigimg->id_contract = $model->id_contract;
 
                             $rate_bigimg = \backend\models\Sizebigimg::findOne($bigimg->size)->rate * $model->num_bigimg;
 
 
-
-                            $bigimg->save();
-
+                            for($i=0;$i<$model->num_bigimg;$i++){
+                                $bigimg->id_contract = $model->id_contract;
+                                $bigimg->save();
+                            }
                             $model->total = intval($rate_album)+$wagemakeup+$wagephoto+$rent_dress + $rate_bigimg;
                             $model->save();
                     }

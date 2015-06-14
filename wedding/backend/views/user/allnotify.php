@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <td>Ngày Thực Hiện</td>
             <td>Nội dung</td>
             <td>Trạng Thái</td>
-            <td>Hành Động</td>
+            <td width="50px">Hành Động</td>
         </tr>
         <?php foreach ($allnotify as $notify) { ?>
         <tr>
@@ -35,12 +35,14 @@ $this->params['breadcrumbs'][] = $this->title;
             <td><?php echo $notify['content'] ?></td>
             <td><?php if($notify['status']==1) echo 'Chưa Hoàn Thành';else echo 'Hoàn thành'; ?></td>
             <td><?php if($notify['status']==1) { ?>
-                <a class="btn btn-success" href="<?php echo Url::base().'/index.php?r=notify/updatestatus&&id='.$notify['id_notify'];?>">Hoàn thành</a>
-                <a class="btn btn-danger" data-method ="POST" href="<?php echo Url::base().'/index.php?r=notify/delete&&id='.$notify['id_notify'];?>">Delete</a>
+                <a c href="<?php echo Url::base().'/index.php?r=notify/updatestatus&&id='.$notify['id_notify'];?>"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a data-method ="POST" href="<?php echo Url::base().'/index.php?r=notify/delete&&id='.$notify['id_notify'];?>"><span class="glyphicon glyphicon-trash"> </span></a>
             <?php 
                 }else { ?>
                     
-                    <a class="btn btn-success" href="<?php echo Url::base().'/index.php?r=notify/updatestatus&&id='.$notify['id_notify'];?>">Thông báo lại</a>
+                    
+                <a  href="<?php echo Url::base().'/index.php?r=notify/updatestatus&&id='.$notify['id_notify'];?>"><span class="glyphicon glyphicon-pencil"></a>
+                <a  data-method ="POST" href="<?php echo Url::base().'/index.php?r=notify/delete&&id='.$notify['id_notify'];?>"><span class="glyphicon glyphicon-trash"> </span></a>
                 <?php } ?></td>
         </tr>
         <?php } ?>

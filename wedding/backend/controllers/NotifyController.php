@@ -101,18 +101,32 @@ class NotifyController extends Controller
      */
     public function actionUpdate($id)
     {
+//        $session = Yii::$app->session;
+//        
+//        if(isset($session['type_user'])&&$session['type_user']==0){
+//            $model = $this->findModel($id);
+//
+//            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//                return $this->redirect(['view', 'id' => $model->id_notify]);
+//            } else {
+//                return $this->render('update', [
+//                    'model' => $model,
+//                ]);
+//            }
+//        }
+//        throw new NotFoundHttpException('The requested page does not exist.');
+        $noty = new Notify();
         $session = Yii::$app->session;
         
         if(isset($session['type_user'])&&$session['type_user']==0){
-            $model = $this->findModel($id);
+            $noty = $this->findModel($id);
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id_notify]);
-            } else {
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
-            }
+            //$noty->status = 0;
+            if($noty->status==1)$noty->status=0;else $noty->status=1;
+            if($noty->save()){
+                return $this->redirect(\yii\helpers\Url::base().'/index.php?r=notify');
+            }else return $this->redirect (['index']);
+
         }
         throw new NotFoundHttpException('The requested page does not exist.');
     }

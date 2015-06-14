@@ -19,7 +19,7 @@ class NotifySearch extends Notify
     {
         return [
             [['id_notify', 'id_user', 'status'], 'integer'],
-            [['date_create', 'content'], 'safe'],
+            [['fullname', 'email', 'tell', 'date_create', 'content'], 'safe'],
         ];
     }
 
