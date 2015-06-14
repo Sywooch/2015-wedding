@@ -477,9 +477,6 @@ class UserController extends Controller
 //        return $this->render('notify',$sender);
         
         $notify = Notify::find()->all();
-//        echo '<pre>';
-//        print_r($notify);
-//        echo '<pre>';
         $sender['allnotify']= $notify;
         return $this->render('allnotify',$sender);
         

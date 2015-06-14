@@ -62,7 +62,10 @@ class NotifySearch extends Notify
             'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'content', $this->content]);
+        $query->andFilterWhere(['like', 'fullname', $this->fullname])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'tell', $this->tell])
+            ->andFilterWhere(['like', 'content', $this->content]);
 
         return $dataProvider;
     }

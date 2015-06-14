@@ -14,6 +14,7 @@ use yii\filters\VerbFilter;
  */
 class NotifyController extends Controller
 {
+    
     public function behaviors()
     {
         return [
@@ -26,19 +27,29 @@ class NotifyController extends Controller
         ];
     }
 
+    
+   // public $session = Yii::$app->session;
     /**
      * Lists all Notify models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new NotifySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        $session = Yii::$app->session;
+        
+        if(isset($session['type_user'])&&$session['type_user']==0){
+        
+            $searchModel = new NotifySearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**
@@ -48,9 +59,14 @@ class NotifyController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $session = Yii::$app->session;
+        
+        if(isset($session['type_user'])&&$session['type_user']==0){
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+         }
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**
@@ -59,16 +75,22 @@ class NotifyController extends Controller
      * @return mixed
      */
     public function actionCreate()
-    {
-        $model = new Notify();
+    {   
+        $session = Yii::$app->session;
+        
+        if(isset($session['type_user'])&&$session['type_user']==0){
+        
+            $model = new Notify();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_notify]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id_notify]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         }
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**
@@ -79,15 +101,20 @@ class NotifyController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $session = Yii::$app->session;
+        
+        if(isset($session['type_user'])&&$session['type_user']==0){
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_notify]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id_notify]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         }
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**
@@ -100,7 +127,7 @@ class NotifyController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(\yii\helpers\Url::base().'/index.php?r=user/notify');
     }
     
     public function actionAa(){
@@ -121,6 +148,23 @@ class NotifyController extends Controller
         
         
 
+    }
+    
+    public function actionUpdatestatus($id){
+        $noty = new Notify();
+        $session = Yii::$app->session;
+        
+        if(isset($session['type_user'])&&$session['type_user']==0){
+            $noty = $this->findModel($id);
+
+            //$noty->status = 0;
+            if($noty->status==1)$noty->status=0;else $noty->status=1;
+            if($noty->save()){
+                return $this->redirect(\yii\helpers\Url::base().'/index.php?r=user/notify');
+            }else return $this->redirect (['index']);
+
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**
