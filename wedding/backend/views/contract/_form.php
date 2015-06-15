@@ -101,9 +101,9 @@ $opt = [15,20,25,30,35,40,45,50];
     <?= $form->field($model, 'timecomplete')->textInput() ?>
     
    
-     <?php if(isset($dresscontract)&&isset($_GET['start'])&&isset($_GET['end'])){
-         
-          if($var->getAllDressFree($_GET['start'], $_GET['end'])!=NULL){
+     <?php if(isset($dresscontract)&&isset($_GET['start'])&&isset($_GET['end'])){?>
+        
+<?php           if($var->getAllDressFree($_GET['start'], $_GET['end'])!=NULL){
             $dress = ArrayHelper::map($var->getAllDressFree($_GET['start'], $_GET['end']),'id_dress','name_dress');}else $dress=[];
           echo $form->field($dresscontract, 'id_dress[]')->dropDownList(
                         $dress,
@@ -113,7 +113,9 @@ $opt = [15,20,25,30,35,40,45,50];
                                     
                                 ]
                             );
-         
+         ?>
+          <div id="test" ></div>    
+     <?php   
      }?>
     
     <?php if(isset($photocontract)&&isset($_GET['start'])&&isset($_GET['end'])){

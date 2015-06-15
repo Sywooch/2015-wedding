@@ -91,18 +91,60 @@ $(function(){
 });
 
 
-//$(document).ready(function(event) {
-//    $('select').on('mouseenter','option',function(e) {
-//        alert('yeah');
-//        // this refers to the option so you can do this.value if you need..
-//    });
-//});
+$(document).ready(function(event) {
+    $("#test img").remove();
+    $("#test div").remove();
+    $('select').on('mouseenter','option',function(e) {
+     //   alert(e.id);
+        var $target = $(e.target);
+        $("#test img").remove();
+        $("#test div").remove();
+        if($target.is('option')){
+               $target.text();
+              
+               
+               var b ={id:$target.attr("value")};
+               //alert($target.attr("value"));
+               $.ajax({
+                    url : 'index.php?r=dress/hoverdress',
+                    data :  {id:$target.attr("value")} ,
+                    dataType : 'json',
+                    type : 'POST',
+                    
+                    success: function(data) {
+                        
 
+                    $("#test img").remove();
+                    $("#test div").remove();
+                    
+                    $('#test').prepend('<img style="width: 50px;height: 50px ;" src="'+data[2]+'" />');
+                    $('#test').prepend('<div>'+data[1]+'</div>');
+                    $('#test').prepend('<div> Giá áo cưới : '+data[5]+' VND/Ngày</div>');
+                    }
 
-//     
-      
-    
+                });
+               $("#test img").remove();
+               $("#test div").remove();
+                
+        } 
+               $("#test img").remove();
+               $("#test div").remove();
         
+
+    });
+    $("#test img").remove();
+    $("#test div").remove();
+    
+});
+
+
+$(function(){
+    $("#test img").remove();
+    $("#test div").remove();
+})
+
+
+   
         
         
         

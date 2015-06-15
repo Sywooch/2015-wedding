@@ -35,6 +35,8 @@ class AppAsset extends AssetBundle
         'js/jquery.localisation-min.js',
         'js/ui.multiselect.js',
         'js/plot/plot.js',
+        'js/jshover/jquery.tooltipster.js',
+        'js/jshover/jquery.tooltipster.min.js',
 
     ];
     public $depends = [

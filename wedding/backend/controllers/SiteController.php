@@ -192,5 +192,8 @@ class SiteController extends Controller
 //        session_destroy ();
         return $this->redirect('index.php');
     }
+    
+    
+    
 
 }
