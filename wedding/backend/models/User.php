@@ -558,4 +558,38 @@ class User extends ActiveRecord implements CartPositionInterface
         if(isset($con)) return $con;else return NULL;
     }
     
+    
+    public function getPhotoNotContract($start,$end){
+        $result = Yii::$app->db->createCommand("SELECT id_user FROM photocontract where ((start_time BETWEEN '".$start."' AND '".$end."')OR(end_time BETWEEN '".$start."' AND '".$end."')OR('".$start ."'<= start_time AND '".$end."' >=end_time  ) ) ")->queryAll();
+        $allphoto = Yii::$app->db->createCommand("SELECT id FROM user where type_user =2")->queryAll();
+        foreach ($allphoto as $key=>$value) {
+            foreach ($result as $value1) {
+                if($value['id']==$value1['id_user'])
+                    unset ($allphoto[$key]);
+            }
+        }
+        
+        foreach ($allphoto as $photo) {
+            $user[]= Yii::$app->db->createCommand("SELECT id,username from user where id ='".$photo['id']."'")->queryOne();
+        }
+        if(isset($user)) return $user; else return [];
+    }
+    
+    
+    public function getMakeupNotContract($start,$end){
+        $result = Yii::$app->db->createCommand("SELECT id_user FROM makeupcontract where ((start_time BETWEEN '".$start."' AND '".$end."')OR(end_time BETWEEN '".$start."' AND '".$end."')OR('".$start ."'<= start_time AND '".$end."' >=end_time  ) ) ")->queryAll();
+        $allphoto = Yii::$app->db->createCommand("SELECT id FROM user where type_user =3")->queryAll();
+        foreach ($allphoto as $key=>$value) {
+            foreach ($result as $value1) {
+                if($value['id']==$value1['id_user'])
+                    unset ($allphoto[$key]);
+            }
+        }
+        
+        foreach ($allphoto as $photo) {
+            $user[]= Yii::$app->db->createCommand("SELECT id,username from user where id ='".$photo['id']."'")->queryOne();
+        }
+        if(isset($user)) return $user; else return [];
+    }
+    
 }

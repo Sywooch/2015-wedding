@@ -103,10 +103,9 @@ $opt = [15,20,25,30,35,40,45,50];
    
      <?php if(isset($dresscontract)&&isset($_GET['start'])&&isset($_GET['end'])){?>
         
-<?php           if($var->getAllDressFree($_GET['start'], $_GET['end'])!=NULL){
-            $dress = ArrayHelper::map($var->getAllDressFree($_GET['start'], $_GET['end']),'id_dress','name_dress');}else $dress=[];
+    <?php    
           echo $form->field($dresscontract, 'id_dress[]')->dropDownList(
-                        $dress,
+                        ArrayHelper::map($var->getDressNotContract($_GET['start'], $_GET['end']),'id_dress','name_dress'),
                                 [//'prompt'=>'Select Dress',
                                    'multiple'=>true,
                                     'size'=>'auto',
@@ -116,18 +115,18 @@ $opt = [15,20,25,30,35,40,45,50];
          ?>
           <div id="test" ></div>    
      <?php   
-     }?>
+     } ?>
     
     <?php if(isset($photocontract)&&isset($_GET['start'])&&isset($_GET['end'])){
         
         
-        if(!$model->isNewRecord){
-            $arr = $user_photo->getAllPhotofree($_GET['start'], $_GET['end']);
-        }else {
-            $arr = $user_photo->getAllPhotofreeupdate($_GET['start'], $_GET['end'],$model->id_contract);
-        }
+//        if(!$model->isNewRecord){
+//            $arr = $user_photo->getAllPhotofree($_GET['start'], $_GET['end']);
+//        }else {
+//            $arr = $user_photo->getAllPhotofreeupdate($_GET['start'], $_GET['end'],$model->id_contract);
+//        }
           echo $form->field($photocontract, 'id_user')->dropDownList(
-                        ArrayHelper::map($arr,'id','username'),
+                        ArrayHelper::map(backend\models\User::getPhotoNotContract($_GET['start'], $_GET['end']),'id','username'),
                                 [/*'prompt'=>'Select Dress',*/
 //                                   'multiple'=>true,
                                     'size'=>'auto',
@@ -140,7 +139,7 @@ $opt = [15,20,25,30,35,40,45,50];
     
     <?php if(isset($makeupcontract)&&isset($_GET['start'])&&isset($_GET['end'])){
           echo $form->field($makeupcontract, 'id_user')->dropDownList(
-                        ArrayHelper::map($user_makeup->getAllMakeupfree($_GET['start'], $_GET['end']),'id','username'),
+                        ArrayHelper::map($user_makeup->getMakeupNotContract($_GET['start'], $_GET['end']),'id','username'),
                                 [/*'prompt'=>'Select Dress',*/
 //                                   'multiple'=>true,
                                     'size'=>'auto',

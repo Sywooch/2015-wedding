@@ -325,13 +325,9 @@ class DressController extends Controller
             }
             echo json_encode($b);
         }
-        
-//        $a = \Yii::$app->db->createCommand("SELECT * from dress where id_dress = 'D1433517868'")->queryOne();
-//        
-//        echo '<pre>';
-//        print_r($a);
-//        echo '</pre>';
     }
+    
+   
 
     /**
      * Finds the Dress model based on its primary key value.

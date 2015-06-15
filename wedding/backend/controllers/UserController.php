@@ -513,7 +513,10 @@ class UserController extends Controller
         return $this->redirect(['index']);
     }
     
-   
+    public function actionTest(){
+        $user = new User();
+        $user->getPhotoNotContract('2015-06-08','2015-07-12');
+    }
 
     /**
      * Finds the User model based on its primary key value.

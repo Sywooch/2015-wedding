@@ -315,10 +315,23 @@ class ContractController extends Controller
         
     }
 
+    //update info
     
+    public function actionUpdateinfo($id){
+        
+        $sender['contract'] = Contract::find()->where(['id_contract'=>$id])->one();
+        $sender['album'] = Album::find()->where(['id_contract'=>$id])->one();
+        $sender['dress'] = Dresscontract::find()->where(['id_contract'=>$id])->all();
+        $sender['photo'] = Photocontract::find()->where(['id_contract'=>$id])->one();
+        $sender['makeup'] = Makeupcontract::find()->where(['id_contract'=>$id])->one();
+        $sender['bigimg'] = Bigimg::find()->where(['id_contract'=>$id])->all();
+        
+            return $this->render('updateinfo',$sender);
 
+        
+    }
 
-    /**
+        /**
      * Deletes an existing Contract model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
