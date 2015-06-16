@@ -33,10 +33,19 @@ foreach ($albumimg as $img) {
 </div>  
 
 <?php if(isset($session['username'])&&$session['type_user']==0) { ?>
-<div class="row">
+
         <?= Html::a('Edit AlBum', Url::base().'/index.php?r=album/albumview&id='.$id_album.'&&edit', ['class' => 'btn btn-success']) ?>
-</div>
 <?php } ?>
+<?php if(isset($session['username'])&&$session['type_user']==0) { ?>
+<h2>Ảnh cưới</h2>
+<div id="albumView">
+    <?php if(isset($bigimg)) {?>
+    <a title=''><img style="width: 100%" src='<?php echo $bigimg; ?>' alt='<?php  ?>'></a>
+    <?php } else {?>
+    <p>Chưa có ảnh cưới</p>
+    <?php } ?>
+</div>
+<?php }?>
 <div class="clr"></div>
 <!--srcrip and css-->
 <?php

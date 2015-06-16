@@ -45,7 +45,7 @@ class Bigimg extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_contract' => 'Id Contract',
+            'id_contract' => 'Hợp Đồng Số',
             'url' => 'Url',
             'size' => 'Size',
         ];

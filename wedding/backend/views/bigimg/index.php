@@ -15,9 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Bigimg', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -25,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+           // 'id',
             'id_contract',
             'url:url',
             'size',

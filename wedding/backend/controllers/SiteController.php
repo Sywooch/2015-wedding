@@ -81,7 +81,7 @@ class SiteController extends Controller
         
         if(isset($session['type_user'])){
             if($session['type_user']==0){
-              return $this->redirect('index.php?r=user/notify');
+              return $this->redirect('index.php?r=notify');
             }else if($session['type_user']==1){
                 return $this->redirect('index.php?r=album/myalbum');
             }else if($session['type_user']==2||$session['type_user']==3){

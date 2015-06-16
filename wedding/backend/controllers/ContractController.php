@@ -237,7 +237,7 @@ class ContractController extends Controller
         
         $contract = Contract::find()->where(['id_contract'=>$id])->one();
         $album = Album::find()->where(['id_contract'=>$id])->one();
-        $dress = new Dress();
+        $dress = new Dresscontract();
         $photo = Photocontract::find()->where(['id_contract'=>$id])->one();
         $makeup = Makeupcontract::find()->where(['id_contract'=>$id])->one();
         $bigimg = Bigimg::find()->where(['id_contract'=>$id])->one();
@@ -247,20 +247,23 @@ class ContractController extends Controller
             $photo->load(Yii::$app->request->post());
             $makeup->load(Yii::$app->request->post());
             $bigimg->load(Yii::$app->request->post());
-            
+            if(isset($_GET['end']))
             $contract->end_time = $_GET['end'];
+            if(isset($_GET['start']))
             $contract->start_time = $_GET['start'];
+            if(isset($_GET['id_local']))
             $contract->id_local = $_GET['id_local'];
+            if(isset($_GET['timeadd']))
             $contract->timeadd = $_GET['timeadd'];
             
             $query = new Query();
-            $tb = $query->select(['timework'])->from('localtion')->where(['id_local'=>$model->id_local])->one();
-            $time_add = $tb['timework'] + $model->timeadd;
+            $tb = $query->select(['timework'])->from('localtion')->where(['id_local'=>$contract->id_local])->one();
+            $time_add = $tb['timework'] + $contract->timeadd;
             
             Yii::$app->db->createCommand("delete from dresscontract where id_contract = '".$contract->id_contract."'")->execute();
             $rent_dress = 0;
             foreach ($dress->id_dress as $dress){
-                Yii::$app->db->createCommand("INSERT INTO dresscontract (id_dress,id_contract,start_time,end_time) VALUES ('".$dress."','".$model->id_contract."','".$model->start_time."','".$model->end_time."')")->execute();
+                Yii::$app->db->createCommand("INSERT INTO dresscontract (id_dress,id_contract,start_time,end_time) VALUES ('".$dress."','".$contract->id_contract."','".$contract->start_time."','".$contract->end_time."')")->execute();
                  $infodress = Dress::findOne($dress);
                 $rent_dress += intval($infodress->rate_hire)*intval($time_add);
             }
@@ -277,8 +280,29 @@ class ContractController extends Controller
             $infomakeup = User::findOne($makeup->id_user);
             $wagemakeup = intval($infomakeup->rate_user)*intval($time_add);
             
+            //Yii::$app->db->createCommand("delete from bigimg where id_contract ='".$contract->id_contract."'")->execute();
             
-            return $this->redirect(['index']);
+            $rate_album = Ratealbum::findOne($album->numpage)->rate;
+
+                            
+                             
+          
+
+            $rate_bigimg = \backend\models\Sizebigimg::findOne($bigimg->size)->rate * $contract->num_bigimg;
+            
+            for($i=0;$i < $contract->num_bigimg;$i++){
+//                Yii::$app->db->createCommand("INSERT INTO bigimg (id_contract,size) VALUES ('".$contract->id_contract."','".$bigimg->size."')")->execute();
+                $bigimg->id_contract = $contract->id_contract;
+                $bigimg->save();
+             }
+            
+            
+            $contract->total = intval($rate_album)+$wagemakeup+$wagephoto+$rent_dress + $rate_bigimg;
+            
+            if($contract->save()&& $album->save())
+            {
+            return $this->redirect(['index']);}
+            else return $this->goHome ();
         }
         $sender['contract'] = $contract;
         $sender['album']=$album;

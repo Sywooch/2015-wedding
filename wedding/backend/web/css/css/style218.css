@@ -2413,3 +2413,5 @@ label:before {
     select {padding-right:18px}
 }
 .field-contract-id_contract label{display: none}
+/*.notify-index .glyphicon {display: none;}*/
+.notify-index .glyphicon-eye-open {display: none;}

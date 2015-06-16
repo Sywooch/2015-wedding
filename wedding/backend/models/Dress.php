@@ -43,7 +43,7 @@ class Dress extends ActiveRecord implements CartPositionInterface
     public function rules()
     {
         return [
-            [['name_dress', 'type_dress', 'info_dress', 'rate_hire', 'rate_sale', 'status'], 'required'],
+            [['name_dress', 'type_dress', 'info_dress', 'rate_hire', 'status'], 'required'],
             [['type_dress', 'rate_hire', 'rate_sale', 'status'], 'integer'],
             [['info_dress'], 'string'],
             [['name_dress', 'avatar'], 'string', 'max' => 100]
@@ -78,13 +78,13 @@ class Dress extends ActiveRecord implements CartPositionInterface
     public function attributeLabels()
     {
         return [
-            'id_dress' => 'Id Dress',
-            'name_dress' => 'Name Dress',
+            'id_dress' => 'Mã Áo Cưới',
+            'name_dress' => 'Tên Áo Cưới',
             'avatar' => 'Avatar',
-            'type_dress' => 'Type Dress',
-            'info_dress' => 'Info Dress',
-            'rate_hire' => 'Rate Hire',
-            'rate_sale' => 'Rate Sale',
+            'type_dress' => 'Loại Áo Cưới',
+            'info_dress' => 'Thông Tin Áo Cưới',
+            'rate_hire' => 'Giá Thuê',
+            'rate_sale' => 'Giá Bán',
             'status' => 'Status',
         ];
     }

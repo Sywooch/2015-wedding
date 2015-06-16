@@ -22,11 +22,14 @@ if(isset($_GET['start'])&&isset($_GET['end'])){
             $start =$contract->start_time;
             $end =$contract->end_time;
         }  
-
+if(isset($_GET['id_local'])){
+    $contract->id_local = $_GET['id_local'];
+}
 ?>
 <div class="contract-form">
     <?php $form = ActiveForm::begin(); ?>
         <?=$form->field($contract, 'id_contract')->hiddenInput()?>
+        
          <?= $form->field($contract, 'id_local')->dropDownList(
                     ArrayHelper::map(Localtion::find()->all(), 'id_local', 'name_local'),
                         [
@@ -128,11 +131,12 @@ if(isset($_GET['start'])&&isset($_GET['end'])){
               ]
         ]);?>
     
+  
+    <h2>Big Photo Wedding</h2>
+    
     <?= $form->field($bigimg, 'size')->dropDownList(
                     ArrayHelper::map(Sizebigimg::find()->all(), 'size', 'size') 
-                        ) ?>
-    <h2>Big Photo Wedding</h2>
-        
+                        ) ?>    
     <?= $form->field($contract, 'num_bigimg')->textInput() ?>
     <?= $form->field($contract, 'total')->textInput(['readonly'=>true]) ?>
     <div class ="form-group">

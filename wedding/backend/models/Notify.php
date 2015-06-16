@@ -50,12 +50,12 @@ class Notify extends \yii\db\ActiveRecord
     {
         return [
             'id_notify' => 'Id Notify',
-            'id_user' => 'Id User',
-            'fullname' => 'Fullname',
+            'id_user' => 'Mã Khách Hàng',
+            'fullname' => 'Tên Khách Hàng',
             'email' => 'Email',
-            'tell' => 'Tell',
-            'date_create' => 'Date Create',
-            'content' => 'Content',
+            'tell' => 'Điện Thoại',
+            'date_create' => 'Ngày Nhắc Nhở',
+            'content' => 'Nội Dung',
             'status' => 'Status',
         ];
     }

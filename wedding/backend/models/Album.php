@@ -48,11 +48,11 @@ class Album extends \yii\db\ActiveRecord
     {
         return [
             'id_album' => 'Id Album',
-            'id_contract' => 'Id Contract',
+            'id_contract' => 'Hơp Đồng Số',
             'url_psd' => 'Url Psd',
-            'numpage' => 'Numpage',
-            'time_complete' => 'Time Complete',
-            'url_folder' => 'Url Folder',
+            'numpage' => 'Số lượng trang',
+            'time_complete' => 'Thời gian hoàn thành album',
+            'url_folder' => 'Upload trang album',
             'rate' => 'Rate',
             'status' => 'Status',
         ];

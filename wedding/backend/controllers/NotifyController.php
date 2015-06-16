@@ -57,41 +57,41 @@ class NotifyController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
-        $session = Yii::$app->session;
-        
-        if(isset($session['type_user'])&&$session['type_user']==0){
-            return $this->render('view', [
-                'model' => $this->findModel($id),
-            ]);
-         }
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
+//    public function actionView($id)
+//    {
+//        $session = Yii::$app->session;
+//        
+//        if(isset($session['type_user'])&&$session['type_user']==0){
+//            return $this->render('view', [
+//                'model' => $this->findModel($id),
+//            ]);
+//         }
+//        throw new NotFoundHttpException('The requested page does not exist.');
+//    }
 
     /**
      * Creates a new Notify model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {   
-        $session = Yii::$app->session;
-        
-        if(isset($session['type_user'])&&$session['type_user']==0){
-        
-            $model = new Notify();
-
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id_notify]);
-            } else {
-                return $this->render('create', [
-                    'model' => $model,
-                ]);
-            }
-        }
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
+//    public function actionCreate()
+//    {   
+//        $session = Yii::$app->session;
+//        
+//        if(isset($session['type_user'])&&$session['type_user']==0){
+//        
+//            $model = new Notify();
+//
+//            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//                return $this->redirect(['view', 'id' => $model->id_notify]);
+//            } else {
+//                return $this->render('create', [
+//                    'model' => $model,
+//                ]);
+//            }
+//        }
+//        throw new NotFoundHttpException('The requested page does not exist.');
+//    }
 
     /**
      * Updates an existing Notify model.

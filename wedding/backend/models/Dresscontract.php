@@ -43,8 +43,8 @@ class Dresscontract extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_dress' => 'Id Dress',
-            'id_contract' => 'Id Contract',
+            'id_dress' => 'Áo Cưới',
+            'id_contract' => 'Mã Hợp Đồng',
         ];
     }
 

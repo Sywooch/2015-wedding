@@ -44,8 +44,8 @@ class Makeupcontract extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_user' => 'Id User',
-            'id_contract' => 'Id Contract',
+            'id_user' => 'Thợ Trang Điểm',
+            'id_contract' => 'Mã Hợp Đồng',
         ];
     }
 

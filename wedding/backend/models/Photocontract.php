@@ -44,8 +44,8 @@ class Photocontract extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_user' => 'Photographers',
-            'id_contract' => 'Id Contract',
+            'id_user' => 'Thợ Chụp Ảnh',
+            'id_contract' => 'Mã Hợp Đồng',
         ];
     }
 

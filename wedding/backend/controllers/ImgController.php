@@ -158,7 +158,7 @@ class ImgController extends Controller
         if(isset($_GET['typedelete']))
         {
             if($_GET['typedelete']=='myalbum')
-            return $this->redirect(['album/albumview','id'=>$_GET['id_album']]);
+            return $this->redirect(['album/view','id'=>$_GET['id_album']]);
             if($_GET['typedelete']=='editdress')
                 return $this->redirect(['dress/editimgdress','id'=>$_GET['id_dress']]);
             if($_GET['typedelete']=='editlocal')

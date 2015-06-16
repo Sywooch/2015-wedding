@@ -90,7 +90,13 @@ AppAsset::register($this);
                             </ul>
                         <?php } else if($session['type_user']== 0) { ?>
                             <ul id="menu">
-                                <li class=""><a href="<?php echo Url::base().'/index.php?r=album' ?>" title="Trang chủ">Album</a></li>
+                                <li class="haveSub"><a href="" title="Trang chủ">Ảnh cưới</a>
+                                    <ul>
+                                        <li><a href="<?php echo Url::base().'/index.php?r=album' ?>" title="Trang chủ">Album cưới</a></li>
+                                        <li><a href="<?php echo Url::base().'/index.php?r=bigimg' ?>" title="Trang chủ">Ảnh cưới lớn</a></li>
+                                    </ul>
+                                    
+                                </li>
                                 
                                 <li class="haveSub "><a href="">Tài Khoản </a><span></span>
                                     <ul>
@@ -204,6 +210,10 @@ AppAsset::register($this);
                         </ul>
                         <div class="clr"></div>
                     </div><!--end rightBox-->
+                    <div class ="rightBox">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.5046422685427!2d106.65774599999996!3d10.772607999999986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ec17709146b%3A0x54a1658a0639d341!2zMjY4IEzDvSBUaMaw4budbmcgS2nhu4d0!5e0!3m2!1svi!2sus!4v1434440586118" width="260px" height="300px" frameborder="0" style="border:0"></iframe>
+                        
+                    </div>
                     <div class="rightBox">
                         <div class="fb-like" style="position: fixed" data-share="true"  data-show-faces="true"></div>    
                     </div>

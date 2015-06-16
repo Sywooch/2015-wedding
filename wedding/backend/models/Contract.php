@@ -60,22 +60,22 @@ class Contract extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_contract' => 'Id Contract',
-            'id_user' => 'Id User',
-            'id_local' => 'Id Local',
-            'start_time' => 'Start Time',
-            'end_time' => 'End Time',
-            'create_day' => 'Create Day',
-            'total' => 'Total',
-            'payment1' => 'Payment1',
-            'payment2' => 'Payment2',
-            'payment3' => 'Payment3',
-            'timephoto' => 'Timephoto',
-            'timeadd' => 'Timeadd',
-            'num_bigimg'=>'Number Big Img',
-            'timecomplete' => 'Timecomplete',
+            'id_contract' => 'Hợp Đồng Số',
+            'id_user' => 'Khách Hàng',
+            'id_local' => 'Địa Điểm Chụp Ảnh',
+            'start_time' => 'Thời Gian Bắt Đầu',
+            'end_time' => 'Thời Gian Kết Thúc',
+            'create_day' => 'Ngày Tạo Hợp Đồng',
+            'total' => 'Tổng tiên',
+            'payment1' => 'Thời Gian Ghanh Toán Đợt 1',
+            'payment2' => 'Thời Gian Ghanh Toán Đợt 2',
+            'payment3' => 'Thời Gian Ghanh Toán Đợt 3',
+            'timephoto' => 'Thời Gian',
+            'timeadd' => 'Thời Gian Khách Muốn Thêm',
+            'num_bigimg'=>'Tổng số ảnh cưới',
+            'timecomplete' => 'Thời Gian Hoàn Thành',
             'status' => 'Status',
-            'fullname'=>  Yii::t('app', 'Fullname'),
+            'fullname'=>  Yii::t('app', 'Tên Khách Hàng'),
         ];
     }
 

@@ -18,10 +18,7 @@ use dosamigos\datepicker\DatePicker;
 
    
     
-    <?= $form->field($model, 'id_contract')->dropDownList(
-                        ArrayHelper::map(Contract::find()->where(['have_album'=>0])->all(), 'id_contract', 'id_contract'),
-                            ['prompt'=>'Select Status',]
-                            ) ?>
+    <?= $form->field($model, 'id_contract')->textInput(['readonly'=>true]) ?>
 
    
 
@@ -52,7 +49,7 @@ use dosamigos\datepicker\DatePicker;
     <?php if(isset($bigimg) ){ 
              ?>
         <?= $form->field($bigimg, 'url')->fileInput(['maxlength' => 250]) ?>
-        <?= $form->field($bigimg, 'size')->textInput(['maxlength' => 20]) ?>
+        <?= $form->field($bigimg, 'size')->textInput(['readonly' => true]) ?>
     <?php } ?>
  
     <div class="form-group">

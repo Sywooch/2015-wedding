@@ -61,12 +61,12 @@ class Localtion extends ActiveRecord implements CartPositionInterface
     public function attributeLabels()
     {
         return [
-            'id_local' => 'Id Local',
-            'name_local' => 'Name Local',
-            'info_local' => 'Info Local',
-            'rate' => 'Rate',
+            'id_local' => 'Mã Địa Điểm',
+            'name_local' => 'Tên Địa Điểm',
+            'info_local' => 'Thông Tin Địa Điểm',
+            'rate' => 'Giá',
             'avatar' => 'Avatar',
-            'timework' => 'Timework',
+            'timework' => 'Thời Gian Chụp Ảnh',
             'status' => 'Status',
         ];
     }

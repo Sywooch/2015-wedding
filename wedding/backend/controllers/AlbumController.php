@@ -61,14 +61,78 @@ class AlbumController extends Controller
      */
     public function actionView($id)
     {
-        $session = Yii::$app->session;
-        if(isset($session['type_user'])&&$session['type_user']==0){
+//        $session = Yii::$app->session;
+//        if(isset($session['type_user'])&&$session['type_user']==0){
+//        
+//        return $this->render('view', [
+//            'model' => $this->findModel($id),
+//        ]);
+//        }
+//        throw new NotFoundHttpException('The requested page does not exist.');
+         $session = Yii::$app->session;
+        if(isset($session['username'])&&$session['type_user']==0){
+             $this->findModel($id);
+            
+                $contract = Album::find()->where(['id_album'=>$id])->one()->id_contract;
+
+                $bigimg = Bigimg::find()->where(['id_contract'=>$contract])->one()->url;
+               
+                    $imgalbum = Imgalbum::find()->where(['id_album'=>$id])->all();
+                
+                if(isset($imgalbum)){
+                    foreach ($imgalbum as $key => $img) {
+                        $albumimg[$key]= $img->id_img;
+                       // $hehe[$key][]= $img->id_album;
+                    }
+                }    
+            
+
+            if(isset($albumimg)){
+                foreach ($albumimg as $img){
+                    $allimg[] = Img::findOne($img);
+                }
+
+            }
+            if(isset($allimg)){
+                foreach ($allimg as $key=> $img) {
+                    $sender[$key]['url']= $img->url;
+                    $sender[$key]['id_img']= $img->id_img;
+
+                }
+            }  else {
+                $sender[0]['url']= null;
+                $sender[0]['id_img']= null;
+            }
+              
+            $status = Album::find()->where(['id_album'=>$id])->one()->status;
+
+    //        echo '<pre>';
+    //        print_r($sender);
+    //        echo '</pre>';
+            if(!isset($_GET['edit'])){
+                return $this->render('myalbum',
+                    [
+                        'albumimg'=>$sender,
+                        'id_album'=>$id,
+                        'bigimg'=>$bigimg,
+                        'title'=>$id,
+                        'status'=>  \backend\models\StatusAlbum::find()->where(['status_album'=>$status])->one()->name_status,
+                    ]);
+            }else{
+                return $this->render('albumview',
+                    [
+                        'albumimg'=>$sender,
+                        'id_album'=>$id,
+                        'bigimg'=>$bigimg,
+                        'title'=>$id,
+                    ]);
+            }
+            
         
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        }else
+        {
+            return $this->redirect(['index']);
         }
-        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**
@@ -109,10 +173,10 @@ class AlbumController extends Controller
         $model['title'] = 'All Album';
         $model['']= '';
         
-        echo '<pre>';
-        print_r($model['allalbum']);
-        echo '</pre>';
-        exit;
+//        echo '<pre>';
+//        print_r($model['allalbum']);
+//        echo '</pre>';
+//        exit;
         
         return $this->render('allalbum',$model);
     }
@@ -284,16 +348,18 @@ class AlbumController extends Controller
         if(isset($session['username'])&&$session['type_user']==0){
              $this->findModel($id);
             
-                //$album = Album::find()->where(['id_album'=>$id])->one();
+                $contract = Album::find()->where(['id_album'=>$id])->one()->id_contract;
 
-                //$bigimg = Bigimg::find()->where(['id_contract'=>$contract->id_contract])->one();
+                $bigimg = Bigimg::find()->where(['id_contract'=>$contract])->one()->url;
                
-                    $imgalbum = Imgalbum::find()->where(['id_album'=>$id])->all();
+                $imgalbum = Imgalbum::find()->where(['id_album'=>$id])->all();
+                
+                
+                
                 
                 if(isset($imgalbum)){
                     foreach ($imgalbum as $key => $img) {
                         $albumimg[$key]= $img->id_img;
-                       // $hehe[$key][]= $img->id_album;
                     }
                 }    
             
@@ -316,22 +382,23 @@ class AlbumController extends Controller
             }
               
             $status = Album::find()->where(['id_album'=>$id])->one()->status;
-
-    //        echo '<pre>';
-    //        print_r($sender);
-    //        echo '</pre>';
+            
+            
+            
             if(!isset($_GET['edit'])){
                 return $this->render('myalbum',
                     [
                         'albumimg'=>$sender,
                         'id_album'=>$id,
                         'title'=>$id,
+                        'bigimg'=>$bigimg,
                         'status'=>  \backend\models\StatusAlbum::find()->where(['status_album'=>$status])->one()->name_status,
                     ]);
             }else{
                 return $this->render('albumview',
                     [
                         'albumimg'=>$sender,
+                        'bigimg'=>$bigimg,
                         'id_album'=>$id,
                         'title'=>$id,
                     ]);
@@ -345,17 +412,23 @@ class AlbumController extends Controller
         
     }
     
-    public function actionBigimg($id_user){
-        $contract = \backend\models\Contract::find()->where(['id_user'=>$id_user])->one();
-        if(isset($contract)){
-            $bigimg = Bigimg::find()->where(['id_contract'=>$contract->id_contract])->all();
-        }
-        
-        if(isset($bigimg)){
-            echo '<pre>';
-            print_r($bigimg);
-            echo '</pre>';
-        }    
+    public function actionBigimg($id){
+        $session = Yii::$app->session;
+        if(isset($session['username'])&&isset($session['id_user'])&&$session['type_user']==0){
+
+            $bigimg = Bigimg::find()->where(['id_contract'=>$id])->all();
+             
+            $id_album = Album::find()->where(['id_contract'=>$id])->one()->id_album;
+             
+            if(isset($bigimg)){
+                 $sender['bigimg'] = $bigimg;
+            }
+            if(isset($mess)) $sender['mess'] = $mess;
+             
+             $sender['title'] = 'BigPhoTo';
+            $sender['id_album']=$id_album; 
+             return $this->render('mybigimg',$sender);
+        } 
     }
     
     public function actionMybigimg(){
@@ -378,7 +451,9 @@ class AlbumController extends Controller
              return $this->render('mybigimg',$sender);
         }
     }
-
+    
+    
+    
     
 
     /**
