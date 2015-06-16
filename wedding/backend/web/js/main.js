@@ -144,6 +144,20 @@ $(function(){
 })
 
 
+$(function(){
+
+    $(".b").change(function(){
+        if( $('#contract-id_local').val() && $('#contract-start_time').val() && $('#contract-timeadd').val() ) {
+           var x = document.getElementById("contract-start_time").value;
+            var y = document.getElementById("contract-timeadd").value;
+           var z = document.getElementById("contract-id_local").value;
+           var id = document.getElementById("contract-id_contract").value;
+            
+            
+            window.location.href ='index.php?r=contract/getendtime'+ '&&start='+x+'&&timeadd='+y+'&&id_local='+z+"&&update&&id="+id;  
+       }
+    });   
+});
    
         
         

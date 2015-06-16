@@ -2412,3 +2412,4 @@ label:before {
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     select {padding-right:18px}
 }
+.field-contract-id_contract label{display: none}

@@ -211,7 +211,7 @@ class Dress extends ActiveRecord implements CartPositionInterface
     }
     
     public function getDressNotContractSample($start,$end,$id_contract){
-        $result = Yii::$app->db->createCommand("SELECT id_dress FROM dresscontract WHERE ((start_time BETWEEN '".$start."' AND '".$end."')OR(end_time BETWEEN '".$start."' AND '".$end."')OR('".$start ."'<= start_time AND '".$end."' >=end_time  ) )AND id_contract= '".$id_contract."'")->queryAll();
+        $result = Yii::$app->db->createCommand("SELECT id_dress FROM dresscontract WHERE ((start_time BETWEEN '".$start."' AND '".$end."')OR(end_time BETWEEN '".$start."' AND '".$end."')OR('".$start ."'<= start_time AND '".$end."' >=end_time  ) )AND id_contract != '".$id_contract."'")->queryAll();
         $alldress = Yii::$app->db->createCommand("SELECT id_dress from dress")->queryAll();
         foreach ($alldress as $key=>$value) {
             foreach ($result as $value1) {
