@@ -32,7 +32,7 @@ class Photocontract extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_user', 'id_contract'], 'required'],
+            [['id_user', 'id_contract'], 'required','message' => 'Thông tin này không được để trống'],
             [['id_user', 'id_contract','status'], 'integer'],
             [['start_time', 'end_time'], 'string','max'=>100]
         ];

@@ -47,8 +47,8 @@ class Contract extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_user', 'id_local', 'start_time', 'payment1', 'timeadd','num_bigimg'], 'required'],
-            [['id_user', 'total', 'timeadd', 'status','have_album','num_bigimg'], 'integer'],
+            [['id_user', 'id_local', 'start_time', 'payment1', 'timeadd','num_bigimg'], 'required','message' => 'Thông tin này không được để trống'],
+            [['id_user', 'total', 'timeadd', 'status','have_album','num_bigimg'], 'integer','message' => 'Nhập số nguyên'],
             [['id_local'],'string'],[['total_time'],'double'],
             [['start_time', 'end_time', 'create_day', 'payment1', 'payment2', 'payment3', 'timephoto', 'timecomplete'], 'safe']
         ];
@@ -67,9 +67,9 @@ class Contract extends \yii\db\ActiveRecord
             'end_time' => 'Thời Gian Kết Thúc',
             'create_day' => 'Ngày Tạo Hợp Đồng',
             'total' => 'Tổng tiên',
-            'payment1' => 'Thời Gian Ghanh Toán Đợt 1',
-            'payment2' => 'Thời Gian Ghanh Toán Đợt 2',
-            'payment3' => 'Thời Gian Ghanh Toán Đợt 3',
+            'payment1' => 'Thời Gian Thanh Toán Đợt 1',
+            'payment2' => 'Thời Gian Thanh Toán Đợt 2',
+            'payment3' => 'Thời Gian Thanh Toán Đợt 3',
             'timephoto' => 'Thời Gian',
             'timeadd' => 'Thời Gian Khách Muốn Thêm',
             'num_bigimg'=>'Tổng số ảnh cưới',
@@ -171,7 +171,7 @@ class Contract extends \yii\db\ActiveRecord
         $endmonth = $year.'-'.$monthyear.'-'.$date;
         $startmonth = $year.'-'.$monthyear.'-'.'01';
         
-        $contract = Yii::$app->db->createCommand("SELECT id_contract FROM contract WHERE start_time >='".$startmonth."' AND start_time<='".$endmonth."' ORDER BY start_time")->queryAll();
+        $contract = Yii::$app->db->createCommand("SELECT id_contract FROM contract WHERE start_time >='".$startmonth."' AND start_time<='".$endmonth."' ORDER BY start_time desc")->queryAll();
         
         //var_dump($contract);
         

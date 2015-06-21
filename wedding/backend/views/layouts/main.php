@@ -140,7 +140,7 @@ AppAsset::register($this);
                                 <li class="haveSub "><a href="<?php echo Url::base().'/index.php?r=user/task&&id_user='.$session['id_user']; ?>" title="">Nhiệm Vụ</a><span></span>
                                     <ul>
                                     <?php for($i=1;$i<=12;$i++){ ?>
-                                        <li><a href="<?php echo Url::base().'/index.php?r=user/task&&id_user='.$session['id_user'].'&&month='.$i; ?>" title=""><?php echo 'Tháng '.$i ?></a><span></span></li>
+                                        <li><a href="<?php echo Url::base().'/index.php?r=user/mytask&&month='.$i; ?>" title=""><?php echo 'Tháng '.$i ?></a><span></span></li>
                                     <?php } ?>
                                     </ul>
                                 </li>
@@ -243,7 +243,7 @@ AppAsset::register($this);
     </div>
        <div class="clr"></div>
        </div>
-    <div id="footer">
+<!--    <div id="footer">
 	<div class="pagewrap">
     	<ul class="fooLink">
         	<h1><span>DANH MỤC</span></h1>
@@ -274,9 +274,9 @@ AppAsset::register($this);
         </ul>
         
         <div class="clr"></div>
-    </div><!--end pagewrap-->
+    </div>end pagewrap
 	<div class="clr"></div>
-</div><!--end footer-->
+</div>end footer-->
 
     <?php $this->endBody() ?>
 </body>

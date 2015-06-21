@@ -43,7 +43,24 @@ $opt = [15,20,25,30,35,40,45,50];
                   'format'=>'yyyy-mm-dd'
               ]
         ]);?>
-        <?= $form->field($model, 'timeadd')->textInput(['class'=> "form-control a"]) ?>
+        <?= $form->field($model, 'timeadd')->dropDownList(
+                    [
+                        '0'=>'0',
+                        '1'=>'1',
+                        '2'=>'2',
+                        '3'=>'3',
+                        '4'=>'4',
+                        '5'=>'5',
+                        '6'=>'6',
+                        '7'=>'7',
+                        '8'=>'8',
+                        '9'=>'9',
+                        '10'=>'10',
+                    ],
+                    
+                   ['prompt'=>'Thêm ngày','class'=> "form-control b"]);
+        
+        ?>
                 
     </div>
     <?php }?>
@@ -167,21 +184,21 @@ $opt = [15,20,25,30,35,40,45,50];
         
         
         
-        <?= $form->field($bigimg, 'size')->dropDownList(
-                    ArrayHelper::map(Sizebigimg::find()->all(), 'size', 'size') 
-                        ) ?>
+       
         
     <?php }?>    
-        <h2>Big Photo Wedding</h2>
-        
+        <h2>Ảnh cưới</h2>
+         <?= $form->field($bigimg, 'size')->dropDownList(
+                    ArrayHelper::map(Sizebigimg::find()->all(), 'size', 'size') 
+                        ) ?>
        <?= $form->field($model, 'num_bigimg')->textInput() ?>
         
         
     </div>
     
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-        <?= Html::submitButton( 'Back', ['class' => 'btn btn-success','onclick' => "history.go(-1).clear"]) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Tạo' : 'Chỉnh sửa', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton( 'Quay Lại', ['class' => 'btn btn-success','onclick' => "history.go(-1).clear"]) ?>
 
     </div>
         </div>    

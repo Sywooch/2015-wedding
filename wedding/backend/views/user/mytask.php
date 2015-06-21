@@ -7,11 +7,17 @@ use backend\models\Localtion;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Contract */
-
-$this->title = 'User';
+$session = Yii::$app->session;
+if($session['type_user']==2){
+    $this->title = 'Thợ Chụp Ảnh';
+}
+if($session['type_user']==3){
+    $this->title = 'Thợ Trang Điểm';
+}
 $this->params['breadcrumbs'][] = ['label' => 'User', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $i=1;
+
 ?>
 <div class="usertask-view">
 
@@ -43,8 +49,11 @@ $i=1;
             ?></td>
             <td><?=$task['start_time']?></td>
             <td><?=$task['end_time']?></td>
-            <td><?=$task['status']?></td>
-            <td></td>
+<!--            <td><?//=$task['status']?></td>-->
+            <td><?php if ($task['status']==0)
+                echo 'Chưa Hoàn Thành';else echo 'Hoàn Thành';
+                ?></td>
+            <td><a href="<?php echo yii\helpers\Url::base().'/index.php?r=user/updatetask&id='.$task['id_contract'].'&type='.$session['type_user'].'&status='.$task['status'].'&id_user='.$session['id_user'] ?>"><span class ="glyphicon glyphicon-pencil"></span></a></td>
             
         </tr>
                 

@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Localtion */
 
-$this->title = 'Create Localtion';
-$this->params['breadcrumbs'][] = ['label' => 'Localtions', 'url' => ['index']];
+$this->title = 'Tạo Địa Điểm';
+$this->params['breadcrumbs'][] = ['label' => 'Địa điểm', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="localtion-create">

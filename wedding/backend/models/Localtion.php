@@ -38,9 +38,9 @@ class Localtion extends ActiveRecord implements CartPositionInterface
     public function rules()
     {
         return [
-            [['name_local', 'info_local', 'rate',  'timework', 'status'], 'required'],
+            [['name_local', 'info_local', 'rate',  'timework', 'status'], 'required','message' => 'Thông tin này không được để trống'],
             [['info_local'], 'string'],
-            [['rate', 'timework', 'status'], 'integer'],
+            [['rate', 'timework', 'status'], 'integer','message' => 'Nhập số nguyên'],
             [['name_local', 'avatar'], 'string', 'max' => 100]
         ];
     }

@@ -4,7 +4,7 @@ use yii\helpers\Url;
 use yii\bootstrap\BootstrapAsset;
 $session = Yii::$app->session;
 $this->title = $title;
-$this->params['breadcrumbs'][] = ['label' => 'Dresses', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Áo cưới', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 backend\assets\AppAsset::register($this);
 

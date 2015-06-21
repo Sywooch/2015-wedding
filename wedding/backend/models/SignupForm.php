@@ -37,26 +37,52 @@ class SignupForm extends Model
     {
         return [
             ['username', 'filter', 'filter' => 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+            ['username', 'required','message' => 'Tên tài khoản không được để trống'],
+            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Tài khoản này đã tồn tài'],
+            ['username', 'string', 'min' => 2, 'max' => 255,'message' => 'Tài khoản có ít nhất 2 kí tự'],
 
             ['email', 'filter', 'filter' => 'trim'],
-            ['email', 'required'],
+            ['email', 'required','message' => 'Thông tin này không được để trống'],
             
-            ['email', 'email'],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
-            ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+            ['email', 'email','message' => 'Địa chỉ mail không hợp lệ'],
+            ['email2', 'email','message' => 'Địa chỉ mail không hợp lệ'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Mail này đã tồn tại trong hệ thống'],
+            ['password', 'required','message' => 'Thông tin này không được để trống'],
+            ['password', 'string', 'min' => 6,'message' => 'Mật khảu có ít nhất 6 kí tự'],
             
-            [['type_user','fullname','tell','info_user','address'],'required'],
-            [['type_user','range_user','rate_user','have_contract'],'integer'],
+            [['type_user','fullname','tell','info_user','address'],'required','message' => 'Thông tin này không được để trống'],
+            [['type_user','range_user','rate_user','have_contract'],'integer','message' => 'Nhập kiểu số nguyên '],
             [['email','avatar','fullname','fullname2','address'],'string','max'=>255],
             [['tell','tell2'],'string','max'=>12],    
         ];
     }
 
-    
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'username' => 'Tên Tài Khoản',
+            'auth_key' => 'Auth Key',
+            'password_hash' => 'Password Hash',
+            'password_reset_token' => 'Password Reset Token',
+            'type_user' => 'Loại Tài Khoản',
+            'range_user' => 'Hạng Tài Khoản',
+            'rate_user' => 'Giá Thuê Tài Khoản',
+            'fullname' => 'Họ Tên',
+            'fullname2' => 'Họ tên 2',
+            'tell' => 'Điện Thoại',
+            'tell2' => 'Điện Thoại 2',
+            'email' => 'Email',
+            'email2' => 'Email2',
+            'info_user' => 'Thông Tin Tài Khoản',
+            'address' => 'Địa Chỉ',
+            'avatar' => 'Avatar',
+            'have_contract' => 'Have Contract',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ];
+    }
 
     /**
      * Signs user up.

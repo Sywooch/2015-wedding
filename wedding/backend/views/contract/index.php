@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\ContractSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Contracts';
+$this->title = 'Hợp đồng';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -16,9 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Contract', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+<!--    <p>
+        <?//= Html::a('Create Contract', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>-->
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -26,10 +26,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_contract',
+           //  'id_contract',
             'idLocal.name_local',
-            'id_user',
-            'id_local',
+            //'id_user',
+            //'id_local',
+           
             [
             'attribute' => 'idUser.fullname', 
             'sortLinkOptions'=>  yii\helpers\Url::base().'/index.php?r=contract/index&sort=idUser.fullname',     
@@ -48,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'timephoto',
             // 'timeadd:datetime',
             // 'timecomplete',
-             'status',
+            // 'status',
 //            'idUser.fullname',
             
 

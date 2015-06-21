@@ -77,7 +77,7 @@ class LocaltionController extends Controller
         
             $searchModel = new LocaltionSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+           // $searchModel->rate = $searchModel->rate.' VND';
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
@@ -211,7 +211,7 @@ class LocaltionController extends Controller
        
         
         $test['imgs']= $imgs; 
-        $test['title'] = 'All Localtion';
+        $test['title'] = 'Tất cả địa điểm';
         //$model->find()->all();
         return $this->render('viewalllocaltion',$test);
     }

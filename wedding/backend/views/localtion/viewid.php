@@ -5,7 +5,7 @@ use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
 $session = Yii::$app->session;
 $this->title = $title;
-$this->params['breadcrumbs'][] = ['label' => 'Localtion', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Địa điểm', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $i =0;

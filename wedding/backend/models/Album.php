@@ -35,7 +35,7 @@ class Album extends \yii\db\ActiveRecord
     {
         return [
             [['id_contract', 'numpage'], 'required'],
-            [['id_contract', 'numpage', 'rate', 'status'], 'integer'],
+            [['id_contract', 'numpage', 'rate', 'status'], 'integer','message' => 'Nhập số nguyên'],
             [['time_complete'], 'safe'],
             [['url_psd','url_folder'], 'string', 'max' => 350]
         ];

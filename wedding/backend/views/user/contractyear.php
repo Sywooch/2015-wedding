@@ -41,7 +41,7 @@ $this->registerCssFile(Url::base().'/css/plot/examples.css', ['depends' => [Boot
          <div class="breadcrumb"> Thống kê số lương hợp đồng trong năm</div>
          <div id="placeholder" class="demo-placeholder" ></div>
     </div>
-    <div class="demo-container">
+<!--    <div class="demo-container">
           <label>
             <select id = "year-photo">
                 <option value="<?php echo date('Y')-4 ?>"><?php echo date('Y')-4 ?></option>
@@ -76,7 +76,7 @@ $this->registerCssFile(Url::base().'/css/plot/examples.css', ['depends' => [Boot
         
          <div class="breadcrumb">Thống kê top thợ trang điểm trong năm</div>
          <div id="placeholder2" class="demo-placeholder" ></div>
-    </div>
+    </div>-->
     
     
     

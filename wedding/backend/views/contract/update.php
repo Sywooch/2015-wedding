@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Contract */
 
-$this->title = 'Update Contract: ' . ' ' . $model->id_contract;
-$this->params['breadcrumbs'][] = ['label' => 'Contracts', 'url' => ['index']];
+$this->title = 'Chỉnh sửa hợp đồng: ' . ' ' . $model->id_contract;
+$this->params['breadcrumbs'][] = ['label' => 'Hợp đồng', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id_contract, 'url' => ['view', 'id' => $model->id_contract]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Chỉnh sửa';
 ?>
 <div class="contract-update">
 

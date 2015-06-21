@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\DressSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Dresses';
+$this->title = 'Áo cưới';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dress-index">
@@ -15,9 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Dress', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+<!--    <p>
+        <?//= Html::a('Create Dress', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>-->
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
            // 'id_dress',
             'name_dress',
             'avatar:image',
-            'type_dress',
+           // 'type_dress',
           //  'info_dress:ntext',
              'rate_hire',
             // 'rate_sale',

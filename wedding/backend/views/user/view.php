@@ -8,8 +8,25 @@ use yii\bootstrap\Modal;
 /* @var $this yii\web\View */
 /* @var $model backend\models\User */
 
+if(isset($type_user)){
+    if($type_user==0) {$label= 'Admin';
+    $url = 'index';
+    }
+    if($type_user==1) {$label= 'Khách Hàng';
+    $url = 'getallcustomer';
+    }
+    if($type_user==2) {$label= 'Thợ Chụp Ảnh';
+    $url = 'getallphoto';
+    }
+    if($type_user==3) {$label= 'Thợ Trang Điểm';
+    $url = 'getallmakeup';
+    }
+    
+}
+
+
 $this->title = $model->username;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $label, 'url' => [$url]];
 $this->params['breadcrumbs'][] = $this->title;
 $session = Yii::$app->session;
 ?>
@@ -30,7 +47,7 @@ $session = Yii::$app->session;
         <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+           // 'id',
             'username',
            // 'auth_key',
             //'password_hash',
@@ -47,7 +64,7 @@ $session = Yii::$app->session;
             'info_user:ntext',
             'address',
 //            'avatar',
-            'status',
+           // 'status',
            // 'created_at',
            // 'updated_at',
         ],
@@ -56,14 +73,14 @@ $session = Yii::$app->session;
     
     
      <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Chỉnh Sửa', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
          
-        <?php if(isset($session['usernamr'])&&$session['type_user']==0) { ?> 
+        <?php if(isset($session['username'])&&$session['type_user']==0) { ?> 
          
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Xóa', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Bạn có muốn xóa '.$label.' '.$model->username.' khỏi hệ thống?',
                 'method' => 'post',
             ],
         ]) ?>

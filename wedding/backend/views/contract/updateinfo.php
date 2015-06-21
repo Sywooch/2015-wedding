@@ -12,9 +12,12 @@ use backend\models\Sizebigimg;
 use backend\models\User;
 //use backend\models\Ratealbum;
 
-$this->title = 'Update Contract '.$contract->id_contract;
+$this->title = 'Chỉnh sửa hợp đồng: '.$contract->id_contract;
 
+?>
+ <h1><?= Html::encode($this->title) ?></h1>
 
+<?php 
 if(isset($_GET['start'])&&isset($_GET['end'])){
             $start =$_GET['start'];
             $end =$_GET['end'];
@@ -28,7 +31,7 @@ if(isset($_GET['id_local'])){
 ?>
 <div class="contract-form">
     <?php $form = ActiveForm::begin(); ?>
-        <?=$form->field($contract, 'id_contract')->hiddenInput()?>
+        <?=$form->field($contract, 'id_contract')->textInput(['readonly'=>true])?>
         
          <?= $form->field($contract, 'id_local')->dropDownList(
                     ArrayHelper::map(Localtion::find()->all(), 'id_local', 'name_local'),
@@ -50,10 +53,25 @@ if(isset($_GET['id_local'])){
         
         <?php if(isset($_GET['timeadd'])){
             $contract->timeadd = $_GET['timeadd'];
-            echo $form->field($contract, 'timeadd')->textInput(['class'=> "form-control b"]) ;
-        } else {
-            echo $form->field($contract, 'timeadd')->textInput(['class'=> "form-control b"]);
-        } ?>
+            
+        } 
+//            echo $form->field($contract, 'timeadd')->textInput(['class'=> "form-control b"]);
+            echo $form->field($contract, 'timeadd')->dropDownList(
+                    [
+                        '1'=>'1',
+                        '2'=>'2',
+                        '3'=>'3',
+                        '4'=>'4',
+                        '5'=>'5',
+                        '6'=>'6',
+                        '7'=>'7',
+                        '8'=>'8',
+                        '9'=>'9',
+                        '10'=>'10',
+                    ],
+                    
+                   ['class'=> "form-control b"]);
+         ?>
         
       
         <?=$form->field($contract,'id_user')->textInput(['readonly'=>true]);?>
@@ -132,7 +150,7 @@ if(isset($_GET['id_local'])){
         ]);?>
     
   
-    <h2>Big Photo Wedding</h2>
+    <h2>Ảnh cưới</h2>
     
     <?= $form->field($bigimg, 'size')->dropDownList(
                     ArrayHelper::map(Sizebigimg::find()->all(), 'size', 'size') 
@@ -140,8 +158,8 @@ if(isset($_GET['id_local'])){
     <?= $form->field($contract, 'num_bigimg')->textInput() ?>
     <?= $form->field($contract, 'total')->textInput(['readonly'=>true]) ?>
     <div class ="form-group">
-             <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
-        <?= Html::submitButton( 'Back', ['class' => 'btn btn-success','onclick' => "history.go(-1).clear"]) ?>
+             <?= Html::submitButton('Chỉnh Sửa', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton( 'Quay Lại', ['class' => 'btn btn-success','onclick' => "history.go(-1).clear"]) ?>
     </div>
     <?php $form = ActiveForm::end() ?>
 </div>

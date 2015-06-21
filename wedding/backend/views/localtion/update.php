@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Localtion */
 
-$this->title = 'Update Localtion: ' . ' ' . $model->id_local;
-$this->params['breadcrumbs'][] = ['label' => 'Localtions', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_local, 'url' => ['view', 'id' => $model->id_local]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Chỉnh sửa địa điểm: ' . ' ' . $model->name_local;
+$this->params['breadcrumbs'][] = ['label' => 'Địa điểm', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->name_local, 'url' => ['view', 'id' => $model->id_local]];
+$this->params['breadcrumbs'][] = 'Chỉnh Sửa';
 ?>
 <div class="localtion-update">
 

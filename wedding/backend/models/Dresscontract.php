@@ -31,7 +31,7 @@ class Dresscontract extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_dress', 'id_contract'], 'required'],
+            [['id_dress', 'id_contract'], 'required','message' => 'Thông tin này không được để trống'],
             [['id_dress', 'id_contract'], 'integer'],
             [['start_time', 'end_time'], 'string','max'=>100]
         ];

@@ -9,7 +9,7 @@ use yii\bootstrap\Modal;
 /* @var $model backend\models\Dress */
 
 $this->title = $model->name_dress;
-$this->params['breadcrumbs'][] = ['label' => 'Dresses', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Áo cưới', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $model->name_dress;
 ?>
 <div class="dress-view">
@@ -19,18 +19,18 @@ $this->params['breadcrumbs'][] = $model->name_dress;
     
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id_dress], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Chỉnh sửa', ['update', 'id' => $model->id_dress], ['class' => 'btn btn-primary']) ?>
         
-        <?= Html::a('View Img', ['viewimg', 'id' => $model->id_dress], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Xem hình ảnh áo cưới', ['viewimg', 'id' => $model->id_dress], ['class' => 'btn btn-primary']) ?>
         
-         <?= Html::button('Create Img',['value'=> Url::to('index.php?r=img/create&&id='.$model->id_dress.'&&type=dress'),'class' => 'btn btn-success','id'=>'createimg' ] ) ?>
+         <?= Html::button('Tạo hình ảnh áo cưới',['value'=> Url::to('index.php?r=img/create&&id='.$model->id_dress.'&&type=dress'),'class' => 'btn btn-success','id'=>'createimg' ] ) ?>
         
         
         
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_dress], [
+        <?= Html::a('Xóa', ['delete', 'id' => $model->id_dress], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Bạn có muốn xóa áo cưới này?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -53,10 +53,10 @@ $this->params['breadcrumbs'][] = $model->name_dress;
             //'id_dress',
             'name_dress',
             'avatar:image',
-            'type_dress',
+            //'type_dress',
             'info_dress:ntext',
             'rate_hire',
-            'rate_sale',
+           // 'rate_sale',
             'status',
         ],
     ]) ?>

@@ -129,10 +129,7 @@ class ContractSearch extends Contract
             'timephoto' => $this->timephoto,
             'timeadd' => $this->timeadd,
             'timecomplete' => $this->timecomplete,
-            'status' => $this->status,
-           // 'name_local'=>  $this->idUser->name_local,
-            
-            
+            'status' => $this->status,    
         ]);
 
         

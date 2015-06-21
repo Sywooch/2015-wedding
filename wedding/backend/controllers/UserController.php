@@ -61,6 +61,7 @@ class UserController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'title'=>'Khách Hàng',
             //'model'=>$model,
         ]);
     }
@@ -76,6 +77,7 @@ class UserController extends Controller
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+                'title'=>'Thợ Chụp Ảnh',
                 //'model'=>$model,
             ]);
         
@@ -93,6 +95,7 @@ class UserController extends Controller
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+                'title'=>'Thợ Trang Điểm',
                 //'model'=>$model,
             ]);
         
@@ -115,13 +118,10 @@ class UserController extends Controller
             if($model->type_user==2){
 
                 // user is photo
-                $allcontract = Yii::$app->db->createCommand("SELECT id_contract FROM photocontract where id_user = '".$id_user."'")->queryAll();
+                $allcontract = Yii::$app->db->createCommand("SELECT id_contract FROM photocontract where id_user = '".$id_user."' order by start_time asc")->queryAll();
             }else if($model->type_user == 3){
                 //user is makeup
-                 $allcontract = Yii::$app->db->createCommand("SELECT id_contract FROM makeupcontract where id_user = '".$id_user."'")->queryAll();
-            }else if($model->type_user == 4){
-                // user is assitant
-                 $allcontract = Yii::$app->db->createCommand("SELECT id_contract FROM photocontract where id_user = '".$id_user."'")->queryAll();
+                 $allcontract = Yii::$app->db->createCommand("SELECT id_contract FROM makeupcontract where id_user = '".$id_user."' order by start_time asc")->queryAll();
             }
 
 
@@ -190,7 +190,7 @@ class UserController extends Controller
                     // set task of user
                     $taskofuser;
                     foreach ($result as $val) {
-                        $taskofuser[] = Yii::$app->db->createCommand("SELECT id_user,id_local,start_time,end_time,status FROM contract where id_contract = '".$val."'")->queryOne();
+                        $taskofuser[] = Yii::$app->db->createCommand("SELECT id_user,id_local,start_time,end_time,status,id_contract FROM contract where id_contract = '".$val."'")->queryOne();
                     }
 
                     $modellocal = new Localtion();
@@ -199,6 +199,7 @@ class UserController extends Controller
                     }
 
                     $array['taskofuser'] = $taskofuser;
+                    //$array['type_user']
                     return $this->render('taskuser',$array);
                 }else {
                     $noti['mess'] = 'Không có nhiệm vụ nào trong tháng này';
@@ -213,29 +214,45 @@ class UserController extends Controller
         $session = Yii::$app->session;
         $user = new User();
         
+        if(isset($_GET['month'])){
+            $month = $_GET['month'];
+        }else $month = date ('m');
+        
+        
         if(isset($session['type_user'])){
             if($session['type_user']==2)
-                $task = $user->getTaskOfphoto(6,2015,$session['id_user']);
+                $task = $user->getTaskOfphoto($month,date('y'),$session['id_user']);
             else if($session['type_user']==3)
-                $task = $user->getTaskOfmakeup(6,2015,$session['id_user']);
+                $task = $user->getTaskOfmakeup($month,date('y'),$session['id_user']);
             else throw new NotFoundHttpException('The requested page does not exist.');
             
             $sender['taskofuser']= $task;
-            $sender['mess'] = "Không có nhiệm vụ trong tháng nay";
+            $sender['mess'] = "Không có nhiệm vụ trong tháng này";
             return $this->render('mytask',$sender);
             
         }
-      //  throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     
 
-
+    public function actionUpdatetask($id,$type,$status,$id_user){
+        if($status==1)$up =0;else $up=1;
+        if($type == 2){
+            $result = Yii::$app->db->createCommand("UPDATE photocontract SET status = '".$up."' where id_contract = '".$id."'");
+        }
+        if($type == 3) {
+             $result = Yii::$app->db->createCommand("UPDATE makeupcontract SET status = '".$up."' where id_contract = '".$id."'");
+        }
+        
+        if($result->execute())
+        return $this->redirect(['mytask']);
+    }
 
     public function actionAllphotograper(){
         $modeluser = new User();
         return $this->render('staff',[
-            'title'=>'Photograper',
+            'title'=>'Thợ chụp ảnh',
             'photos'=>$modeluser->getallphoto(),
             'type'=>2,
         ]);
@@ -244,7 +261,7 @@ class UserController extends Controller
     public function actionAllmakeup(){
         $model = new User();
         return $this->render('staff',[
-            'title'=>'Make up',
+            'title'=>'Thợ trang điểm',
             'photos'=>$model->getallmakeup(),
             'type'=>3,
         ]);
@@ -287,8 +304,11 @@ class UserController extends Controller
     {
         $session = Yii::$app->session;
         if(isset($session['username'])&&($session['type_user']==0||$session['id_user']==$id)){
+            $user = $this->findModel($id);
+            $user->rate_user =  number_format($user->rate_user).'VND';
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $user,
+            'type_user'=>  $this->findModel($id)->type_user,
         ]);
         
         }
@@ -349,13 +369,11 @@ class UserController extends Controller
         if(isset($session['username'])&&($session['type_user']==0||$session['id_user']==$id)){
         
             $model = $this->findModel($id);
+           // $model->rate_user = number_format($model->rate_user);
             $url_avar = $model->avatar;
             
             if ($model->load(Yii::$app->request->post()))
-                {
-//                echo '<pre>';
-//                var_dump($model->save());
-//                echo '</pre>';
+            {
                 if($model->avatar==NULL){
                     $model->avatar = $url_avar;
                 }else{
@@ -465,16 +483,6 @@ class UserController extends Controller
     
 
     public function actionNotify(){
-//        $user = new User();
-//        $sender['contracts_start']=$user->getContractstart(date('Y-m-d'));
-//        
-//
-//        $sender['contracts_payment1']=$user->getContractpayment1(date('Y-m-d'));
-////        
-//        $sender['contracts_payment2']=$user->getContractpayment2(date('Y-m-d'));
-////        
-//        $sender['contracts_payment3']=$user->getContractpayment3(date('Y-m-d'));
-//        return $this->render('notify',$sender);
         
         $notify = Notify::find()->all();
         $sender['allnotify']= $notify;

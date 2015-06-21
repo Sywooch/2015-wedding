@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Contract */
 
-$this->title = 'My contact';
-$this->params['breadcrumbs'][] = ['label' => 'Contracts', 'url' => ['index']];
+$this->title = 'Hợp đồng của tôi';
+$this->params['breadcrumbs'][] = ['label' => 'Hợp đồng', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="contract-view">

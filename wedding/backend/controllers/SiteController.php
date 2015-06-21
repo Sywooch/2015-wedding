@@ -85,7 +85,7 @@ class SiteController extends Controller
             }else if($session['type_user']==1){
                 return $this->redirect('index.php?r=album/myalbum');
             }else if($session['type_user']==2||$session['type_user']==3){
-                return $this->redirect('index.php?r=user/task&&id_user='.$session['id_user'].'&month='.  date('m'));
+                return $this->redirect('index.php?r=user/mytask');
             }
         }
         
@@ -124,7 +124,8 @@ class SiteController extends Controller
         
         $user = new User();
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post()) && $model->login()) 
+        {
             
                   $session = Yii::$app->session;
 //               // var_dump($user->getInfobyUsername($model->username));
@@ -148,7 +149,8 @@ class SiteController extends Controller
                     }
                 }
             return $this->goBack();
-        } else {
+        } 
+        else {
             return $this->render('login', [
                 'model' => $model,
             ]);

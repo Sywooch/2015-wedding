@@ -6,13 +6,13 @@ use yii\bootstrap\ActiveForm;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\LoginForm */
 
-$this->title = 'Login';
+$this->title = 'Đăng Nhập';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login" style="padding-left: 20px">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
+    <!--<p>Please fill out the following fields to login:</p>-->
 
     <div class="row">
         <div class="col-lg-5">

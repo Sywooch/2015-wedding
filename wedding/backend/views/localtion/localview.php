@@ -11,6 +11,7 @@ use yii\bootstrap\BootstrapAsset;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = $title;
+$this->params['breadcrumbs'][] = ['label' => 'Địa điểm', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div id="albumView">

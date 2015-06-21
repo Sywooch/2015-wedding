@@ -187,7 +187,7 @@ class DressController extends Controller
        
         
         $test['imgs']= $imgs; 
-        $test['title'] = 'All Dress';
+        $test['title'] = 'Tất cả áo cưới';
         //$model->find()->all();
         return $this->render('viewalldress',$test);
     }

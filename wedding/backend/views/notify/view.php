@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model backend\models\Notify */
 
 $this->title = $model->id_notify;
-$this->params['breadcrumbs'][] = ['label' => 'Notifies', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Thông báo', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="notify-view">
