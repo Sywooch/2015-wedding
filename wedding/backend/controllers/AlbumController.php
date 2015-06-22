@@ -204,9 +204,9 @@ class AlbumController extends Controller
         
             $model = $this->findModel($id);
             $bigimg = Bigimg::find()->where(['id_contract'=>$model->id_contract])->one();
-
+            $url = $bigimg->url;
             if ($model->load(Yii::$app->request->post()) && $bigimg->load(Yii::$app->request->post()) ) {
-                $url = $bigimg->url;
+                
 
 
                 $img = new UploadForm();

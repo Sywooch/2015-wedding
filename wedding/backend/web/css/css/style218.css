@@ -2350,11 +2350,13 @@ img { border: none;}
 
 
 .localtion-index img{
-    width: 150px;
+    width: 160px;
+    height: 100px;
 }
 
 .dress-index img{
-    width: 100px;
+    width: 160px;
+    height: 100px;
 }
 
 
@@ -2415,3 +2417,8 @@ label:before {
 /*.field-contract-id_contract label{display: none}*/
 /*.notify-index .glyphicon {display: none;}*/
 .notify-index .glyphicon-eye-open {display: none;}
+.search{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+}

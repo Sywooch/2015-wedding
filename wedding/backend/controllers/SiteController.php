@@ -104,6 +104,14 @@ class SiteController extends Controller
         
         return $this->render('index',$sender);
     }
+    
+    public function actionSearch(){
+        if(isset($_POST['bt_search'])){
+            echo 'sdfsfdsd';
+        }else echo "false";
+    }
+
+    
 
     public function actionAbout()
     {

@@ -455,9 +455,15 @@ class UserController extends Controller
         if(isset($_POST['year'])){
             $user = new User();
             $users = $user->getlocaltioninyear($_POST['year']);
-            $a= [['1',2],['2',5],['3',7]];
+//            $a= [['1',2],['2',5],['3',7]];
             echo json_encode($users);
         }
+        
+//        $user = new User();
+//        $users = $user->getlocaltioninyear1(2015);
+//        echo '<pre>';
+//        print_r($users);
+//        echo '</pre>';
 //       throw new NotFoundHttpException('The requested page does not exist.');
     }
     

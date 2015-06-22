@@ -85,7 +85,7 @@ AppAsset::register($this);
                                 <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Liên lạc</a></li>
                                 
                                 <li class=""><a href="<?php echo Url::base().'/index.php?r=contract/mycontract' ?>" title="Tin tức">Hợp Đồng</a></li>
-                                <li class=""><a href="" title="Khuyến mãi">Thông Tin Cá Nhân</a></li>
+                                <li class=""><a href="<?php echo Url::base().'/index.php?r=user/view&&id='.$session['id_user'] ?>" title="Khuyến mãi">Thông Tin Cá Nhân</a></li>
                                 <li class=""><a href="<?php echo Url::base().'/index.php?r=site/logout' ?>" data-method = "post" class="place">Đăng Xuất(<?php echo $session['username']; ?>)</a></li>
                             </ul>
                         <?php } else if($session['type_user']== 0) { ?>
@@ -199,6 +199,22 @@ AppAsset::register($this);
                 </div>
                 
                 <div id="colRight">
+                    <div class="rightBox">
+                        <div class="titleBox"><h1>Tìm Kiếm</h1><i></i></div>
+                        <div class="search">
+                            <form action="<?php echo Url::base().'/index.php?r=site/search' ?>" method="POST">
+                                <input type="text" name="search_text"><br>
+                                <input type="radio" name="search" value="dress" checked>Áo cưới
+                                <input type="radio" name="search" value="local">Địa Điểm
+<!--                                <input type="radio" name="search" value="photo">Thợ chụp ảnh
+                                <input type="radio" name="search" value="makeup">Thợ Trang Điểm-->
+                                <br>
+                                <input type="submit" name="bt_search" id="bt_search" value="Tìm Kiếm" >
+                            </form>
+                        </div>
+                        
+                        
+                    </div>
                     <div class="rightBox menuRight">
                         <div class="titleBox"><h1>DỊCH VỤ CƯỚI</h1><i></i></div>
                         <ul>

@@ -28,12 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php if(isset($model)){ ?>
     <table class="table table-striped table-bordered detail-view">
         <tr>
-            <td style="width: 30%">ID Contract</td>
+            <td style="width: 30%">Hợp Đồng Số</td>
             <td><?php echo $model->id_contract; ?></td>
         </tr>
         <tr>
-            <td>ID Local</td>
-            <td><?php echo $model->id_local; ?></td>
+            <td>Địa Điểm</td>
+            <td><?php  $model->id_local;
+        echo backend\models\Localtion::find()->where(['id_local'=>$model->id_local])->one()->name_local; ?></td>
         </tr>
         <tr>
             <td>Thời Gian Bắt Đầu</td>
@@ -44,15 +45,15 @@ $this->params['breadcrumbs'][] = $this->title;
             <td><?php echo $model->end_time; ?></td>
         </tr>
         <tr>
-            <td>Payment 1</td>
+            <td>Thanh Toán Đợt 1</td>
             <td><?php echo $model->payment1; ?></td>
         </tr>
         <tr>
-            <td>Payment 2</td>
+            <td>Thanh Toán Đợt 2</td>
             <td><?php echo $model->payment2; ?></td>
         </tr>
         <tr>
-            <td>Payment 3</td>
+            <td>Thanh Toán Đợt 3</td>
             <td><?php echo $model->payment3; ?></td>
         </tr>
         <tr>
@@ -79,28 +80,4 @@ $this->params['breadcrumbs'][] = $this->title;
     
     
     <?php }?>
-    
-    
-    <?php 
-//    echo DetailView::widget([
-//        'model' => $model,
-//        'attributes' => [
-//            'id_contract',
-//            'id_user',
-//            'id_local',
-//            'start_time',
-//            'end_time',
-//            'create_day',
-//            'total',
-//            'payment1',
-//            'payment2',
-//            'payment3',
-//            'timephoto',
-//            'timeadd:integer',
-//            'timecomplete',
-//            'status',
-//        ],
-   // ]) 
-    ?>
-
 </div>

@@ -22,7 +22,7 @@ foreach ($albumimg as $img) {
 ?>
      <div class="row">  
         <div class="" ><a title=''><img style="width: 50%" src='<?php  echo $img['url']; ?>' alt='<?php  ?>'></a></div>
-        <div class="box"><?= Html::a('Delete', Url::base().'/index.php?r=img/delete&&id='.$img['id_img'].'&&typedelete=myalbum&&id_album='.$id_album, [
+        <div class="box"><?= Html::a('Xóa', Url::base().'/index.php?r=img/delete&&id='.$img['id_img'].'&&typedelete=myalbum&&id_album='.$id_album, [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -35,7 +35,7 @@ foreach ($albumimg as $img) {
    
     
     <div class="row">
-        <?= Html::a('View AlBum', Url::base().'/index.php?r=album/albumview&id='.$id_album, ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Xem Album', Url::base().'/index.php?r=album/albumview&id='.$id_album, ['class' => 'btn btn-success']) ?>
     </div>
     
 </div>  

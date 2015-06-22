@@ -14,7 +14,7 @@ if($session['type_user']==2){
 if($session['type_user']==3){
     $this->title = 'Thợ Trang Điểm';
 }
-$this->params['breadcrumbs'][] = ['label' => 'User', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Nhân Viên', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $i=1;
 

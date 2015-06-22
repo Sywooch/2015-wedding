@@ -414,13 +414,31 @@ class User extends ActiveRecord implements CartPositionInterface
 //        $year = intval($year);
         $start = $year.'-01-01';
         $end = $year.'-12-31';
-        $result = Yii::$app->db->createCommand("SELECT count(*),id_local FROM contract WHERE start_time >='".$start."' AND start_time<='".$end."' GROUP BY id_user LIMIT 5")->queryAll();
+        $result = Yii::$app->db->createCommand("SELECT count(*),id_local FROM contract WHERE start_time >='".$start."' AND start_time<='".$end."' GROUP BY id_local LIMIT 5")->queryAll();
          
         foreach ($result as $key=>$value) {
             
             $info = Localtion::find()->where(['id_local'=>$value['id_local']])->one();
             
             $res[] = [$info->name_local,$value['count(*)'],$value['id_local'],$info->avatar,$info->rate,  $info->timework];
+        }
+        return $res;
+    }
+    
+    
+    public function getlocaltioninyear1($year) {
+//        $year = intval($year);
+        $start = $year.'-01-01';
+        $end = $year.'-12-31';
+        $result = Yii::$app->db->createCommand("SELECT count(*),id_local FROM contract WHERE start_time >='".$start."' AND start_time<='".$end."' GROUP BY id_local LIMIT 5")->queryAll();
+        
+        
+        
+        foreach ($result as $key=>$value) {
+            
+            $info = Localtion::find()->where(['id_local'=>$value['id_local']])->one();
+            
+            $res[] = [$info->name_local,$value['count(*)']];
         }
         return $res;
     }

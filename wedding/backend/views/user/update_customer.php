@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\User */
 
-$this->title = 'Update User: ' . ' ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+$this->title = 'Chỉnh sửa khách hàng: ' . ' ' . $model->username;
+$this->params['breadcrumbs'][] = ['label' => 'Khách hàng', 'url' => ['getallcustomer']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Chỉnh Sửa';
 ?>
 <div class="user-update">
 

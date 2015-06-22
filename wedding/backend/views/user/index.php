@@ -8,7 +8,7 @@ use backend\controllers\SiteController;
 /* @var $searchModel backend\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = $title;
+$this->title = 'Tất cả Tài Khoản';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">

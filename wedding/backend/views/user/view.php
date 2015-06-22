@@ -77,13 +77,13 @@ $session = Yii::$app->session;
          
         <?php if(isset($session['username'])&&$session['type_user']==0) { ?> 
          
-        <?= Html::a('Xóa', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Bạn có muốn xóa '.$label.' '.$model->username.' khỏi hệ thống?',
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?php //echo Html::a('Xóa', ['delete', 'id' => $model->id], [
+//            'class' => 'btn btn-danger',
+//            'data' => [
+//                'confirm' => 'Bạn có muốn xóa '.$label.' '.$model->username.' khỏi hệ thống?',
+//                'method' => 'post',
+//            ],
+//        ]) ?>
         <?php } ?>
     </p>
 

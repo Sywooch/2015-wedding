@@ -239,7 +239,7 @@ class LocaltionController extends Controller
         
         
         $sender['imgs'] = $infolocal;
-        $sender['title'] = 'My Localtion';
+        $sender['title'] = 'Địa Điểm Của Tôi';
         return $this->render('mylocal',$sender);
         }
     }

@@ -27,7 +27,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
            // 'id_dress',
             'name_dress',
-            'avatar:image',
+            //'avatar:image',
+            [
+               'header'=>'Avatar' ,
+                'headerOptions'=> ['width' => '170px'],
+                'attribute'=>'avatar',
+                'format'=>'image',
+               // 'value' =>'width:100px',
+               // 'options'=>'100px',
+
+            ],
            // 'type_dress',
           //  'info_dress:ntext',
              'rate_hire',

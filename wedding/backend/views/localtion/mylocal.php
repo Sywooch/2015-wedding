@@ -8,6 +8,8 @@ use yii\helpers\Url;
  * and open the template in the editor.
  */
 $this->title =$title;
+$this->params['breadcrumbs'][] = ['label' => 'Địa Điểm', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class = "dress-index">
     <div id ="album">

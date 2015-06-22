@@ -5,10 +5,22 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model backend\models\User */
 
-$this->title = 'Update User: ' . ' ' . $model->username;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+
+if($model->type_user == 2) {
+    $label = 'Thợ Chụp ảnh';
+    $url ='getallphoto';
+}
+if($model->type_user == 3) {
+    $label = 'Thợ Trang Điểm';
+    $url ='getallmakeup';
+}
+
+
+
+$this->title = 'Chỉnh sửa tài khoản: ' . ' ' . $model->username;
+$this->params['breadcrumbs'][] = ['label' => $label, 'url' => [$url]];
 $this->params['breadcrumbs'][] = ['label' => $model->username, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Chỉnh sửa';
 ?>
 <div class="user-update">
 
@@ -37,7 +49,7 @@ $this->params['breadcrumbs'][] = 'Update';
     <?=$form->field($model, 'avatar')->fileInput()?>
 
     <div class="form-group">
-        <?= Html::submitButton('Update', ['class' =>'btn btn-primary']) ?>
+        <?= Html::submitButton('Chỉnh sửa', ['class' =>'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

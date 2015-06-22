@@ -40,8 +40,10 @@ $opt = [15,20,25,30,35,40,45,50];
               'inline'=>false,
               'clientOptions'=>[
                   'autoclose'=>true,
-                  'format'=>'yyyy-mm-dd'
-              ]
+                  'format'=>'yyyy-mm-dd',
+                  'class'=> "form-control a"
+              ],
+                
         ]);?>
         <?= $form->field($model, 'timeadd')->dropDownList(
                     [
@@ -58,7 +60,7 @@ $opt = [15,20,25,30,35,40,45,50];
                         '10'=>'10',
                     ],
                     
-                   ['prompt'=>'Thêm ngày','class'=> "form-control b"]);
+                   ['prompt'=>'Thêm ngày','class'=> "form-control a"]);
         
         ?>
                 
