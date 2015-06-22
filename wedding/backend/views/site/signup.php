@@ -8,13 +8,13 @@ use backend\models\TypeUser;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \frontend\models\SignupForm */
 
-$this->title = 'Signup';
+$this->title = 'Thêm Tài Khoản';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-signup">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to signup:</p>
+    <!--<p>Please fill out the following fields to signup:</p>-->
 
     <div class="row">
         <div class="col-lg-5">
@@ -60,9 +60,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model, 'address')->textInput(['maxlength' => 250]) ?>            
             <div id ="staff" class="staff" style="display: none;">
                 <?= $form->field($model, 'range_user')->dropDownList([
-                        '1'=>'A',
-                        '2'=>'B',
-                        '3'=>'C'
+                        '1'=>'1',
+                        '2'=>'2',
+                        '3'=>'3'
                     ],['prompt'=>'Select Range User']) ?>
                 
                  <?= $form->field($model, 'rate_user')->textInput() ?>

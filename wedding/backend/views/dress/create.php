@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Dress */
 
-$this->title = 'Create Dress';
-$this->params['breadcrumbs'][] = ['label' => 'Dresses', 'url' => ['index']];
+$this->title = 'Thêm Áo Cưới';
+$this->params['breadcrumbs'][] = ['label' => 'Áo cưới', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dress-create">

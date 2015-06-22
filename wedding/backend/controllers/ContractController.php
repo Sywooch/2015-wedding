@@ -78,8 +78,36 @@ class ContractController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'photo'=>  Photocontract::find()->where(['id_contract'=>$id])->one(),
+            'makeup'=>  Makeupcontract::find()->where(['id_contract'=>$id])->one(),
+            'dresses'=>  Dresscontract::find()->where(['id_contract'=>$id])->all(),
         ]);
     }
+    
+    
+    
+    public function actionGetendtime($timeadd,$start,$id_local){
+       // $model = $this->findModel($id_local);
+        $model = new Contract();
+        $query = new Query();
+        $tb = $query->select(['timework'])->from('localtion')->where(['id_local'=>$id_local])->one();
+
+        $time_add = $tb['timework'] + $timeadd;
+        $date1 = str_replace('-', '/', $start);
+        $end = date('Y-m-d',strtotime($date1 ."+".$time_add. " days"));
+        if(isset($_GET['update'])&&isset($_GET['id'])){
+            return  $this->redirect('index.php?r=contract/updateinfo&&id='.$_GET['id'].'&&start='.$start.'&&end='.$end.'&&id_local='.$id_local.'&&timeadd='.$timeadd);
+       
+        }else{
+            return $this->redirect('index.php?r=contract/create&&start='.$start.'&&end='.$end.'&&id_local='.$id_local.'&&timeadd='.$timeadd);
+           
+        }
+        
+        
+    }
+    
+    
+   
 
     /**
      * Creates a new Contract model.
@@ -87,15 +115,12 @@ class ContractController extends Controller
      * @return mixed
      */
     public function actionCreate()
-    {
-        
-        $modelsBigImg = [new Bigimg];
-        
+    { 
        $session = Yii::$app->session;
        
        if(isset($session['username'])&&$session['type_user']==0){
         
-           $model = new Contract();
+            $model = new Contract();
             $dress = new Dress();
             $dresscontract = new Dresscontract();
             $photocontract = new Photocontract();
@@ -105,10 +130,17 @@ class ContractController extends Controller
             if ($model->load(Yii::$app->request->post())) {
 
                 // get all multi img
-
-
-                // get data form create contract
-                //get info dress contract
+             //   if(isset($_GET['start'])&&isset($_GET['end'])&&isset($_GET['id_local'])&&isset($_GET['timeadd'])){
+                    $this->findModelLocaltion($_GET['id_local']);
+                    $model->end_time = $_GET['end'];
+                    $model->start_time = $_GET['start'];
+                    $model->id_local = $_GET['id_local'];
+                    $model->timeadd = $_GET['timeadd'];
+            //    }
+                
+                $query = new Query();
+                $tb = $query->select(['timework'])->from('localtion')->where(['id_local'=>$model->id_local])->one();
+                $time_add = $tb['timework'] + $model->timeadd;
                 $dresscontract->load(Yii::$app->request->post());
                 // get id user photogaraper
                 $photocontract->load(Yii::$app->request->post());
@@ -120,43 +152,31 @@ class ContractController extends Controller
                 // load info imgbig
                 $bigimg->load(Yii::$app->request->post());
 
-                // create end time photo
-                $query = new Query();
-                $tb = $query->select(['timework'])->from('localtion')->where(['id_local'=>$model->id_local])->one();
 
-                $time_add = $tb['timework'] + $model->timeadd;
-
-
-                $date1 = str_replace('-', '/', $model->start_time);
-                $model->end_time = date('Y-m-d',strtotime($date1 ."+".$time_add. " days"));
-                //end create phôt
-    //            echo '<pre>';
-    //            print_r($photocontract->id_user);
-    //            echo '</pre>';
-
-                //time work of contract
                 $model->total_time = $time_add;
                 // save contract
                 if($model->save()){ 
-                    //$db = new Connection();
-                    //update customer have contract
                     Yii::$app->db->createCommand('UPDATE user SET have_contract=1 WHERE id ='.$model->id_user)->execute();
-                     //money rent dress
-                //
+
                     $rent_dress = 0;
-                    // add dress contract
                     foreach ($dresscontract->id_dress as $dress) {
+                        
+                        $dresscon = new Dresscontract();
+                        Yii::$app->db->createCommand("INSERT INTO dresscontract (id_dress,id_contract,start_time,end_time) VALUES ('".$dress."','".$model->id_contract."','".$model->start_time."','".$model->end_time."')")->execute();
 
-                        Yii::$app->db->createCommand("INSERT INTO dresscontract (id_dress,id_contract) VALUES ('".$dress."','".$model->id_contract."')")->execute();
-
+                        
                         $infodress = Dress::findOne($dress);
                         $rent_dress += intval($infodress->rate_hire)*intval($time_add);
 
                     }
                     //add photo to contract
-                    Yii::$app->db->createCommand("INSERT INTO photocontract (id_user,id_contract) VALUES ('".$photocontract->id_user."','".$model->id_contract."')")->execute();
+                    
+                    Yii::$app->db->createCommand("INSERT INTO photocontract (id_user,id_contract,start_time,end_time) VALUES ('".$photocontract->id_user."','".$model->id_contract."','".$model->start_time."','".$model->end_time."')")->execute();
+                    
+
+                    
                     // add makeup to contract
-                    Yii::$app->db->createCommand("INSERT INTO makeupcontract (id_user,id_contract) VALUES ('".$makeupcontract->id_user."','".$model->id_contract."')")->execute();        
+                    Yii::$app->db->createCommand("INSERT INTO makeupcontract (id_user,id_contract,start_time,end_time) VALUES ('".$makeupcontract->id_user."','".$model->id_contract."','".$model->start_time."','".$model->end_time."')")->execute();        
 
 
                     // wage of photo
@@ -175,28 +195,29 @@ class ContractController extends Controller
                     if($album->save()){
                              $rate_album = Ratealbum::findOne($album->numpage)->rate;
 
+                            
+                             
+                            //$bigimg->id_contract = $model->id_contract;
+
+                            $rate_bigimg = \backend\models\Sizebigimg::findOne($bigimg->size)->rate * $model->num_bigimg;
 
 
-                            $bigimg->id_contract = $model->id_contract;
-
-                            $rate_bigimg = \backend\models\Sizebigimg::findOne($bigimg->size)->rate;
-
-
-
-                            $bigimg->save();
-
+                            for($i=0;$i<$model->num_bigimg;$i++){
+                                $bigimg->id_contract = $model->id_contract;
+                                $bigimg->save();
+                            }
                             $model->total = intval($rate_album)+$wagemakeup+$wagephoto+$rent_dress + $rate_bigimg;
                             $model->save();
                     }
 
 
-
+                     return $this->redirect(['view', 'id' => $model->id_contract]);
                 }
 
 
 
 
-                return $this->redirect(['view', 'id' => $model->id_contract]);
+               
             } 
             else {
 
@@ -215,77 +236,93 @@ class ContractController extends Controller
            return $this->goHome();
        }
     }
-    public function actionViewcontractref($id)
-    {
-        $model = new Contract();
-        $contract = ContractController::findModel($id);
+    
+    //update info contract
+    public function actionUpdateinfo($id){
+        
+        $contract = Contract::find()->where(['id_contract'=>$id])->one();
+        $album = Album::find()->where(['id_contract'=>$id])->one();
+        $dress = new Dresscontract();
+        $photo = Photocontract::find()->where(['id_contract'=>$id])->one();
+        $makeup = Makeupcontract::find()->where(['id_contract'=>$id])->one();
+        $bigimg = Bigimg::find()->where(['id_contract'=>$id])->one();
+        if($contract->load(Yii::$app->request->post())){
+            $album->load(Yii::$app->request->post());
+            $dress->load(Yii::$app->request->post());
+            $photo->load(Yii::$app->request->post());
+            $makeup->load(Yii::$app->request->post());
+            $bigimg->load(Yii::$app->request->post());
+            if(isset($_GET['end']))
+            $contract->end_time = $_GET['end'];
+            if(isset($_GET['start']))
+            $contract->start_time = $_GET['start'];
+            if(isset($_GET['id_local']))
+            $contract->id_local = $_GET['id_local'];
+            if(isset($_GET['timeadd']))
+            $contract->timeadd = $_GET['timeadd'];
+            
+            $query = new Query();
+            $tb = $query->select(['timework'])->from('localtion')->where(['id_local'=>$contract->id_local])->one();
+            $time_add = $tb['timework'] + $contract->timeadd;
+            
+            Yii::$app->db->createCommand("delete from dresscontract where id_contract = '".$id."'")->execute();
+            $rent_dress = 0;
+            foreach ($dress->id_dress as $dress){
+                Yii::$app->db->createCommand("INSERT INTO dresscontract (id_dress,id_contract,start_time,end_time) VALUES ('".$dress."','".$id."','".$contract->start_time."','".$contract->end_time."')")->execute();
+                 $infodress = Dress::findOne($dress);
+                $rent_dress += intval($infodress->rate_hire)*intval($time_add);
+            }
+            
+            
+            Yii::$app->db->createCommand("UPDATE photocontract SET id_user = '".$photo->id_user."',start_time = '".$contract->start_time."',end_time = '".$contract->end_time."' where id_contract ='".$id."'")->execute();
+            Yii::$app->db->createCommand("UPDATE makeupcontract SET id_user = '".$makeup->id_user."',start_time = '".$contract->start_time."',end_time = '".$contract->end_time."' where id_contract ='".$id."'")->execute();
+            
+            
+            $infophoto = User::findOne($photo->id_user);
+            $wagephoto = intval($infophoto->rate_user)*intval($time_add);
 
-        $array = $model->getDressfree($contract->start_time, $contract->end_time);
-        
-        foreach ($array as $value) {
-            if($value['id_contract']!=$id){
-                $arr_iddress[] = Yii::$app->db->createCommand('select id_dress from dresscontract where id_contract = '.$value['id_contract'])->queryAll();
-                $arr_idstaff[] = Yii::$app->db->createCommand('select id_user from staffcontract where id_type = 2 AND id_contract = '.$value['id_contract'])->queryAll();
+                    // wage of makeup
+            $infomakeup = User::findOne($makeup->id_user);
+            $wagemakeup = intval($infomakeup->rate_user)*intval($time_add);
+            
+            //Yii::$app->db->createCommand("delete from bigimg where id_contract ='".$contract->id_contract."'")->execute();
+            
+            $rate_album = Ratealbum::findOne($album->numpage)->rate;
+
+                            
+                             
+          
+
+            $rate_bigimg = \backend\models\Sizebigimg::findOne($bigimg->size)->rate * $contract->num_bigimg;
+            
+            for($i=0;$i < $contract->num_bigimg;$i++){
+//                Yii::$app->db->createCommand("INSERT INTO bigimg (id_contract,size) VALUES ('".$contract->id_contract."','".$bigimg->size."')")->execute();
+                $bigimg->id_contract = $contract->id_contract;
+                $bigimg->save();
+             }
+            
+            
+            $contract->total = intval($rate_album)+$wagemakeup+$wagephoto+$rent_dress + $rate_bigimg;
+            
+            if($contract->save()&& $album->save())
+            {
+              return $this->redirect(['view','id'=>$contract->id_contract]);
+            
             }
+            else return $this->goHome ();
         }
-        $dress;
+        $sender['contract'] = $contract;
+        $sender['album']=$album;
+        $sender['dress'] = $dress;
+        $sender['photo']=$photo;
+        $sender['makeup']=$makeup;
+        $sender['bigimg']=$bigimg;
+        return $this->render('updateinfo',$sender);
+
         
-        // dress have task
-        for ($i=0;$i<count($arr_iddress);$i++){
-            foreach ($arr_iddress[$i] as $value) {
-               $dress[]= $value['id_dress']; 
-            }
-        }
-        
-        // user staff have staff
-        for ($i=0;$i<count($arr_idstaff);$i++){
-            foreach ($arr_idstaff[$i] as $value) {
-               $staff[]= $value['id_dress']; 
-            }
-        }
-        
-        
-        
-        //all dress 
-        $alldress = Yii::$app->db->createCommand('select id_dress from dress')->queryAll();
-        
-        // all staff have type = 2
-        
-        $allstaff = Yii::$app->db->createCommand('select id_user from user where type_user = 2')->queryAll();
-        
-        
-        // get dress don't have task
-        $dressfree;
-        
-        
-        foreach ($alldress as $val) {
-            $dressfree[] = $val['id_dress'];
-        }
-        $dressfree = array_diff($dressfree, $dress);
-       // get staff dont't have task and id_type =2
-        $stafffree;
-        foreach ($allstaff as $val) {
-            $stafffree[] = $val['id_dress'];
-        }
-        $stafffree = array_diff($stafffree, $staff);
-        
-        echo '<pre>';
-        print_r($alldress);
-        echo'</pre>';
-        
-        echo '<pre>';
-        print_r($dressfree);
-        echo'</pre>';
     }
-    
-    public function actionTest(){
-        //echo time();
-       // var_dump(User::find());
-       $test = new Localtion();
-       $test->getName('L1429634734');
-    }
-    
-    /**
+
+        /**
      * Updates an existing Contract model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -294,42 +331,156 @@ class ContractController extends Controller
     public function actionUpdate($id)
     {   
         $session = Yii::$app->session;
+//        $model = new Contract();
+//        $dress = new Dress();
+//        //$dresscontract = new Dresscontract();
+//        $photocontract = new Photocontract();
+//        $makeupcontract = new Makeupcontract();
+//        $bigimg = new Bigimg();
+//        $album = new Album();
         
+//        if(isset($session['username'])&&$session['type_user']==0){
+//        
+//            $model = $this->findModel($id);
+//           // $dresscontract =  Dresscontract::find()->where(['id_contract'=>$id])->all();
+//            if ($model->load(Yii::$app->request->post())) {
+//
+//
+//
+//
+//                $query = new Query();
+//                $tb = $query->select(['timework'])->from('localtion')->where(['id_local'=>$model->id_local])->one();
+//
+//                $time_add = $tb['timework'] + $model->timeadd;
+//
+//
+//                $date1 = str_replace('-', '/', $model->start_time);
+//                $model->end_time = date('Y-m-d',strtotime($date1 ."+".$time_add. " days"));
+//
+//
+//
+//
+//                $model->save();
+//                return $this->redirect(['view', 'id' => $model->id_contract]);
+//            } else {
+//
+//
+//
+//                return $this->render('update', [
+//                    'model' => $model,
+//                   // 'dresscontract'=>$dresscontract,
+//                ]);
+//            }
+//        }
         if(isset($session['username'])&&$session['type_user']==0){
-        
-            $model = $this->findModel($id);
-
-            if ($model->load(Yii::$app->request->post())) {
-
-
-
+            $contract = Contract::find()->where(['id_contract'=>$id])->one();
+            $album = Album::find()->where(['id_contract'=>$id])->one();
+            $dress = new Dresscontract();
+            $photo = Photocontract::find()->where(['id_contract'=>$id])->one();
+            $makeup = Makeupcontract::find()->where(['id_contract'=>$id])->one();
+            $bigimg = Bigimg::find()->where(['id_contract'=>$id])->one();
+            if($contract->load(Yii::$app->request->post())){
+                $album->load(Yii::$app->request->post());
+                $dress->load(Yii::$app->request->post());
+                $photo->load(Yii::$app->request->post());
+                $makeup->load(Yii::$app->request->post());
+                $bigimg->load(Yii::$app->request->post());
+                if(isset($_GET['end']))
+                $contract->end_time = $_GET['end'];
+                if(isset($_GET['start']))
+                $contract->start_time = $_GET['start'];
+                if(isset($_GET['id_local']))
+                $contract->id_local = $_GET['id_local'];
+                if(isset($_GET['timeadd']))
+                $contract->timeadd = $_GET['timeadd'];
 
                 $query = new Query();
-                $tb = $query->select(['timework'])->from('localtion')->where(['id_local'=>$model->id_local])->one();
+                $tb = $query->select(['timework'])->from('localtion')->where(['id_local'=>$contract->id_local])->one();
+                $time_add = $tb['timework'] + $contract->timeadd;
 
-                $time_add = $tb['timework'] + $model->timeadd;
+                Yii::$app->db->createCommand("delete from dresscontract where id_contract = '".$contract->id_contract."'")->execute();
+                $rent_dress = 0;
+                foreach ($dress->id_dress as $dress){
+                    Yii::$app->db->createCommand("INSERT INTO dresscontract (id_dress,id_contract,start_time,end_time) VALUES ('".$dress."','".$contract->id_contract."','".$contract->start_time."','".$contract->end_time."')")->execute();
+                     $infodress = Dress::findOne($dress);
+                    $rent_dress += intval($infodress->rate_hire)*intval($time_add);
+                }
+                
+                
+                Yii::$app->db->createCommand("delete from photocontract where id_contract ='".$id."'")->execute();
+                Yii::$app->db->createCommand("INSERT INTO photocontract (id_user,id_contract,start_time,end_time) VALUES ('".$photo->id_user."','".$id."','".$contract->start_time."','".$contract->end_time."')")->execute();
+                Yii::$app->db->createCommand("delete from makeupcontract where id_contract ='".$id."'")->execute();
+                Yii::$app->db->createCommand("INSERT INTO makeupcontract (id_user,id_contract,start_time,end_time) VALUES ('".$makeup->id_user."','".$id."','".$contract->start_time."','".$contract->end_time."')")->execute();
+
+//                Yii::$app->db->createCommand("UPDATE photocontract SET id_user = '".$photo->id_user."',start_time = '".$contract->start_time."',end_time = '".$contract->end_time."'")->execute();
+//                Yii::$app->db->createCommand("UPDATE makeupcontract SET id_user = '".$makeup->id_user."',start_time = '".$contract->start_time."',end_time = '".$contract->end_time."'")->execute();
 
 
-                $date1 = str_replace('-', '/', $model->start_time);
-                $model->end_time = date('Y-m-d',strtotime($date1 ."+".$time_add. " days"));
+                $infophoto = User::findOne($photo->id_user);
+                $wagephoto = intval($infophoto->rate_user)*intval($time_add);
+
+                        // wage of makeup
+                $infomakeup = User::findOne($makeup->id_user);
+                $wagemakeup = intval($infomakeup->rate_user)*intval($time_add);
+
+                //Yii::$app->db->createCommand("delete from bigimg where id_contract ='".$contract->id_contract."'")->execute();
+
+                $rate_album = Ratealbum::findOne($album->numpage)->rate;
 
 
 
 
-                $model->save();
-                return $this->redirect(['view', 'id' => $model->id_contract]);
-            } else {
+
+                $rate_bigimg = \backend\models\Sizebigimg::findOne($bigimg->size)->rate * $contract->num_bigimg;
+
+                for($i=0;$i < $contract->num_bigimg;$i++){
+    //                Yii::$app->db->createCommand("INSERT INTO bigimg (id_contract,size) VALUES ('".$contract->id_contract."','".$bigimg->size."')")->execute();
+                    $bigimg->id_contract = $contract->id_contract;
+                    $bigimg->save();
+                 }
 
 
+                $contract->total = intval($rate_album)+$wagemakeup+$wagephoto+$rent_dress + $rate_bigimg;
 
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
+                if($contract->save()&& $album->save())
+                {
+                return $this->redirect(['view','id'=>$contract->id_contract]);}
+                else return $this->goHome ();
             }
+            $sender['contract'] = $contract;
+            $sender['album']=$album;
+            $sender['dress'] = $dress;
+            $sender['photo']=$photo;
+            $sender['makeup']=$makeup;
+            $sender['bigimg']=$bigimg;
+                return $this->render('updateinfo',$sender);
         }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    
+    //info contract of customer
+    public function actionMycontract(){
+        $contract = new Contract();
+        $session = Yii::$app->session;
+        
+        
+        if(isset($session['id_user'])&&$session['type_user']==1){
+        
+            $info = $contract->getMycontract($session['id_user']);
+
+            $sender['model']= $info;
+
+
+            return  $this->render('mycontract',$sender);
+        }
+        
     }
 
-    /**
+    //update info
+    
+    
+
+        /**
      * Deletes an existing Contract model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -352,6 +503,15 @@ class ContractController extends Controller
     protected function findModel($id)
     {
         if (($model = Contract::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+    
+    protected function findModelLocaltion($id)
+    {
+        if (($model = Localtion::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

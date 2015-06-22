@@ -9,7 +9,7 @@ use yii\bootstrap\Modal;
 /* @var $model backend\models\Localtion */
 
 $this->title = $model->name_local;
-$this->params['breadcrumbs'][] = ['label' => 'Localtions', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Địa Điểm', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="localtion-view">
@@ -17,17 +17,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id_local], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Chỉnh Sửa', ['update', 'id' => $model->id_local], ['class' => 'btn btn-primary']) ?>
         
-        <?= Html::a('Update', ['update', 'id' => $model->id_local], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Xem Hình Ảnh', ['viewimg', 'id' => $model->id_local], ['class' => 'btn btn-primary']) ?>
         
         <?= Html::button('Create Amb',['value'=> Url::to('index.php?r=ambience/create&&id='.$model->id_local),'class' => 'btn btn-primary','id'=>'createamb' ] ) ?>
-        <?= Html::button('Create Img',['value'=> Url::to('index.php?r=img/create&&id='.$model->id_local.'&&type=local'),'class' => 'btn btn-primary','id'=>'create_img' ] ) ?>
+        <?= Html::button('Thêm Hình Ảnh',['value'=> Url::to('index.php?r=img/create&&id='.$model->id_local.'&&type=local'),'class' => 'btn btn-primary','id'=>'create_img' ] ) ?>
         
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_local], [
+        <?= Html::a('Xóa', ['delete', 'id' => $model->id_local], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Bạn có muốn xóa địa điểm này không?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id_local',
+//            'id_local',
             'name_local',
             'info_local:ntext',
             'rate',

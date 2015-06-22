@@ -57,24 +57,9 @@ class DressController extends Controller
         }else return $this->goHome ();
     }
     
-    //test model get dress free
-    public function actionGetdress(){
-        $model = new Dress();
-        //$re = $model->getDressfree('2015-04-28','2015-04-16');
-   
-        echo '<pre>';
-        print_r($re);
-        echo '</pre>';
-        
-    }
+ 
     
-//    public function actionTest($start,$end){
-//        $model = new Dress();
-//        $arr = $model->getAllDressFree($start, $end);
-//        echo '<pre>';
-//        print_r($arr);
-//        echo '</pre>';
-//    }
+
     // get all dress don't have task from start to end
     public function actionGetalldressfree($start, $end){
         $model = new Dress();
@@ -123,10 +108,16 @@ class DressController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {
+    {   
+        $session = \Yii::$app->session;
+        
+        if(isset($session['type_user'])&&$session['type_user']==0){
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+        }else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 
     /**
@@ -135,48 +126,12 @@ class DressController extends Controller
      * @return mixed
      */
     
-    
 
-
-    
-
-
-    public function actionAddtocart($id)
-    {
-        $cart = new ShoppingCart();
-
-        $model = Dress::findOne($id);
-        if ($model) {
-            $cart->put($model, 1);
-         //   return $this->redirect(['index']);
-        }
-        
-        $count = $cart->getCount();
-       // echo $count;
-        //$cart->removeAll();
-        //throw new NotFoundHttpException();
-        return $this->redirect('index.php?r=dress/alldress');
-    }
-    
-    public function actionListtocart(){
-        $cart = new ShoppingCart();
-        //echo $cart->getCount();
-        $items = $cart->positions;
-//        echo '<pre>';
-//        print_r($items);
-//        echo '</pre>';
-        foreach ($items as $item) {
-           
-            echo $item->getCost().'<br>';
-            echo $item->getId().'<br>';
-            echo $item->getPrice().'<br>';
-        }
-       // $cart
-    }
 
     
     // view all image of dress
-    public function actionViewimg($id){
+    public function actionViewimg($id)
+    {
         
         //$model = new Imgdress();
         
@@ -202,10 +157,27 @@ class DressController extends Controller
     }
     
     
-    // get all dress
+    public function actionEditimgdress($id){
+        
+        $session = Yii::$app->session;
+        
+        if(isset($session['username'])&&$session['type_user']==0){
+        
+            $this->findModel($id);
+            $dress = new Dress();
+            $arrurl = $dress->getimgdress($id);
+            $sender['imgdress'] = $arrurl;
+            $sender['id_dress'] = $id;
+            $sender['title'] = $this->findModel($id)->name_dress;
+            return $this->render('dressview',$sender);
+        }return $this->goBack();
+        
+    }
+
+        // get all dress
     public function actionAlldress(){
         $query = new Query();
-        $rows = $query->select(['id_dress','avatar','name_dress'])->from('dress')->where(['status'=>1])->all();
+        $rows = $query->select(['id_dress','avatar','name_dress','rate_hire'])->from('dress')->where(['status'=>1])->all();
         $imgs;
        // $i =0;
         foreach ($rows as $row) {
@@ -215,7 +187,7 @@ class DressController extends Controller
        
         
         $test['imgs']= $imgs; 
-        $test['title'] = 'All Dress';
+        $test['title'] = 'Tất cả áo cưới';
         //$model->find()->all();
         return $this->render('viewalldress',$test);
     }
@@ -255,18 +227,46 @@ class DressController extends Controller
                 }
         }else return $this->goHome ();
      }   
-    /**
+     
+     /*My dress*/
+     
+     public function actionMydress(){
+         
+         $session = Yii::$app->session;
+         
+         if(isset($session['id_user'])&&$session['type_user']==1){
+            $dress = new Dress();
+            
+            $id_user = $session['id_user'];
+            
+            $arr = $dress->getmydress($id_user);
+
+            $sender['imgs'] = $arr;
+            $sender['title'] = 'My Dress';
+            return $this->render('mydress',$sender);
+             
+         }
+         return $this->goBack();
+        
+         
+         
+     }
+
+          /**
      * Updates an existing Dress model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
+     
+     
+     
     public function actionUpdate($id)
     {
         $session = Yii::$app->session;
         
         
-        if(isset($session)&&$session['type_user']==0){
+        if(isset($session['id_user'])&&$session['type_user']==0){
             $model = $this->findModel($id);
             $url_avatar = $model->avatar;
             if ($model->load(Yii::$app->request->post())) {
@@ -290,7 +290,8 @@ class DressController extends Controller
                     'model' => $model,
                 ]);
             }
-        }else return $this->goHome ();
+        }
+        return $this->goHome ();
     }
 
     /**
@@ -305,6 +306,28 @@ class DressController extends Controller
 
         return $this->redirect(['index']);
     }
+    public function actionTest($start,$end){
+        $dress = new Dress();
+        $a=$dress->getAllDressFree($start, $end);
+        
+        echo '<pre>';
+        print_r($a);
+        echo '</pre>';
+        
+        
+    }
+
+    public function actionHoverdress(){
+        if(isset($_POST["id"])){
+            $a = Yii::$app->db->createCommand("SELECT * from dress where id_dress = '".$_POST["id"]."'")->queryOne();
+            foreach ($a as $va){
+                $b[]= $va;
+            }
+            echo json_encode($b);
+        }
+    }
+    
+   
 
     /**
      * Finds the Dress model based on its primary key value.
@@ -321,10 +344,5 @@ class DressController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-//    public function actionTest(){
-//        $session = Yii::$app->session;
-//        echo $session['username'].'<br>';
-//        echo $session['id_user'].'<br>';
-//        echo $session['type_user'];
-//    }
+
 }

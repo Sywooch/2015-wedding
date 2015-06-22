@@ -21,16 +21,27 @@ class ContractSearch extends Contract
     {
         return [
             [['id_contract', 'id_user', 'id_local', 'total', 'timeadd', 'status'], 'integer'],
-            [['start_time', 'end_time', 'create_day', 'payment1', 'payment2', 'payment3', 'timephoto', 'timecomplete'], 'safe'],
+            [['start_time', 'end_time', 'create_day', 'payment1', 'payment2', 'payment3', 'timephoto', 'timecomplete','fullname'], 'safe'],
+//            [['idUser.fullname'],'safe'],
         ];
     }
     
     public $user;
     
+    public $fullname;
+
+
     
+//    public function attributes() {
+//        return array_merge( parent::attributes(),['idUser.fullname']);
+//
+//    }
+
     
 
-        /**
+
+
+    /**
      * @inheritdoc
      */
     public function scenarios()
@@ -50,19 +61,50 @@ class ContractSearch extends Contract
     {
         //$query = Contract::find();
         
-        $query =Contract::find()->joinWith('idUser');
+        $query =Contract::find();
+        $query1 = User::find();
+        
+       // $query->joinWith('idUser');
+        
+//        echo '<pre>';
+//        print_r($query->all());
+//        echo '</pre>';exit;
+//        $subqr = User::find();
+        
+      //  $query->innerJoin('user', 'user.id = id_user');
         
         //var_dump($query);exit;
         $test = Yii::$app->db->createCommand('select * from contract INNER JOIN user ON contract.id_user = user.id')->queryAll();
-        //var_dump($test);exit;
-//         echo '<pre>';
-//         print_r($user);
-//         echo '</pre>';
-//         exit;
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
         
+
+        
+//        $dataProvider->setSort([
+//            'attributes' =>[
+//                'id_contract',
+//                'id_user',
+//                'id_local',
+//                'start_time',
+//                'fullname'=>[
+//                    'asc' => ['user.fullname' => SORT_ASC],
+//                    'desc' => ['user.fullname' => SORT_DESC],
+//                    'label' => 'Fullname'
+//                ]
+//
+//            ]    
+//        ]);
+        
+        
+//        $dataProvider->sort->attributes['idUser.fullname']=[
+//            
+//            'asc' => ['idUser.fullname' => SORT_ASC],
+//             'desc' => ['idUser.fullname' => SORT_DESC],
+//            
+//        ];
+        $query->joinWith(['idUser']); 
         $this->load($params);
 
         if (!$this->validate()) {
@@ -71,32 +113,27 @@ class ContractSearch extends Contract
             return $dataProvider;
         }
         
-//        var_dump($query->all());exit;
         
-//        $query->andFilterWhere([
-//            
-//            'id_contract' => $this->id_contract,
-//            'id_user' => $this->id_user,
-//            'id_local' => $this->id_local,
-//            'start_time' => $this->start_time,
-//            'end_time' => $this->end_time,
-//            'create_day' => $this->create_day,
-//            'total' => $this->total,
-//            'payment1' => $this->payment1,
-//            'payment2' => $this->payment2,
-//            'payment3' => $this->payment3,
-//            'timephoto' => $this->timephoto,
-//            'timeadd' => $this->timeadd,
-//            'timecomplete' => $this->timecomplete,
-//            'status' => $this->status,
-//           // 'name_local'=>  $this->idUser->name_local,
-//            
-//            
-//        ]);
-//        echo '<pre>';
-//         print_r($query->all());
-//         echo '</pre>';
-//         exit;
+        $query->andFilterWhere([
+            
+            'id_contract' => $this->id_contract,
+            'id_user' => $this->id_user,
+            'id_local' => $this->id_local,
+            'start_time' => $this->start_time,
+            'end_time' => $this->end_time,
+            'create_day' => $this->create_day,
+            'total' => $this->total,
+            'payment1' => $this->payment1,
+            'payment2' => $this->payment2,
+            'payment3' => $this->payment3,
+            'timephoto' => $this->timephoto,
+            'timeadd' => $this->timeadd,
+            'timecomplete' => $this->timecomplete,
+            'status' => $this->status,    
+        ]);
+
+        
+        
         return $dataProvider;
     }
 }

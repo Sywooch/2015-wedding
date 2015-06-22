@@ -520,7 +520,8 @@ img { border: none;}
 .otherBox #slideBoxCont #slideBox { width: 102.6%;}
 #slideBox ul, #newsSmall, #homeAlbum { cursor: default;}
 .oneSer {
-   width: 22.5%;
+   //width: 22.5%;
+   width:30%;
    height: auto;
    float: left;
    overflow: hidden;
@@ -1094,6 +1095,8 @@ img { border: none;}
 	border-top: solid 1px #FD0B7D;
 	border-bottom: solid 1px #D20265;
 	padding-left: 10px;
+        margin: 0px;
+        padding-bottom: 48px; 
 }
 .titleBox i {
 	position: absolute;
@@ -1153,7 +1156,7 @@ img { border: none;}
 .cap { text-transform: uppercase;}
 /*colLeft colRight*/
 #colLeft {
-	width: 100%;
+	width: 75%;
 	float: left;
 }
 #colRight {
@@ -1163,7 +1166,7 @@ img { border: none;}
 .leftBox {
 	background: #fff;
 	margin-bottom: 30px;
-        padding-left: 20px;
+        /*padding-left: 20px;*/
 	/*border: solid 1px #E6E6E6;*/
 }
 .rightBox {
@@ -1242,9 +1245,11 @@ img { border: none;}
 }
 #rightNews li:hover h1 a { color: #fff;}
 /*services*/
-#services, #album { padding-top: 20px;}
+#services, #album { 
+    /*padding-top: 20px;*/
+}
 #services .oneSer, #album .oneSer {
-	width: 30%;
+	/*width: 30%;*/
 	margin: 0 5px 20px 20px;
 }
 #album .oneSer, .otherBox .oneSer { height: auto;}
@@ -1282,7 +1287,7 @@ img { border: none;}
 .otherList li:hover, .otherList li:hover a { color: #f20272; text-decoration: underline;}
 #tab1 { padding-bottom: 10px; position: relative;}
 /*albumView*/
-#albumView { min-height: 200px; padding-left: 20px;}
+#albumView { min-height: 200px; padding-left: 10px;}
 /*#news*/
 #news { padding-top: 20px;}
 #news .oneNews {
@@ -2341,4 +2346,79 @@ img { border: none;}
 	#contact form input, #contact form textarea { width: 91%;}
 	#homeRight { padding: 14px 5%;}
 	.nicePic { height: 390px;}
+}
+
+
+.localtion-index img{
+    width: 160px;
+    height: 100px;
+}
+
+.dress-index img{
+    width: 160px;
+    height: 100px;
+}
+
+
+select {
+    padding:3px;
+    margin: 0;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border-radius:4px;
+    -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    background: #f8f8f8;
+    color:#888;
+    border:none;
+    outline:none;
+    display: inline-block;
+/*    -webkit-appearance:none;
+    -moz-appearance:none;*/
+    appearance:none;
+    cursor:pointer;
+    margin-bottom: 10px;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    select {padding-right:18px}
+}
+
+/*label {position:relative}*/
+/*label:after {
+    content:'<>';
+    font:11px "Consolas", monospace;
+    color:#aaa;
+    -webkit-transform:rotate(90deg);
+    -moz-transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+    transform:rotate(90deg);
+    right:8px; top:2px;
+    padding:0 0 2px;
+    border-bottom:1px solid #ddd;
+    position:absolute;
+    pointer-events:none;
+}
+label:before {
+    content:'';
+    right:6px; top:0px;
+    width:20px; height:20px;
+    background:#f8f8f8;
+    position:absolute;
+    pointer-events:none;
+    display:block;
+}*/
+
+/* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    select {padding-right:18px}
+}
+/*.field-contract-id_contract label{display: none}*/
+/*.notify-index .glyphicon {display: none;}*/
+.notify-index .glyphicon-eye-open {display: none;}
+.search{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
 }

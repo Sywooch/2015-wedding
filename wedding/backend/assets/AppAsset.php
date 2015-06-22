@@ -20,7 +20,7 @@ class AppAsset extends AssetBundle
 
         
      public $css = [		    
-       'css/site.css',		
+     //  'css/site.css',		
 //        'css/stylesheets/elements.css',	
 //        'css/stylesheets/isotope.css',		
 //        'css/stylesheets/premium.css',		
@@ -28,6 +28,7 @@ class AppAsset extends AssetBundle
          'css/css/jquery.fancybox.css',
          'css/css/style218.css',
 //         'css/css/galleria.folio.css',
+         
      ];		     
 
 
@@ -35,12 +36,17 @@ class AppAsset extends AssetBundle
         'js/main.js',
         'js/jquery.localisation-min.js',
         'js/ui.multiselect.js',
-//        'js/js/galleria.folio.min.js',
-//        'js/js/galleria-1.2.8.min.js',
-//        'js/js/jquery-2.1.4.min.js',
+        'js/plot/plot.js',
+        'js/jshover/jquery.tooltipster.js',
+        'js/jshover/jquery.tooltipster.min.js',
+
     ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
+      
     ];
+    
+    public $position=1;
+    
 }

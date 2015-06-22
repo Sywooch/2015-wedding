@@ -9,6 +9,8 @@ use Yii;
  *
  * @property integer $id_dress
  * @property integer $id_contract
+ * @property string $start_time
+ * @property string $end_time
  *
  * @property Contract $idContract
  * @property Dress $idDress
@@ -29,8 +31,9 @@ class Dresscontract extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_dress', 'id_contract'], 'required'],
-            [['id_dress', 'id_contract'], 'integer']
+            [['id_dress', 'id_contract'], 'required','message' => 'Thông tin này không được để trống'],
+            [['id_dress', 'id_contract'], 'integer'],
+            [['start_time', 'end_time'], 'string','max'=>100]
         ];
     }
 
@@ -40,8 +43,8 @@ class Dresscontract extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_dress' => 'Id Dress',
-            'id_contract' => 'Id Contract',
+            'id_dress' => 'Áo Cưới',
+            'id_contract' => 'Mã Hợp Đồng',
         ];
     }
 

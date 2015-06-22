@@ -8,7 +8,7 @@ use backend\controllers\SiteController;
 /* @var $searchModel backend\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Users';
+$this->title = 'Tất cả Tài Khoản';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'auth_key',
 //            'password_hash',
 //            'password_reset_token',
-             'type_user',
+//             'type_user',
             // 'range_user',
             // 'rate_user',
              'fullname',

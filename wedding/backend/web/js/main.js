@@ -6,6 +6,16 @@ $(function(){
     })
 });
 
+
+$(function(){
+    $('#editavatar').click(function(){
+        $('#modalavatar').modal('show')
+                .find('#modalContentavatar')
+                .load($(this).attr('value'));
+    })
+});
+
+
 $(function(){
     //alert('ádasdasd');
     $('#createamb').click(function(){
@@ -46,32 +56,115 @@ $(document).ready(function (){
             });
 });
 $(function(){
-    $("#contract-start_time").change(function(){
 
-    	$("#contract-timeadd").change(function(){
+    $(".a").change(function(){
+        if( $('#contract-id_local').val() && $('#contract-start_time').val() && $('#contract-timeadd').val() ) {
+           var x = document.getElementById("contract-start_time").value;
+            var y = document.getElementById("contract-timeadd").value;
+           var z = document.getElementById("contract-id_local").value;
+            //window.location.href ='index.php?r=contract/create'+ '&&start='+x+'&&end='+x+'&&id_local='+z;
             
+            var url = window.location.href.split("/");
             
-                
-    		var x = document.getElementById("contract-start_time").value;
-    		var y = document.getElementById("contract-timeadd").value;
-                var z = document.getElementById("contract-id_local").value;
-                
-                
-                
-                  
-                 
-                //var baseurl='<?php echo Yii::$app->request->baseUrl();?>';
-    		window.location.href ='index.php?r=contract%2Fcreate'+ '&&start='+x+'&&end='+x+'&&id_local='+z;
-
-//                $.ajax({
-//                url: $form.attr('action'),
-//                type: 'POST',
-//                data: $form.serialize(),
-//                success: function(result) {
-//                    // ... Process the result ...
-//                }
-//            });
-    	});
-    });
+            var check;
+            for(var i = 1; i <= url.length-1; i++){
+               if(url[i]=='index.php?r=contract')
+               {
+                   check = i;
+               }
+            }
+            
+            var test = url[check+1].split("&&");
+            var checkupdate = false
+            if(test[0]=='update'){
+                checkupdate = true;
+            }
+            
+            if(checkupdate){
+                window.location.href ='index.php?r=contract/getendtime'+ '&&start='+x+'&&timeadd='+y+'&&id_local='+z+"&&update&&"+test[1];
+            }
+            else window.location.href ='index.php?r=contract/getendtime'+ '&&start='+x+'&&timeadd='+y+'&&id_local='+z;
+            
+           //  
+       }
+    });   
 });
 
+
+$(document).ready(function(event) {
+    $("#test img").remove();
+    $("#test div").remove();
+    $('select').on('mouseenter','option',function(e) {
+     //   alert(e.id);
+        var $target = $(e.target);
+        $("#test img").remove();
+        $("#test div").remove();
+        if($target.is('option')){
+               $target.text();
+              
+               
+               var b ={id:$target.attr("value")};
+               //alert($target.attr("value"));
+               $.ajax({
+                    url : 'index.php?r=dress/hoverdress',
+                    data :  {id:$target.attr("value")} ,
+                    dataType : 'json',
+                    type : 'POST',
+                    
+                    success: function(data) {
+                        
+
+                    $("#test img").remove();
+                    $("#test div").remove();
+                    
+                    $('#test').prepend('<img style="width: 50px;height: 50px ;" src="'+data[2]+'" />');
+                    $('#test').prepend('<div>'+data[1]+'</div>');
+                    $('#test').prepend('<div> Giá áo cưới : '+data[5]+' VND/Ngày</div>');
+                    }
+
+                });
+               $("#test img").remove();
+               $("#test div").remove();
+                
+        } 
+               $("#test img").remove();
+               $("#test div").remove();
+        
+
+    });
+    $("#test img").remove();
+    $("#test div").remove();
+    
+});
+
+<<<<<<< HEAD
+=======
+
+$(function(){
+    $("#test img").remove();
+    $("#test div").remove();
+})
+
+
+$(function(){
+
+    $(".b").change(function(){
+        if( $('#contract-id_local').val() && $('#contract-start_time').val() && $('#contract-timeadd').val() ) {
+           var x = document.getElementById("contract-start_time").value;
+            var y = document.getElementById("contract-timeadd").value;
+           var z = document.getElementById("contract-id_local").value;
+           var id = document.getElementById("contract-id_contract").value;
+            
+            
+            window.location.href ='index.php?r=contract/getendtime'+ '&&start='+x+'&&timeadd='+y+'&&id_local='+z+"&&update&&id="+id;  
+       }
+    });   
+});
+   
+        
+        
+        
+
+
+
+>>>>>>> branch#nhan

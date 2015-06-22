@@ -8,9 +8,17 @@ use yii\helpers\Url;
  * and open the template in the editor.
  */
 $this->title =$title;
+//$this->params['breadcrumbs'][] = ['label' => 'Địa điểm', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class = "dress-index">
+    
+   
+    
+    
     <div id ="album">
+        
+    <?php if($imgs!=NULL){ ?>
     <?php foreach ($imgs as $img) {?>
         <li class='oneSer oneAlbum ' >
 	        <a href='<?php echo 'index.php?r=localtion/viewimg&&id='.$img['id_local'] ?>' class='thumb' style='background-image:url(<?php echo $img['avatar'] ?>);'>
@@ -20,13 +28,13 @@ $this->title =$title;
 	                <p><a href='<?php echo 'index.php?r=localtion/viewimg&&id='.$img['id_local'] ?>'  title=''><?php echo $img['name_local'] ?></a></p>
                         <p><a href='<?php echo 'index.php?r=localtion/viewimg&&id='.$img['id_local'] ?>'  title=''><?php echo $img['rate'].'VND' ?></a></p>
                         <p><a href='<?php echo 'index.php?r=localtion/viewimg&&id='.$img['id_local'] ?>'  title=''><?php echo $img['timework'].' Ngày' ?></a></p>
-                        <p><?=  Html::a('Add To Cart', 'index.php?r=localtion/addtocart&&id='.$img['id_local'],['class'=>'btn btn-success addcart']) ?></p>
+                        <!--<p><?=  Html::a('Add To Cart', 'index.php?r=localtion/addtocart&&id='.$img['id_local'],['class'=>'btn btn-success addcart']) ?></p>-->
                     </ul>
 	        <h1><a href='<?php echo 'index.php?r=dress/viewimg&&id='.$img['id_local'] ?>' title=''><?php echo $img['name_local'] ?></a></h1>
                 
         </li>
     <?php
-        
+    }
     } ?>
     </div>    
        

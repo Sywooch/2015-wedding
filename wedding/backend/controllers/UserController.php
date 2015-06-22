@@ -13,6 +13,7 @@ use DateTime;
 use yii\web\UploadedFile;
 
 use backend\models\Localtion;
+use backend\models\Notify;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -39,17 +40,18 @@ class UserController extends Controller
     {
         $session = Yii::$app->session;
         if(isset($session['username'])&&$session['type_user']==0){
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
-        
+            $searchModel = new UserSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            
-        ]);
-        }else return $this->goBack ();
+
+
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+
+            ]);
+        }
+        return $this->goBack ();
     }
     
     // get all customer
@@ -60,23 +62,49 @@ class UserController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'title'=>'Khách Hàng',
             //'model'=>$model,
         ]);
     }
     
-    // get timework user
-    public function  actionTimework(){
-        $model = new Contract();
-        //$test = $model->getContractInMonth(1);
-        //var_dump(Yii::$app->user);
-        echo '<pre>';
-        print_r(Yii::$app->user);
-        echo '</pre>';
+    public function actionGetallphoto(){
         
-        //var_dump($test);
+        $session = Yii::$app->session;
+        if(isset($session['username'])&&$session['type_user']==0){
+        
+            $searchModel = new UserSearch();
+            $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams,2);
+           // $model = User::getUserByType(3);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'title'=>'Thợ Chụp Ảnh',
+                //'model'=>$model,
+            ]);
+        
+        } 
+        return $this->goHome ();
     }
-    // view task yourself
-    // 
+    // get all makeup
+    public function actionGetallmakeup() {
+         $session = Yii::$app->session;
+        if(isset($session['username'])&&$session['type_user']==0){
+        
+            $searchModel = new UserSearch();
+            $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams,3);
+           // $model = User::getUserByType(3);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'title'=>'Thợ Trang Điểm',
+                //'model'=>$model,
+            ]);
+        
+        } 
+        return $this->goHome ();
+    }
+    
+  
     
     public function actionTask($id_user){
         
@@ -91,13 +119,10 @@ class UserController extends Controller
             if($model->type_user==2){
 
                 // user is photo
-                $allcontract = Yii::$app->db->createCommand("SELECT id_contract FROM photocontract where id_user = '".$id_user."'")->queryAll();
+                $allcontract = Yii::$app->db->createCommand("SELECT id_contract FROM photocontract where id_user = '".$id_user."' order by start_time asc")->queryAll();
             }else if($model->type_user == 3){
                 //user is makeup
-                 $allcontract = Yii::$app->db->createCommand("SELECT id_contract FROM makeupcontract where id_user = '".$id_user."'")->queryAll();
-            }else if($model->type_user == 4){
-                // user is assitant
-                 $allcontract = Yii::$app->db->createCommand("SELECT id_contract FROM photocontract where id_user = '".$id_user."'")->queryAll();
+                 $allcontract = Yii::$app->db->createCommand("SELECT id_contract FROM makeupcontract where id_user = '".$id_user."' order by start_time asc")->queryAll();
             }
 
 
@@ -166,7 +191,7 @@ class UserController extends Controller
                     // set task of user
                     $taskofuser;
                     foreach ($result as $val) {
-                        $taskofuser[] = Yii::$app->db->createCommand("SELECT id_user,id_local,start_time,end_time,status FROM contract where id_contract = '".$val."'")->queryOne();
+                        $taskofuser[] = Yii::$app->db->createCommand("SELECT id_user,id_local,start_time,end_time,status,id_contract FROM contract where id_contract = '".$val."'")->queryOne();
                     }
 
                     $modellocal = new Localtion();
@@ -175,6 +200,7 @@ class UserController extends Controller
                     }
 
                     $array['taskofuser'] = $taskofuser;
+                    //$array['type_user']
                     return $this->render('taskuser',$array);
                 }else {
                     $noti['mess'] = 'Không có nhiệm vụ nào trong tháng này';
@@ -185,58 +211,68 @@ class UserController extends Controller
         }
     }
     
+    
+    public function actionMytask(){
+        $session = Yii::$app->session;
+        $user = new User();
+        
+        if(isset($_GET['month'])){
+            $month = $_GET['month'];
+        }else $month = date ('m');
+        
+        
+        if(isset($session['type_user'])){
+            if($session['type_user']==2)
+                $task = $user->getTaskOfphoto($month,date('y'),$session['id_user']);
+            else if($session['type_user']==3)
+                $task = $user->getTaskOfmakeup($month,date('y'),$session['id_user']);
+            else throw new NotFoundHttpException('The requested page does not exist.');
+            
+            $sender['taskofuser']= $task;
+            $sender['mess'] = "Không có nhiệm vụ trong tháng này";
+            return $this->render('mytask',$sender);
+            
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    
+
+    public function actionUpdatetask($id,$type,$status,$id_user){
+        if($status==1)$up =0;else $up=1;
+        if($type == 2){
+            $result = Yii::$app->db->createCommand("UPDATE photocontract SET status = '".$up."' where id_contract = '".$id."'");
+        }
+        if($type == 3) {
+             $result = Yii::$app->db->createCommand("UPDATE makeupcontract SET status = '".$up."' where id_contract = '".$id."'");
+        }
+        
+        if($result->execute())
+        return $this->redirect(['mytask']);
+    }
+
     public function actionAllphotograper(){
         $modeluser = new User();
-        
         return $this->render('staff',[
-            'title'=>'Photograper',
+            'title'=>'Thợ chụp ảnh',
             'photos'=>$modeluser->getallphoto(),
+            'type'=>2,
         ]);
     }
     
     public function actionAllmakeup(){
         $model = new User();
         return $this->render('staff',[
-            'title'=>'Make up',
+            'title'=>'Thợ trang điểm',
             'photos'=>$model->getallmakeup(),
+            'type'=>3,
         ]);
     }
 
 
 
     //get all photo
-    public function actionGetallphoto(){
-        
-        $session = \Yii::$app->session;
-        if(isset($session['username'])&&$session['type_user']==0){
-        
-            $searchModel = new UserSearch();
-            $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams,2);
-           // $model = User::getUserByType(3);
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-                //'model'=>$model,
-            ]);
-        
-        } else  return $this->goHome ();
-    }
-    // get all makeup
-    public function actionGetallmakeup() {
-         $session = \Yii::$app->session;
-        if(isset($session['username'])&&$session['type_user']==0){
-        
-            $searchModel = new UserSearch();
-            $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams,3);
-           // $model = User::getUserByType(3);
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-                //'model'=>$model,
-            ]);
-        
-        } else     return $this->goHome ();
-    }
+    
     
     // get all assistant
     public function actionGetallassistant() {
@@ -252,27 +288,13 @@ class UserController extends Controller
                 //'model'=>$model,
             ]);
         
-        } else        return    $this->goHome ();
+        }
+        return    $this->goHome ();
     }
     
-    // get all all photo free from start to end
-    public function actionGetallphotofree($start,$end){
-        $model = new User();
-        //$model->getAllPhotofree($start, $end);
-        echo '<pre>';
-        print_r($model->getAllPhotofree($start, $end));
-        echo '</pre>';
-    }
-
-    // get all makeup free from start to end
-    
-    public function actionGetallmakeupfree($start, $end){
-        $model = new User();
-        
-        echo '<pre>';
-        print_r($model->getMakeupfree($start, $end));
-        echo '</pre>';
-    }
+ 
+   
+   
 
     
     /**
@@ -284,12 +306,38 @@ class UserController extends Controller
     {
         $session = Yii::$app->session;
         if(isset($session['username'])&&($session['type_user']==0||$session['id_user']==$id)){
+            $user = $this->findModel($id);
+            $user->rate_user =  number_format($user->rate_user).'VND';
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $user,
+            'type_user'=>  $this->findModel($id)->type_user,
         ]);
         
         }
-        else        return    $this->goHome ();
+       
+        return $this->goHome ();
+    }
+    
+    
+    public function actionEditavatar($id){
+        $model = $this->findModel($id);
+        $avar = $model->avatar;
+         if ($model->load(Yii::$app->request->post())){
+            $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
+            $model->avatar = UploadedFile::getInstance($model, 'avatar');
+            if($model->avatar!=NULL){
+                    $model->avatar->saveAs( 'uploads/avatar/'.$imgname.'.'.$model->avatar->extension );
+
+                    //save in db
+
+                    $model->avatar = 'uploads/avatar/'.$imgname.'.'. $model->avatar->extension;
+            }else $model->avatar= $avar;
+            
+            $test = \Yii::$app->db->createCommand("UPDATE user SET avatar = '".$model->avatar."' WHERE id='".$id."'")->execute();
+            return $this->redirect(['view','id'=>$id]);
+         }else {
+             return $this->renderAjax('editavatar',['model'=>$model]);
+         }
     }
 
     /**
@@ -323,12 +371,11 @@ class UserController extends Controller
         if(isset($session['username'])&&($session['type_user']==0||$session['id_user']==$id)){
         
             $model = $this->findModel($id);
+           // $model->rate_user = number_format($model->rate_user);
             $url_avar = $model->avatar;
             
-            if ($model->load(Yii::$app->request->post())) {
-//                echo '<pre>';
-//                var_dump($model->save());
-//                echo '</pre>';
+            if ($model->load(Yii::$app->request->post()))
+            {
                 if($model->avatar==NULL){
                     $model->avatar = $url_avar;
                 }else{
@@ -359,7 +406,114 @@ class UserController extends Controller
                      ]);
                 
             }
-        }else return $this->goHome ();
+        }
+        return $this->goHome ();
+    }
+    
+    public function actionContract(){
+        $model = new User();
+        
+        
+        
+        
+        
+        if(isset($_POST['year'])){
+           
+            $a=$model->getContractYear($_POST['year']);
+            $c = [[1,$a[1]],[2,$a[2]],[3,$a[3]],[4,$a[4]],[5,$a[5]],[6,$a[6]],[7,$a[7]],[8,$a[8]],[9,$a[9]],[10,$a[10]],[11,$a[11]],[12,$a[12]]];
+           echo json_encode($c);exit;
+        }
+
+      // $contracts = $model->getContractYear(2015);
+     //  var_dump($contracts);   
+       
+        
+        $session = \Yii::$app->session;
+        if(isset($session['type_user'])&&$session['type_user']==0){
+        $sender['title'] = 'Thống Kê';
+        
+       // $sender['contracts'] = $contracts;
+        
+        return $this->render('contractyear',$sender);
+        
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    
+    
+    public function actionPlotphoto(){
+//        $user = new User();
+        if(isset($_POST['year'])){
+            $user = new User();
+            $users = $user->getphotoinyear($_POST['year']);
+          //  $a= [['1',2],['2',5],['3',7]];
+            echo json_encode($users);
+        }
+        
+//        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    
+    public function actionPlotlocal(){        
+        if(isset($_POST['year'])){
+            $user = new User();
+            $users = $user->getlocaltioninyear($_POST['year']);
+//            $a= [['1',2],['2',5],['3',7]];
+            echo json_encode($users);
+        }
+        
+//        $user = new User();
+//        $users = $user->getlocaltioninyear1(2015);
+//        echo '<pre>';
+//        print_r($users);
+//        echo '</pre>';
+//       throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    
+    public function actionPlotdress(){        
+        if(isset($_POST['year'])){
+            $user = new User();
+            $users = $user->getdressinyear($_POST['year']);
+            $a= [['1',2],['2',5],['3',7]];
+            echo json_encode($users);
+        }
+    }
+
+
+    public function actionPlotmakeup() {
+        if(isset($_POST['year'])){
+            $user = new User();
+            $users = $user->getmakeupinyear($_POST['year']);
+          //  $a= [['1',2],['2',5],['3',7]];
+            echo json_encode($users);
+        }
+//        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    
+
+    public function actionNotify(){
+        
+        $notify = Notify::find()->all();
+        $sender['allnotify']= $notify;
+        return $this->render('allnotify',$sender);
+        
+    }
+    
+    
+    //
+    
+    public function actionMystaff(){
+        $user = new User();
+        $session = Yii::$app->session;
+        
+        if(isset($session['id_user'])&&$session['type_user']==1){
+        
+        
+        $sender['title'] = 'My Staff';
+        $sender['photos'] =$user->getmystaff($session['id_user']);
+        
+        
+        return $this->render('staff',$sender);
+        }
     }
 
     /**
@@ -375,7 +529,10 @@ class UserController extends Controller
         return $this->redirect(['index']);
     }
     
-   
+    public function actionTest(){
+        $user = new User();
+        $user->getPhotoNotContract('2015-06-08','2015-07-12');
+    }
 
     /**
      * Finds the User model based on its primary key value.

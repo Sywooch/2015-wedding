@@ -14,16 +14,13 @@ use dosamigos\datepicker\DatePicker;
 
 <div class="album-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
    
     
-    <?= $form->field($model, 'id_contract')->dropDownList(
-                        ArrayHelper::map(Contract::find()->where(['have_album'=>0])->all(), 'id_contract', 'id_contract'),
-                            ['prompt'=>'Select Status',]
-                            ) ?>
+    <?= $form->field($model, 'id_contract')->textInput(['readonly'=>true]) ?>
 
-    <?= $form->field($model, 'url_psd')->textInput(['maxlength' => 350]) ?>
+   
 
     <?= $form->field($model, 'numpage')->textInput() ?>
 
@@ -38,7 +35,7 @@ use dosamigos\datepicker\DatePicker;
               ]
         ]);?>
 
-    <?= $form->field($model, 'url_folder')->textInput() ?>
+    <?= $form->field($model, 'url_folder[]')->fileInput(['maxlength' => 250,'multiple' => true]) ?>
 
     <?= $form->field($model, 'rate')->textInput(['maxlength' => 20]) ?>
 
@@ -48,7 +45,13 @@ use dosamigos\datepicker\DatePicker;
                         ArrayHelper::map(StatusAlbum::find()->all(), 'status_album', 'name_status'),
                             ['prompt'=>'Select Status',]
                             ) ?>
-
+    
+    <?php if(isset($bigimg) ){ 
+             ?>
+        <?= $form->field($bigimg, 'url')->fileInput(['maxlength' => 250]) ?>
+        <?= $form->field($bigimg, 'size')->textInput(['readonly' => true]) ?>
+    <?php } ?>
+ 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

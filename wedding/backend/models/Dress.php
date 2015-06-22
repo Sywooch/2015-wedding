@@ -43,8 +43,8 @@ class Dress extends ActiveRecord implements CartPositionInterface
     public function rules()
     {
         return [
-            [['name_dress', 'type_dress', 'info_dress', 'rate_hire', 'rate_sale', 'status'], 'required'],
-            [['type_dress', 'rate_hire', 'rate_sale', 'status'], 'integer'],
+            [['name_dress', 'type_dress', 'info_dress', 'rate_hire', 'status'], 'required','message' => 'Thông tin này không được để trống'],
+            [['type_dress', 'rate_hire', 'rate_sale', 'status'], 'integer','message' => 'Nhập số nguyên'],
             [['info_dress'], 'string'],
             [['name_dress', 'avatar'], 'string', 'max' => 100]
         ];
@@ -78,13 +78,13 @@ class Dress extends ActiveRecord implements CartPositionInterface
     public function attributeLabels()
     {
         return [
-            'id_dress' => 'Id Dress',
-            'name_dress' => 'Name Dress',
+            'id_dress' => 'Mã Áo Cưới',
+            'name_dress' => 'Tên Áo Cưới',
             'avatar' => 'Avatar',
-            'type_dress' => 'Type Dress',
-            'info_dress' => 'Info Dress',
-            'rate_hire' => 'Rate Hire',
-            'rate_sale' => 'Rate Sale',
+            'type_dress' => 'Loại Áo Cưới',
+            'info_dress' => 'Thông Tin Áo Cưới',
+            'rate_hire' => 'Giá Thuê',
+            'rate_sale' => 'Giá Bán',
             'status' => 'Status',
         ];
     }
@@ -143,16 +143,14 @@ class Dress extends ActiveRecord implements CartPositionInterface
                 $imgs[] = $alldress[$key]['id_dress'] ;
             
             }
-            
-            $dress = array_diff($imgs,$dress);
-            
-            
-            foreach ($dress as $dre) {
-                $dress_free[]  = Yii::$app->db->createCommand("select id_dress, name_dress from dress where id_dress = '".$dre."'")->queryOne();
+            if(isset($imgs)&&isset($dress)){
+                $dress = array_diff($imgs,$dress);
+
+
+                foreach ($dress as $dre) {
+                    $dress_free[]  = Yii::$app->db->createCommand("select id_dress, name_dress from dress where id_dress = '".$dre."'")->queryOne();
+                }
             }
-//            echo '<pre>';
-//            print_r($dress_free);
-//            echo '</pre>';
             if(isset($dress_free)){
                 return $dress_free;
             }else return NULL;
@@ -163,5 +161,69 @@ class Dress extends ActiveRecord implements CartPositionInterface
         }
     }
     
+    
+    public function getmydress($id_user){
+        
+        
+        $contract = Contract::find()->where(['id_user'=>$id_user])->one();
+        if(isset($contract))
+        $arrdress = Dresscontract::find()->where(['id_contract'=>$contract->id_contract])->all();
+        
+        
+        if(isset($arrdress))
+        foreach ($arrdress as $dress) {
+            $arr[] = Dress::find()->where(['id_dress'=>$dress->id_dress])->one();
+        }
+        
+        if(isset($arr))return $arr; else return NULL;
+        
+        
+    }
+    public function getimgdress($id_dress){
+        $arridimg = Imgdress::find()->where(['id_dress'=>$id_dress])->all();
+        
+
+        if(isset($arridimg)){
+            foreach ($arridimg as $idimg) {
+                $imgs[]= Img::find()->where(['id_img'=>$idimg->id_img])->one();
+            }
+        }
+
+        
+        if(isset($imgs))return $imgs;else return NULL;
+    }
+    
+    
+    public function getDressNotContract($start,$end){
+        $result = Yii::$app->db->createCommand("SELECT id_dress FROM dresscontract WHERE ((start_time BETWEEN '".$start."' AND '".$end."')OR(end_time BETWEEN '".$start."' AND '".$end."')OR('".$start ."'<= start_time AND '".$end."' >=end_time  ) ) ")->queryAll();
+        $alldress = Yii::$app->db->createCommand("SELECT id_dress from dress")->queryAll();
+        foreach ($alldress as $key=>$value) {
+            foreach ($result as $value1) {
+                if($value['id_dress']==$value1['id_dress'])
+                    unset ($alldress[$key]);
+            }
+        }
+        
+        foreach ($alldress as $dress_val) {
+            $dress[]= Yii::$app->db->createCommand("SELECT id_dress,name_dress from dress where id_dress ='".$dress_val['id_dress']."'")->queryOne();
+        }
+        if(isset($dress)) return $dress;else return [];
+    }
+    
+    public function getDressNotContractSample($start,$end,$id_contract){
+        $result = Yii::$app->db->createCommand("SELECT id_dress FROM dresscontract WHERE ((start_time BETWEEN '".$start."' AND '".$end."')OR(end_time BETWEEN '".$start."' AND '".$end."')OR('".$start ."'<= start_time AND '".$end."' >=end_time  ) )AND id_contract != '".$id_contract."'")->queryAll();
+        $alldress = Yii::$app->db->createCommand("SELECT id_dress from dress")->queryAll();
+        foreach ($alldress as $key=>$value) {
+            foreach ($result as $value1) {
+                if($value['id_dress']==$value1['id_dress'])
+                    unset ($alldress[$key]);
+            }
+        }
+        
+        foreach ($alldress as $dress_val) {
+            $dress[]= Yii::$app->db->createCommand("SELECT id_dress,name_dress from dress where id_dress ='".$dress_val['id_dress']."'")->queryOne();
+        }
+        if(isset($dress)) return $dress;else return [];
+    }
    
 }

@@ -21,10 +21,11 @@ use Yii;
  * @property integer $timeadd
  * @property string $timecomplete
  * @property integer $status
+ * @property integer $num_bigimg
  * @property integer $have_album
  * @property double $total_time
  * @property Localtion $idLocal
- * @property $idUser = new User() 
+ * @property User $idUser
  * @property Dresscontract[] $dresscontracts
  * @property Staffcontract[] $staffcontracts
  * @property Toolcontract[] $toolcontracts
@@ -46,8 +47,8 @@ class Contract extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_user', 'id_local', 'start_time', 'payment1', 'timeadd'], 'required'],
-            [['id_user', 'total', 'timeadd', 'status','have_album'], 'integer'],
+            [['id_user', 'id_local', 'start_time', 'payment1', 'timeadd','num_bigimg'], 'required','message' => 'Thông tin này không được để trống'],
+            [['id_user', 'total', 'timeadd', 'status','have_album','num_bigimg'], 'integer','message' => 'Nhập số nguyên'],
             [['id_local'],'string'],[['total_time'],'double'],
             [['start_time', 'end_time', 'create_day', 'payment1', 'payment2', 'payment3', 'timephoto', 'timecomplete'], 'safe']
         ];
@@ -59,20 +60,22 @@ class Contract extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_contract' => 'Id Contract',
-            'id_user' => 'Id User',
-            'id_local' => 'Id Local',
-            'start_time' => 'Start Time',
-            'end_time' => 'End Time',
-            'create_day' => 'Create Day',
-            'total' => 'Total',
-            'payment1' => 'Payment1',
-            'payment2' => 'Payment2',
-            'payment3' => 'Payment3',
-            'timephoto' => 'Timephoto',
-            'timeadd' => 'Timeadd',
-            'timecomplete' => 'Timecomplete',
+            'id_contract' => 'Hợp Đồng Số',
+            'id_user' => 'Khách Hàng',
+            'id_local' => 'Địa Điểm Chụp Ảnh',
+            'start_time' => 'Thời Gian Bắt Đầu',
+            'end_time' => 'Thời Gian Kết Thúc',
+            'create_day' => 'Ngày Tạo Hợp Đồng',
+            'total' => 'Tổng tiên',
+            'payment1' => 'Thời Gian Thanh Toán Đợt 1',
+            'payment2' => 'Thời Gian Thanh Toán Đợt 2',
+            'payment3' => 'Thời Gian Thanh Toán Đợt 3',
+            'timephoto' => 'Thời Gian',
+            'timeadd' => 'Thời Gian Khách Muốn Thêm',
+            'num_bigimg'=>'Tổng số ảnh cưới',
+            'timecomplete' => 'Thời Gian Hoàn Thành',
             'status' => 'Status',
+            'fullname'=>  Yii::t('app', 'Tên Khách Hàng'),
         ];
     }
 
@@ -168,8 +171,12 @@ class Contract extends \yii\db\ActiveRecord
         $endmonth = $year.'-'.$monthyear.'-'.$date;
         $startmonth = $year.'-'.$monthyear.'-'.'01';
         
+<<<<<<< HEAD
         $contract = Yii::$app->db->createCommand("SELECT id_contract FROM contract WHERE start_time >='".$startmonth."' AND start_time<='".$endmonth."' ORDER BY start_time")->queryAll();
 
+=======
+        $contract = Yii::$app->db->createCommand("SELECT id_contract FROM contract WHERE start_time >='".$startmonth."' AND start_time<='".$endmonth."' ORDER BY start_time desc")->queryAll();
+>>>>>>> branch#nhan
         
         //var_dump($contract);
         
@@ -181,6 +188,14 @@ class Contract extends \yii\db\ActiveRecord
         
         if(isset($allcontract))
         return $allcontract;else
+        return NULL;
+    }
+    
+    
+    
+    public function getMycontract($id_user){
+        $contract = Contract::find()->where(['id_user'=>$id_user])->one();
+        if(isset($contract)) return $contract;
         return NULL;
     }
    

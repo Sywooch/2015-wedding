@@ -2,30 +2,57 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\Url;
+use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\User */
 
+if(isset($type_user)){
+    if($type_user==0) {$label= 'Admin';
+    $url = 'index';
+    }
+    if($type_user==1) {$label= 'Khách Hàng';
+    $url = 'getallcustomer';
+    }
+    if($type_user==2) {$label= 'Thợ Chụp Ảnh';
+    $url = 'getallphoto';
+    }
+    if($type_user==3) {$label= 'Thợ Trang Điểm';
+    $url = 'getallmakeup';
+    }
+    
+}
+
+
 $this->title = $model->username;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $label, 'url' => [$url]];
 $this->params['breadcrumbs'][] = $this->title;
 $session = Yii::$app->session;
 ?>
 <div class="user-view">
-
-<!--    <h1><?= Html::encode($this->title) ?></h1>-->
-
-   
-
-    <?= DetailView::widget([
+    <button id="editavatar" value = "<?php echo Url::base().'/index.php?r=user/editavatar&&id='.$model->id ?>"><img src="<?php echo $model->avatar ?>" alt="Smiley face" height="100" width="100"></button>
+    
+    <?php 
+        Modal::begin([
+            'header' => '<h4>Update avatar</h4>',
+            'id' => 'modalavatar',
+            'size'=>'modal-lg'
+                
+                ]);
+                echo "<div id ='modalContentavatar'></div> ";
+        Modal::end();
+    ?>        
+            
+        <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+           // 'id',
             'username',
            // 'auth_key',
             //'password_hash',
            // 'password_reset_token',
-            'type_user',
+          //  'type_user',
             'range_user',
             'rate_user',
             'fullname',
@@ -36,25 +63,27 @@ $session = Yii::$app->session;
           //  'email2:email',
             'info_user:ntext',
             'address',
-           // 'avatar',
-            'status',
+//            'avatar',
+           // 'status',
            // 'created_at',
            // 'updated_at',
         ],
     ]) ?>
     
+    
+    
      <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Chỉnh Sửa', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
          
-        <?php if(isset($session['usernamr'])&&$session['type_user']==0) { ?> 
+        <?php if(isset($session['username'])&&$session['type_user']==0) { ?> 
          
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?php //echo Html::a('Xóa', ['delete', 'id' => $model->id], [
+//            'class' => 'btn btn-danger',
+//            'data' => [
+//                'confirm' => 'Bạn có muốn xóa '.$label.' '.$model->username.' khỏi hệ thống?',
+//                'method' => 'post',
+//            ],
+//        ]) ?>
         <?php } ?>
     </p>
 

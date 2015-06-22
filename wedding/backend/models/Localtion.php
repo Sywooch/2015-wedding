@@ -38,9 +38,9 @@ class Localtion extends ActiveRecord implements CartPositionInterface
     public function rules()
     {
         return [
-            [['name_local', 'info_local', 'rate',  'timework', 'status'], 'required'],
+            [['name_local', 'info_local', 'rate',  'timework', 'status'], 'required','message' => 'Thông tin này không được để trống'],
             [['info_local'], 'string'],
-            [['rate', 'timework', 'status'], 'integer'],
+            [['rate', 'timework', 'status'], 'integer','message' => 'Nhập số nguyên'],
             [['name_local', 'avatar'], 'string', 'max' => 100]
         ];
     }
@@ -61,12 +61,12 @@ class Localtion extends ActiveRecord implements CartPositionInterface
     public function attributeLabels()
     {
         return [
-            'id_local' => 'Id Local',
-            'name_local' => 'Name Local',
-            'info_local' => 'Info Local',
-            'rate' => 'Rate',
+            'id_local' => 'Mã Địa Điểm',
+            'name_local' => 'Tên Địa Điểm',
+            'info_local' => 'Thông Tin Địa Điểm',
+            'rate' => 'Giá',
             'avatar' => 'Avatar',
-            'timework' => 'Timework',
+            'timework' => 'Thời Gian Chụp Ảnh',
             'status' => 'Status',
         ];
     }
@@ -94,5 +94,38 @@ class Localtion extends ActiveRecord implements CartPositionInterface
 //        echo '</pre>';
         //echo $result['name_local'];
         return $result['name_local'];
+    }
+    
+    public function getAmb($id_local){
+        $arr = Ambience::find()->where(['id_local'=>$id_local])->all();
+        
+        echo '<pre>';
+        print_r($arr);
+        echo '</pre>';
+    }
+    
+    public function getmylocal($id_user){
+        $mycontract = Contract::find()->where(['id_user'=>$id_user])->one();
+        if(isset($mycontract))
+        $mylocal = Localtion::find()->where(['id_local'=>$mycontract->id_local])->all();
+        if(isset($mylocal))return $mylocal;else return NULL;
+    }
+    
+    
+    
+    public function getimglocal($id_local){
+        $arridimg = Imglocal::find()->where(['id_local'=>$id_local])->all();
+        
+        
+
+        if(isset($arridimg)){
+            foreach ($arridimg as $idimg) {
+                $imgs[]= Img::find()->where(['id_img'=>$idimg->id_img])->one();
+            }
+        }
+        
+
+        
+        if(isset($imgs))return $imgs;else return NULL;
     }
 }

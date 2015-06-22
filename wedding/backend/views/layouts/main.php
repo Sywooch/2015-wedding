@@ -30,13 +30,13 @@ AppAsset::register($this);
         <div id="header">
 
            <div id="logo_menu" class="pagewrap">
-               <a href="" class="logo" title=""><img src="images/logo.png" width="478" alt="Việt Khanh Bridal"></a>
+               <a href="" class="logo" title=""><img src="images/logo.png" width="478" alt=""></a>
                <div id="menuMain">
                    
                    <?php if(!isset($session['username'])){ ?>
                    <ul id="menu">
                        <li class=""><a href="<?php echo Url::base().'/index.php' ?>" title="Trang chủ">Trang chủ</a></li>
-                       <li class=""><a href="<?php echo Url::base().'/index.php?r=album' ?>" title="Giới thiệu">Album cưới</a></li>
+<!--                       <li class=""><a href="<?php echo Url::base().'/index.php?r=album' ?>" title="Giới thiệu">Album cưới</a></li>-->
                        <li class="haveSub "><a href="">Nhân Viên</a><span></span>
                            <ul>
                                 <li><a href='<?php echo Url::base().'/index.php?r=user/allphotograper' ?>' title='Chụp hình Cưới'>Thợ chụp ảnh</a></li>
@@ -57,47 +57,46 @@ AppAsset::register($this);
                        <?php }else if(isset($session['username'])){ ?>
                         <?php if($session['type_user']==1){ ?>
                             <ul id="menu">
-                                <li class=""><a href="" title="Trang chủ">Trang chủ</a></li>
-                                <li class="haveSub"><a href="" title="Giới thiệu">Album cưới</a>
+                               
+                                <li class="haveSub"><a href="" title="">Thông Tin Ảnh Cưới</a>
                                     <ul>
-                                         <li class=""><a href="" title="">Album Của Tôi</a></li>
-                                         <li class=""><a href="" title="">Tất Cả Album</a></li>
-                                        
+                                        <li><a href="<?php echo Url::base().'/index.php?r=album/myalbum' ?>">Album cưới</a></li>
+                                        <li><a href="<?php echo Url::base().'/index.php?r=album/mybigimg' ?>">Ảnh lễ cưới</a></li>
                                     </ul>
                                 </li>
-                                <li class="haveSub "><a href="">Nhân Viên</a><span></span>
+                                <li class=" "><a href="<?php echo Url::base().'/index.php?r=user/mystaff' ?>">Nhân Viên </a><span></span>
+                                    
+                                </li>
+                                <li class="haveSub "><a href="">Áo cưới</a><span></span>
                                     <ul>
-                                         <li><a href='' title='Chụp hình Cưới'>Thợ chụp ảnh</a></li>
-                                         <li><a href='<?php echo Url::base().'/index.php?r=dress/alldress' ?>' title='Áo Cưới'>Thợ Trang Điểm</a></li>
-
+                                         <li><a href="<?php echo Url::base().'/index.php?r=dress/mydress' ?>" title=''>Áo cưới của tôi</a></li>
+                                         <li><a href='<?php echo Url::base().'/index.php?r=dress/alldress' ?>' title='Áo Cưới'>Tất cả áo cưới</a></li>
+                                         
                                     </ul>
                                 </li>
-                                <li class="haveSub "><a href="">Dịch vụ cưới</a><span></span>
+                                <li class="haveSub"><a href=""  title="">Địa điểm</a><span></span>
                                     <ul>
-                                         <li><a href='' title='Chụp hình Cưới'>Chụp hình Cưới</a></li>
-                                         <li><a href='' title='Áo Cưới'>Áo Cưới</a></li>
-                                         <li><a href='' title='Trang điểm cô dâu'>Trang điểm cô dâu</a></li>
-                                         <li><a href='' title='Nhẫn Cưới'>Nhẫn Cưới</a></li>
-                                         <li><a href='' title='Hoa Cưới'>Hoa Cưới</a></li> 
+                                         <li><a href="<?php echo Url::base().'/index.php?r=localtion/mylocal' ?>" title=''>Địa điểm của tôi</a></li>
+                                         <li><a href='<?php echo Url::base().'/index.php?r=localtion/alllocal' ?>' title=''>Tất cả địa điểm</a></li>
+                                         
                                     </ul>
                                 </li>
-                                <li><a href="" title="Album ảnh">Địa điểm</a><span></span>
-
-                                </li>
-                                <li class="haveSub "><a href="" title="Bảng giá">Áo cưới</a><span></span>
-                                    <ul>
-                                        <li><a href='' title='Bảng giá'>Bảng giá</a></li> 
-                                    </ul>
-                                </li>
+                               
                                 <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Liên lạc</a></li>
                                 
-                                <li class=""><a href="" title="Tin tức">Hợp Đồng</a></li>
-                                <li class=""><a href="" title="Khuyến mãi">Thông Tin Cá Nhân</a></li>
-                                <li class=""><a href="<?php echo Url::base().'/index.php?r=site/logout' ?>" data-method = "post" class="place">Đăng Xuất</a></li>
+                                <li class=""><a href="<?php echo Url::base().'/index.php?r=contract/mycontract' ?>" title="Tin tức">Hợp Đồng</a></li>
+                                <li class=""><a href="<?php echo Url::base().'/index.php?r=user/view&&id='.$session['id_user'] ?>" title="Khuyến mãi">Thông Tin Cá Nhân</a></li>
+                                <li class=""><a href="<?php echo Url::base().'/index.php?r=site/logout' ?>" data-method = "post" class="place">Đăng Xuất(<?php echo $session['username']; ?>)</a></li>
                             </ul>
                         <?php } else if($session['type_user']== 0) { ?>
                             <ul id="menu">
-                                <li class=""><a href="" title="Trang chủ">Trang chủ</a></li>
+                                <li class="haveSub"><a href="" title="Trang chủ">Ảnh cưới</a>
+                                    <ul>
+                                        <li><a href="<?php echo Url::base().'/index.php?r=album' ?>" title="Trang chủ">Album cưới</a></li>
+                                        <li><a href="<?php echo Url::base().'/index.php?r=bigimg' ?>" title="Trang chủ">Ảnh cưới lớn</a></li>
+                                    </ul>
+                                    
+                                </li>
                                 
                                 <li class="haveSub "><a href="">Tài Khoản </a><span></span>
                                     <ul>
@@ -130,7 +129,7 @@ AppAsset::register($this);
                                         <li class=""><a href="<?php echo Url::base().'/index.php?r=contract/create' ?>" title="" class="place">Hợp Đồng Mới</a></li>
                                     </ul>
                                 </li>
-                                <li class=""><a href="" title="Địa điểm chụp hình cưới" class="place">Liên lạc</a></li>
+                                <li class=""><a href="<?php echo Url::base().'/index.php?r=user/contract' ?>" title="Địa điểm chụp hình cưới" class="place">Thống Kê</a></li>
                                 <li class=""><a href="<?php echo Url::base().'/index.php?r=user/view&&id='.$session['id_user'] ?>" title="Khuyến mãi">Thông Tin Cá Nhân</a></li>
                                 <li class=""><a href="<?php echo Url::base().'/index.php?r=site/logout' ?>" data-method = "post" class="place">Đăng Xuất</a></li>
                             </ul>
@@ -141,7 +140,7 @@ AppAsset::register($this);
                                 <li class="haveSub "><a href="<?php echo Url::base().'/index.php?r=user/task&&id_user='.$session['id_user']; ?>" title="">Nhiệm Vụ</a><span></span>
                                     <ul>
                                     <?php for($i=1;$i<=12;$i++){ ?>
-                                        <li><a href="<?php echo Url::base().'/index.php?r=user/task&&id_user='.$session['id_user'].'&&month='.$i; ?>" title=""><?php echo 'Tháng '.$i ?></a><span></span></li>
+                                        <li><a href="<?php echo Url::base().'/index.php?r=user/mytask&&month='.$i; ?>" title=""><?php echo 'Tháng '.$i ?></a><span></span></li>
                                     <?php } ?>
                                     </ul>
                                 </li>
@@ -177,15 +176,17 @@ AppAsset::register($this);
            </div><!--end logo_menu-->
        </div><!--end header-->        
         
-        
-      
-        
-        
-        
+       
+       
+       <div class="pagewrap">
+	<div id="pageNav">
+            <div class="clr"></div>
+        </div>
        
 
-        <div class="container">
             <div class="content">
+                
+                <?php if(!isset($session['type_user'])) {?>
                 <div id="colLeft">
                      <div class="leftBox">
                         <?= Breadcrumbs::widget([
@@ -194,12 +195,71 @@ AppAsset::register($this);
                         <?= $content ?>
                          <div class="clr"></div>
                     </div>
+                    
                 </div>
-            </div>
-        </div>
+                
+                <div id="colRight">
+                    <div class="rightBox">
+                        <div class="titleBox"><h1>Tìm Kiếm</h1><i></i></div>
+                        <div class="search">
+                            <form action="<?php echo Url::base().'/index.php?r=site/search' ?>" method="POST">
+                                <input type="text" name="search_text"><br>
+                                <input type="radio" name="search" value="dress" checked>Áo cưới
+                                <input type="radio" name="search" value="local">Địa Điểm
+<!--                                <input type="radio" name="search" value="photo">Thợ chụp ảnh
+                                <input type="radio" name="search" value="makeup">Thợ Trang Điểm-->
+                                <br>
+                                <input type="submit" name="bt_search" id="bt_search" value="Tìm Kiếm" >
+                            </form>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="rightBox menuRight">
+                        <div class="titleBox"><h1>DỊCH VỤ CƯỚI</h1><i></i></div>
+                        <ul>
+                           <li><a href='<?php echo Url::base().'/index.php?r=user/allphotograper' ?>'  >Thợ Chụp Ảnh</a></li>
+                           <li><a href='<?php echo Url::base().'/index.php?r=user/allmakeup' ?>' title='Áo Cưới' >Thợ Trang Điểm</a></li>
+                           <li><a href='<?php echo Url::base().'/index.php?r=dress/alldress' ?>' title='Trang điểm cô dâu' >Áo cưới</a></li>
+                           <li><a href='<?php echo Url::base().'/index.php?r=localtion/alllocal' ?>' title='Nhẫn Cưới' >Địa điểm</a></li>
+                           <li><a href='hoa-cuoi-sdv.html' title='Hoa Cưới' >Liên lạc</a></li>        
+                        </ul>
+                        <div class="clr"></div>
+                    </div><!--end rightBox-->
+                    <div class ="rightBox">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.5046422685427!2d106.65774599999996!3d10.772607999999986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ec17709146b%3A0x54a1658a0639d341!2zMjY4IEzDvSBUaMaw4budbmcgS2nhu4d0!5e0!3m2!1svi!2sus!4v1434440586118" width="260px" height="300px" frameborder="0" style="border:0"></iframe>
+                        
+                    </div>
+                    <div class="rightBox">
+                        <div class="fb-like" style="position: fixed" data-share="true"  data-show-faces="true"></div>    
+                    </div>
+                </div><!--end colRight-->        
+                <div class="clr"></div>
+                <?php } else { ?>
+                    
+                <div id="colLeft" style="width:100%">
+                     <div class="leftBox">
+                        <?= Breadcrumbs::widget([
+                            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                        ]) ?>
+                        <?= $content ?>
+                         <div class="clr"></div>
+                    </div>
+                    
+                </div>
+                    
+                <?php } ?>
     </div>
-
-    <div id="footer">
+                
+                
+                
+                
+            </div>
+       
+    </div>
+       <div class="clr"></div>
+       </div>
+<!--    <div id="footer">
 	<div class="pagewrap">
     	<ul class="fooLink">
         	<h1><span>DANH MỤC</span></h1>
@@ -230,11 +290,31 @@ AppAsset::register($this);
         </ul>
         
         <div class="clr"></div>
-    </div><!--end pagewrap-->
+    </div>end pagewrap
 	<div class="clr"></div>
-</div><!--end footer-->
+</div>end footer-->
 
     <?php $this->endBody() ?>
 </body>
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '387081961481281',
+      xfbml      : true,
+      version    : 'v2.3'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 </html>
 <?php $this->endPage() ?>
+
+

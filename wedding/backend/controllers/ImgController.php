@@ -38,13 +38,18 @@ class ImgController extends Controller
      */
     public function actionIndex()
     {
+        $session = Yii::$app->session;
+        
+        if(isset($session['username'])&&$session['type_user']==0){
         $searchModel = new ImgSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
+        ]);}
+        
+        return $this->goHome();
     }
 
     /**
@@ -150,7 +155,17 @@ class ImgController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        if(isset($_GET['typedelete']))
+        {
+            if($_GET['typedelete']=='myalbum')
+            return $this->redirect(['album/view','id'=>$_GET['id_album']]);
+            if($_GET['typedelete']=='editdress')
+                return $this->redirect(['dress/editimgdress','id'=>$_GET['id_dress']]);
+            if($_GET['typedelete']=='editlocal')
+                return $this->redirect(['localtion/viewimg','id'=>$_GET['id_local']]);
+        }
+        
+        
         return $this->redirect(['index']);
     }
 

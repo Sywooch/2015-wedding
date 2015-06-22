@@ -6,7 +6,15 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Contract */
 
-$this->title = 'User';
+$session = Yii::$app->session;
+
+if($session['type_user']==2){
+    $this->title = 'Thợ Chụp Ảnh';
+}
+if($session['type_user']==3){
+    $this->title = 'Thợ Trang Điểm';
+}
+//$this->title = 'Nhân viên';
 $this->params['breadcrumbs'][] = ['label' => 'User', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -22,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
     
     <table class ="table table-striped table-bordered table-hover table-condensed">
         <tr>
-            <td></td>
+            <!--<td></td>-->
             <td>Tên địa điểm</td>
             <td>Thời Gian Bắt Đầu</td>
             <td>Thời Gian Kết Thúc</td>
@@ -31,12 +39,14 @@ $this->params['breadcrumbs'][] = $this->title;
         </tr>
         <?php foreach ($taskofuser as $task) { ?>
         <tr>
-            <td><?=$task['id_user']?></td>
+            <!--<td><?//=$task['id_user']?></td>-->
             <td><?=$task['name_local']?></td>
             <td><?=$task['start_time']?></td>
             <td><?=$task['end_time']?></td>
-            <td><?=$task['status']?></td>
-            <td></td>
+            <td><?php if ($task['status']==1)
+                echo 'Chưa Hoàn Thành';else echo 'Hoàn Thành';
+                ?></td>
+            <td><?php if($task['status']!=1) { ?><a href="<?php echo yii\helpers\Url::base().'/index.php?r=user/updatetask&id='.$task['id_contract'].'&type='.$session['type_user'].'&status='.$task['status'].'&id_user='.$session['id_user'] ?>"><span class ="glyphicon glyphicon-pencil"></span></a><?php } ?></td>
             
         </tr>
                 

@@ -9,12 +9,12 @@ use yii\filters\VerbFilter;
 use backend\models\PasswordResetRequestForm;
 use backend\models\ResetPasswordForm;
 use backend\models\SignupForm;
-use backend\models\ContactForm;
-use yii\web\Session;
+
+
 use backend\models\User;
 //use backend\models\UploadForm;
 use yii\web\UploadedFile;
-use yii\web\Cookie;
+
 
 /**
  * Site controller
@@ -27,20 +27,7 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-//            'access' => [
-//                'class' => AccessControl::className(),
-//                'rules' => [
-//                    [
-//                        'actions' => ['login', 'error'],
-//                        'allow' => true,
-//                    ],
-//                    [
-//                        'actions' => ['logout', 'index'],
-//                        'allow' => true,
-//                        'roles' => ['@'],
-//                    ],
-//                ],
-//            ],
+
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -64,7 +51,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $cookie = Yii::$app->response->cookies;
+       // $cookie = Yii::$app->response->cookies;
         $session = Yii::$app->session;
         
         //if(isset($cookie['username'])&&!isset($session['username'])) {
@@ -73,13 +60,58 @@ class SiteController extends Controller
             $session['username'] = Yii::$app->user->identity->username;
             $session['id_user'] = $user->getInfobyUsername($session['username'])->id;
             $session['type_user'] = $user->getInfobyUsername($session['username'])->type_user;
+            if($session['type_user']==0){
+                    $notify = new \backend\models\Notify();
+                    //$notify->test(date('Y-m-d'));
+                    for($i=0;$i<=7;$i++){
+                        $week[] = date('Y-m-d',strtotime(date('Y-m-d') ."+ ".$i." days"));
+                    }
+
+                    foreach ($week as $value) {
+                        if($notify->test($value)){
+                            $notify->getStarttime($value);
+                            $notify->getPayment1($value);
+                            $notify->getPayment2($value);
+                            $notify->getPayment3($value);
+                        }
+                    }
+                }
         }
         
-//        echo '<pre>';
-//        print_r($cookie);
-//        echo '</pre>';
-        return $this->render('index');
+        
+        if(isset($session['type_user'])){
+            if($session['type_user']==0){
+              return $this->redirect('index.php?r=notify');
+            }else if($session['type_user']==1){
+                return $this->redirect('index.php?r=album/myalbum');
+            }else if($session['type_user']==2||$session['type_user']==3){
+                return $this->redirect('index.php?r=user/mytask');
+            }
+        }
+        
+        $user = new User();
+        
+        $topdress =  $user->getdressinyear(date('y'));
+        $toplocal = $user->getlocaltioninyear(date('y'));
+        $topphoto = $user->getphotoinyear(date('y'));
+        $topmakeup = $user->getmakeupinyear(date('y'));
+        
+        
+        $sender['topdress'] = $topdress;
+        $sender['toplocal'] = $toplocal;
+        $sender['topphoto'] = $topphoto;
+        $sender['topmakeup'] = $topmakeup;
+        
+        return $this->render('index',$sender);
     }
+    
+    public function actionSearch(){
+        if(isset($_POST['bt_search'])){
+            echo 'sdfsfdsd';
+        }else echo "false";
+    }
+
+    
 
     public function actionAbout()
     {
@@ -87,42 +119,12 @@ class SiteController extends Controller
         //return $this->render('about');
     }
     
-//    public function actionLogin()
-//    {
-//        if (!\Yii::$app->user->isGuest) {
-//            return $this->goHome();
-//        }
-//
-//        $model = new LoginForm();
-//        $user = new User();
-//        
-//        if ($model->load(Yii::$app->request->post()) &&$model->login()) {
-//            
-//            
-//            
-//            
-//          
-//                var_dump($model);
-//           
-//                $session = Yii::$app->session;
-//               // var_dump($user->getInfobyUsername($model->username));
-//               $session['username'] = $model->username;
-//                $session['id_user'] = $user->getInfobyUsername($model->username)->id;
-//                $session['type_user'] = $user->getInfobyUsername($model->username)->type_user;
-//                
-//            
-//                return $this->goBack();
-//            
-//            
-//        } else {
-//            return $this->render('login', [
-//                'model' => $model,
-//            ]);
-//        }
-//    }
+
     
     public function actionLogin()
     {
+        
+        
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -130,15 +132,33 @@ class SiteController extends Controller
         
         $user = new User();
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post()) && $model->login()) 
+        {
             
                   $session = Yii::$app->session;
 //               // var_dump($user->getInfobyUsername($model->username));
                 $session['username'] = $model->username;
                 $session['id_user'] = $user->getInfobyUsername($model->username)->id;
                 $session['type_user'] = $user->getInfobyUsername($model->username)->type_user;
+                if($session['type_user']==0){
+                    $notify = new \backend\models\Notify();
+                    //$notify->test(date('Y-m-d'));
+                    for($i=0;$i<=7;$i++){
+                        $week[] = date('Y-m-d',strtotime(date('Y-m-d') ."+ ".$i." days"));
+                    }
+
+                    foreach ($week as $value) {
+                        if($notify->test($value)){
+                            $notify->getStarttime($value);
+                            $notify->getPayment1($value);
+                            $notify->getPayment2($value);
+                            $notify->getPayment3($value);
+                        }
+                    }
+                }
             return $this->goBack();
-        } else {
+        } 
+        else {
             return $this->render('login', [
                 'model' => $model,
             ]);
@@ -146,6 +166,8 @@ class SiteController extends Controller
     }
     public function actionSignup()
     {
+        $session = Yii::$app->session;
+        if(isset($session['username'])&&$session['type_user']==0){
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             
@@ -160,16 +182,8 @@ class SiteController extends Controller
                     $model->avatar = 'uploads/'.$imgname.'.'. $model->avatar->extension;
                 }else {$model->avatar = 'uploads/avatar/avatar.jpg';}
             
-            if ($user = $model->signup()) {
-//                if (Yii::$app->getUser()->login($user)) {
-//                    $session = Yii::$app->session;
-//                    $session['username']=$user->username;
-//                    $session['id_user'] = $user->id;
-//                    $session['type_user'] = $user->type_user;
-////                  echo $session['id_user'];
-////                    echo  $session['type_user'];
-//                     return $this->goHome();
-//                }
+            if ($model->signup()) {
+
                 return $this->goHome();
             }
         }
@@ -177,17 +191,19 @@ class SiteController extends Controller
         return $this->render('signup', [
             'model' => $model,
         ]);
+        }
+        return $this->goHome();
     }
 
     public function actionLogout()
     {
         Yii::$app->user->logout();
-        $cookies = Yii::$app->response->cookies;
-        if(isset($cookies['username'])){
-            unset($cookies['username']);
-        }
+        
 //        session_destroy ();
-        return $this->goHome();
+        return $this->redirect('index.php');
     }
+    
+    
+    
 
 }

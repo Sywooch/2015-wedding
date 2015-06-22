@@ -12,7 +12,7 @@ use Yii;
  * @property string $url_psd
  * @property integer $numpage
  * @property string $time_complete
- * @property integer $url_folder
+ * @property string $url_folder
  * @property string $rate
  * @property integer $status
  *
@@ -35,9 +35,9 @@ class Album extends \yii\db\ActiveRecord
     {
         return [
             [['id_contract', 'numpage'], 'required'],
-            [['id_contract', 'numpage', 'url_folder', 'rate', 'status'], 'integer'],
+            [['id_contract', 'numpage', 'rate', 'status'], 'integer','message' => 'Nhập số nguyên'],
             [['time_complete'], 'safe'],
-            [['url_psd'], 'string', 'max' => 350]
+            [['url_psd','url_folder'], 'string', 'max' => 350]
         ];
     }
 
@@ -48,11 +48,11 @@ class Album extends \yii\db\ActiveRecord
     {
         return [
             'id_album' => 'Id Album',
-            'id_contract' => 'Id Contract',
+            'id_contract' => 'Hơp Đồng Số',
             'url_psd' => 'Url Psd',
-            'numpage' => 'Numpage',
-            'time_complete' => 'Time Complete',
-            'url_folder' => 'Url Folder',
+            'numpage' => 'Số lượng trang',
+            'time_complete' => 'Thời gian hoàn thành album',
+            'url_folder' => 'Upload trang album',
             'rate' => 'Rate',
             'status' => 'Status',
         ];
@@ -65,4 +65,45 @@ class Album extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Contract::className(), ['id_contract' => 'id_contract']);
     }
+//    public function getAllalbum(){
+//        $result = Yii::$app->db->createCommand('SELECT id_album FROM album where status = 4')->queryAll();
+////        echo '<pre>';
+////        print_r($result);
+////        echo '</pre>';
+//        
+//        foreach ($result as $value) {
+//            $allalbum[] = $value['id_album'];
+//        }
+//        if(isset($allalbum)){
+//            return $allalbum;
+//        }
+//        else return NULL;
+//    }
+    
+    
+    
+    public function getImgOfAlbum($id_album){
+        $result = Yii::$app->db->createCommand("select id_img from imgalbum where id_album ='".$id_album."'")->queryAll();
+        
+        
+        if(isset($result)){
+            
+            
+            foreach ($result as $img) {
+                $arrurlimg[]= Yii::$app->db->createCommand("select url from img where id_img ='".$img['id_img']."'")->queryOne();
+            }
+            
+            foreach ($arrurlimg as $value) {
+                $arr[]= $value['url'];
+            }
+        }
+        
+        return $arr;
+    }
+    
+    public function getAllAlbum(){
+        $album = $this->find()->all();
+        if(isset($album)) return $album;else return NULL;
+    }
+    
 }

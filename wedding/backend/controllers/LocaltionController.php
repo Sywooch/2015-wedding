@@ -17,6 +17,9 @@ use yz\shoppingcart\ShoppingCart;
  */
 class LocaltionController extends Controller
 {
+    
+
+
     public function behaviors()
     {
         return [
@@ -29,6 +32,8 @@ class LocaltionController extends Controller
         ];
     }
 
+   // private $session = Yii::$app->session;
+    
     /**
      * Lists all Localtion models.
      * @return mixed
@@ -58,55 +63,27 @@ class LocaltionController extends Controller
     }
     
     
-    
-     public function actionAddtocart($id)
-    {
-        $cart = new ShoppingCart();
 
-        $model = Localtion::findOne($id);
-        if ($model) {
-            $cart->put($model, 1);
-            //return $this->redirect(['index']);
-        }
-        //var_dump($cart->getCost());
-       // var_dump($model);
-        $count = $cart->getCount();
-        echo $count;
-        //$cart->removeAll();
-        //throw new NotFoundHttpException();
-    }
     
-    public function actionListtocart(){
-        $cart = new ShoppingCart();
-      //  echo $cart->getCount();
-        $items = $cart->positions;
-//        echo '<pre>';
-//        print_r($items);
-//        echo '</pre>';
-        $i=0;
-        foreach ($items as $item) {
-            //echo $item->getPrice().'<br>';
-            echo $item->getCost().'<br>';
-          //  $i++;
-        }
-        //echo $i;
-        
-        //$cart->removeAll();
-       // $cart
-    }
     
     // get all dress free date_start to end_date
     
     
     public function actionIndex()
     {
-        $searchModel = new LocaltionSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $session = Yii::$app->session;
+        
+        if(isset($session['username'])&&$session['type_user']==0){
+        
+            $searchModel = new LocaltionSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+           // $searchModel->rate = $searchModel->rate.' VND';
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+        return $this->redirect(['alllocal']);
     }
 
     /**
@@ -116,9 +93,15 @@ class LocaltionController extends Controller
      */
     public function actionView($id)
     {
+        
+        $session = Yii::$app->session;
+        
+        if(isset($session['username'])&&$session['type_user']==0){
+        
         return $this->render('view', [
             'model' => $this->findModel($id),
-        ]);
+        ]);}
+        return $this->redirect(['viewimg','id'=>$id]);
     }
 
     /**
@@ -128,29 +111,37 @@ class LocaltionController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Localtion();
+        
+        $session = Yii::$app->session;
+        
+        if(isset($session['username'])&&$session['type_user']==0){
+        
+            $model = new Localtion();
 
-        if ($model->load(Yii::$app->request->post())) {
-            
-            $model->id_local = 'L'.time();
-            
-            
-            $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
-            $model->avatar = UploadedFile::getInstance($model, 'avatar');
-            //var_dump($model->avatar);
-            $model->avatar->saveAs( 'uploads/'.$imgname.'.'.$model->avatar->extension );
-            
-            //save in db
-            
-            $model->avatar = 'uploads/'.$imgname.'.'. $model->avatar->extension;
-            
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->id_local]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            if ($model->load(Yii::$app->request->post())) {
+
+                $model->id_local = 'L'.time();
+
+
+                $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
+                $model->avatar = UploadedFile::getInstance($model, 'avatar');
+                //var_dump($model->avatar);
+                if($model->avatar!=NULL){
+                $model->avatar->saveAs( 'uploads/'.$imgname.'.'.$model->avatar->extension );
+
+                //save in db
+
+                $model->avatar = 'uploads/'.$imgname.'.'. $model->avatar->extension;
+                }else $model->avatar = '';   
+                $model->save();
+                return $this->redirect(['view', 'id' => $model->id_local]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         }
+        return $this->goHome();
     }
 
     /**
@@ -161,29 +152,36 @@ class LocaltionController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-        $url_avarta = $model->avatar;    
-        if ($model->load(Yii::$app->request->post())) {
-            
-            $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
-            $model->avatar = UploadedFile::getInstance($model, 'avatar');
-            //var_dump($model->avatar);
-            if($model->avatar!=NULL){
-            $model->avatar->saveAs( 'uploads/'.$imgname.'.'.$model->avatar->extension );
-            
-            //save in db
-            
-            $model->avatar = 'uploads/'.$imgname.'.'. $model->avatar->extension;
-            }else{
-                $model->avatar = $url_avarta;
+        $session = Yii::$app->session;
+        
+        if(isset($session['username'])&&$session['type_user']==0){
+        
+            $model = $this->findModel($id);
+            $url_avarta = $model->avatar;    
+            if ($model->load(Yii::$app->request->post())) {
+
+                $imgname = time().rand(0, 10000).rand(0, 10000).rand(0, 10000);
+                $model->avatar = UploadedFile::getInstance($model, 'avatar');
+                //var_dump($model->avatar);
+                if($model->avatar!=NULL){
+                $model->avatar->saveAs( 'uploads/'.$imgname.'.'.$model->avatar->extension );
+
+                //save in db
+
+                $model->avatar = 'uploads/'.$imgname.'.'. $model->avatar->extension;
+                }else{
+                    $model->avatar = $url_avarta;
+                }
+                $model->update();
+                return $this->redirect(['view', 'id' => $model->id_local]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
             }
-            $model->update();
-            return $this->redirect(['view', 'id' => $model->id_local]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+        
+        return $this->redirect(['index']);
     }
 
     /**
@@ -213,12 +211,60 @@ class LocaltionController extends Controller
        
         
         $test['imgs']= $imgs; 
-        $test['title'] = 'All Localtion';
+        $test['title'] = 'Tất cả địa điểm';
         //$model->find()->all();
         return $this->render('viewalllocaltion',$test);
     }
+    
+    
+    //
+    
+    public function actionAmb(){
+        $local = new Localtion();
+        $local->getAmb('L1429606564');
+    }
+    
+    
+    // Find local off user 
+    
+    public function actionMylocal(){
+        $local = new Localtion();
+        
+        $session = Yii::$app->session;
+        
+        if(isset($session['id_user'])&&$session['type_user']==1){
+        $infolocal = $local->getmylocal($session['id_user']);
+        
+        
+        
+        
+        $sender['imgs'] = $infolocal;
+        $sender['title'] = 'Địa Điểm Của Tôi';
+        return $this->render('mylocal',$sender);
+        }
+    }
+    
+    public function actionEditimglocal($id){
+        
+        $session = Yii::$app->session;
+        
+        if(isset($session['username'])&&$session['type_user']==0){
+        
+            $this->findModel($id);
+            $local = new Localtion();
+            $arrimg = $local->getimglocal($id);
+            
+            
+            $sender['imglocals'] = $arrimg;
+            //var_dump($sender);exit;
+            $sender['id'] = $id;
+            $sender['title'] = $this->findModel($id)->name_local;
+            return $this->render('localview',$sender);
+        }
+        return $this->redirect(['view','id'=>$id]);
+    }
 
-    /**
+        /**
      * Finds the Localtion model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
