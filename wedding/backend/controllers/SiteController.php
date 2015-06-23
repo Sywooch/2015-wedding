@@ -107,8 +107,40 @@ class SiteController extends Controller
     
     public function actionSearch(){
         if(isset($_POST['bt_search'])){
-            echo 'sdfsfdsd';
-        }else echo "false";
+            //echo $_POST['search_text'];
+            //echo $_POST['search'];
+            if($_POST['search'] == 'dress'){
+                $result = Yii::$app->db->createCommand("select id_dress, avatar, name_dress, rate_hire from dress where name_dress like '%".$_POST['search_text']."%'")->queryAll();
+                foreach ($result as $row) {
+                    $imgs[] = $row;
+                 }
+
+
+                if(isset($imgs)){
+                    $test['imgs']= $imgs; 
+                }else $test['imgs'] = [];
+                 $test['title'] = 'Tìm kiếm áo cưới';
+                 //$model->find()->all();
+                 return $this->render('searchdress',$test);
+            }
+            if($_POST['search'] == 'local'){
+                 $result = Yii::$app->db->createCommand("select id_local, avatar, name_local , rate, timework from localtion where name_local like '%".$_POST['search_text']."%'")->queryAll();
+            
+                foreach ($result as $row) {
+                    $imgs[] = $row;
+                }
+
+
+                if(isset($imgs))
+                $test['imgs']= $imgs; 
+                else $test['imgs']=[];
+                $test['title'] = 'Tìm kiếm địa điểm';
+             //$model->find()->all();
+                return $this->render('searchlocaltion',$test);
+            
+             
+                 }
+        }
     }
 
     

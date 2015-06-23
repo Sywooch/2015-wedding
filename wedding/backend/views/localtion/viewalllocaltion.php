@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	            <ul class='mask'>
 	                <!--<h2><a href='chup-anh-cuoi-lau-dai-tajmasago-khaisilk-sab-c1.html'>Chụp ảnh cưới lâu đài Tajmasago Khaisilk</a></h2>-->
 	                <p><a href='<?php echo 'index.php?r=localtion/viewimg&&id='.$img['id_local'] ?>'  title=''><?php echo $img['name_local'] ?></a></p>
-                        <p><a href='<?php echo 'index.php?r=localtion/viewimg&&id='.$img['id_local'] ?>'  title=''><?php echo $img['rate'].'VND' ?></a></p>
+                        <p><a href='<?php echo 'index.php?r=localtion/viewimg&&id='.$img['id_local'] ?>'  title=''><?php echo number_format($img['rate']).' VND' ?></a></p>
                         <p><a href='<?php echo 'index.php?r=localtion/viewimg&&id='.$img['id_local'] ?>'  title=''><?php echo $img['timework'].' Ngày' ?></a></p>
                         <!--<p><?=  Html::a('Add To Cart', 'index.php?r=localtion/addtocart&&id='.$img['id_local'],['class'=>'btn btn-success addcart']) ?></p>-->
                     </ul>

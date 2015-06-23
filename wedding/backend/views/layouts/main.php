@@ -203,7 +203,7 @@ AppAsset::register($this);
                         <div class="titleBox"><h1>Tìm Kiếm</h1><i></i></div>
                         <div class="search">
                             <form action="<?php echo Url::base().'/index.php?r=site/search' ?>" method="POST">
-                                <input type="text" name="search_text"><br>
+                                <input type="text" name="search_text" class="required"><br>
                                 <input type="radio" name="search" value="dress" checked>Áo cưới
                                 <input type="radio" name="search" value="local">Địa Điểm
 <!--                                <input type="radio" name="search" value="photo">Thợ chụp ảnh
